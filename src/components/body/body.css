@@ -1,0 +1,12 @@
+.body {
+    position: relative;
+    background-color: rgb(48, 48, 48);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 1px;
+}
+
+.hidden {
+    display: none;
+}
+
