@@ -1,5 +1,3 @@
-import {useContext} from "react";
-
 const KeyboardDisplay = (state, action) => {
 
     if (state === undefined) {
@@ -9,17 +7,16 @@ const KeyboardDisplay = (state, action) => {
         };
     }
 
-
     switch (action.type) {
         case 'SHOW_KEYBOARD':
             return {parameter: action.payload, showKeyboard: true};
 
         case 'HIDE_KEYBOARD':
-            return {...state, showKeyboard: false};
+            return {...state.KeyboardDisplayKeeper, showKeyboard: false};
 
         case 'NEW_VALUE_KEYBOARD':
             state.analogParametersKeeper[state.KeyboardDisplayKeeper.parameter] = action.payload;
-            return {...state};
+            return {...state.KeyboardDisplayKeeper, showKeyboard: false};
 
         default:
             return state.KeyboardDisplayKeeper;

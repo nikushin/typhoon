@@ -1,30 +1,16 @@
-const mongoClient = require("./db");
+const sql = require('./mysql.js');
+
 const io = require('socket.io')(8080, {transports: ['polling', 'websocket']} );
+const EventEmitter = new require('events').EventEmitter;
+const emitter = new EventEmitter();
+module.exports.emitter = emitter;
+const {modbusCreate} = require('./modbus/modbus');
+const {ioConnect} = require ('./function-bloks/io-connect');
+const {emittSocket} = require ('./function-bloks/emitt-socket');
 
-mongoClient.connect(function (err, client) {
-  const db = client.db("usersdb");
-  const collection = db.collection("users");
+modbusCreate();
+emittSocket(io.sockets, emitter);
 
-  if (err) return console.log(err);
-
-  io.on('connect', socket => {
-    console.log('io connect');
-
-    socket.on('msg', (data) => {
-      console.log(data);
-      collection.findOneAndUpdate(
-        {name: data[0]}, // критерий выборки
-        { $set: {value: data[1]}}, // параметр обновления
-        function(err, result){
-          // console.log(result);
-        });
-    });
-
-    collection.find({name: "temp_set_point"}).toArray(function(err, results){
-      if (err) return console.log('ошибка', err);
-      console.log(results[0]['value']);
-      socket.emit("init", ["temp_set_point", results[0]['value']]);
-    });
-
-  });
+io.on('connect', socket => {
+  ioConnect(socket, emitter, sql);
 });

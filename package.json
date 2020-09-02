@@ -8,29 +8,28 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "chart.js": "^2.9.3",
-    "mongodb": "^3.5.9",
+    "modbus-serial": "^8.0.0",
+    "mysql2": "^2.1.0",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
-    "react-chartjs-2": "^2.9.0",
     "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "react-simple-keyboard": "^2.3.82",
-    "react-vis": "^1.11.7",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "simple-keyboard": "^2.29.63",
+    "reselect": "^4.0.0",
     "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^2.3.0",
+    "styled-components": "^5.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node src/server/server.js",
+    "server": "nodemon src/server/server.js",
     "electron": "electron ."
   },
   "eslintConfig": {
@@ -49,6 +48,6 @@
     ]
   },
   "devDependencies": {
-    "electron": "^9.1.1"
+    "nodemon": "^2.0.4"
   }
 }

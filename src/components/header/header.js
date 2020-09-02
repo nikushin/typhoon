@@ -6,16 +6,16 @@ import { Link } from 'react-router-dom';
 const Header = () => {
     return (
         <div className="header">
-          <Link to="/">
-            <Button icon="home" text="Home" />
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Button className="buttonMenu" icon="home" text="Home" />
           </Link>
 
-          <Link to="/settings">
-            <Button icon="settings" text="Settings" />
+          <Link to="/settings" style={{ textDecoration: 'none' }}>
+            <Button className="buttonMenu" icon="settings" text="Settings" />
           </Link>
 
-          <Link to="/manual">
-            <Button icon="manual" text="Manual" />
+          <Link to="/manual" style={{ textDecoration: 'none' }}>
+            <Button className="buttonMenu" icon="manual" text="Manual" />
           </Link>
           {/*<div className="recipe-bar">*/}
             {/*    Header*/}

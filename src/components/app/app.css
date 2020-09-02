@@ -8,4 +8,13 @@
     background-color: lightslategray;
     display: grid;
     grid-template-rows: 1fr 9fr 1fr;
+
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.28581;
+    text-transform: none;
+    color: #182026;
+    font-family: "Arial", serif;
+    user-select: none;
 }

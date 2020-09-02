@@ -2,8 +2,22 @@
     position: relative;
     background-color: rgb(48, 48, 48);
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     margin: 1px;
+    color: white;
+}
+
+.phases-container{
+    display: flex;
+    flex-direction: column;
+    Justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.phases-container div{
+    display: flex;
+    Justify-content: center;
+    align-items: center;
 }
 
 .hidden {

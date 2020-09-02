@@ -1,8 +1,12 @@
 import React from 'react';
 import Graph from "../components/graph";
+import "./setting-page.css"
+
 const SettingsPage = () => {
   return (
-    <Graph/>
+    <div className="SettingsPage">
+      <Graph/>
+    </div>
   );
 };
 

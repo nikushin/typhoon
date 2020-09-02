@@ -1,8 +1,12 @@
-import {initValue, ConnectStatus} from "../actions";
+import {initValue, ConnectStatus, GraphAdd, SetPhasesStatus, IncrementValue} from "../actions";
 import openSocket from "socket.io-client";
 const socket = openSocket('http://localhost:8080', {transports: ['websocket']});
 
-class SocketService{
+class SocketService {
+
+    SocketEmmit (name, data) {
+        socket.emit(name, data);
+    };
 
     SocketSendMessage (data) {
         socket.emit("msg", [data[0], data[1]]);
@@ -10,8 +14,12 @@ class SocketService{
 
     socketCreat() {
         socket.on('init', (data) => {
-            console.log(data);
             initValue(data);
+            console.log('init ' + data)
+        });
+
+        socket.on('graph', (data) => {
+            GraphAdd(data);
         });
 
         socket.on('connect', () => {
@@ -21,10 +29,16 @@ class SocketService{
         socket.on('disconnect', () => {
             ConnectStatus(false);
         });
+
+        socket.on('phases_status', (phases_status) => {
+            console.log(phases_status);
+            SetPhasesStatus(phases_status);
+        });
+
+        socket.on('increment', (data) => {
+            IncrementValue(data);
+        });
     };
-
-
-
 }
 
 const socketService = new SocketService();

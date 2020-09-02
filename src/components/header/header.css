@@ -2,7 +2,12 @@
     background-color: linen;
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
+}
+
+.buttonMenu {
+    margin: 0 10px;
+    user-select: none;
 }
 
 .recipe-bar {

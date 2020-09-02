@@ -1,26 +1,25 @@
 import React, {useContext, useState} from 'react';
 import './keyboard-num.css'
-import {MyContext} from '../../index.js'
+// import {MyContext} from '../../index.js'
 import {useDispatch, useSelector} from "react-redux";
 import {setKeyboardParameter} from "../../actions";
-
 
 const KeyboardNum = () => {
 
   const [Input, setInput] = useState('0');
 
   const keyboardOpen = useSelector(state => state.KeyboardDisplayKeeper.showKeyboard);
-  const parameter = useSelector(state => state.KeyboardDisplayKeeper.parameter);
-  const {SocketSendMessage} = useContext(MyContext);
+  // const parameter = useSelector(state => state.KeyboardDisplayKeeper.parameter);
+  // const {SocketSendMessage} = useContext(MyContext);
   const dispatch = useDispatch();
 
   const setOnPressEnter = () => {
     if (Input !== '') {
-      console.log([parameter, Input]);
-      SocketSendMessage([parameter, Input]);
+      // console.log([parameter, Input]);
+      // SocketSendMessage([parameter, Input]);
       dispatch(setKeyboardParameter(Input));
     } else {
-      SocketSendMessage({[parameter]:'0'});
+      // SocketSendMessage({[parameter]:'0'});
       dispatch(setKeyboardParameter('0'));
     }
     setInput('0');

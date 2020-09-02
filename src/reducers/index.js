@@ -1,12 +1,14 @@
 import updateValue from "./change-value"
 import KeyboardDisplay from "./keyboard-display"
 import analogParameters from "./analog-parameters";
+import Phases from "./phases";
 
 const reducer = (state, action) => {
   return {
     valueKeeper: updateValue(state, action),
     KeyboardDisplayKeeper: KeyboardDisplay(state, action),
-    analogParametersKeeper: analogParameters(state, action)
+    analogParametersKeeper: analogParameters(state, action),
+    PhasesKeeper: Phases(state, action)
   };
 };
 
