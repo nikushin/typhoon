@@ -1,0 +1,80 @@
+.graph {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+}
+
+.graph-additional {
+    //background-color: gray;
+    position: absolute;
+    left: 25px;
+    top: 25px;
+    pointer-events: none;
+}
+
+.graph-background {
+    stroke-width: 1px;
+    stroke: white;
+    pointer-events: none;
+    background-color: rgb(70, 70, 70);
+    position: absolute;
+    left: 50px;
+    top: 50px;
+}
+
+.inner-svg{
+    background-color: rgb(200, 200, 200);
+    overflow: visible;
+}
+
+.graph_lines {
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+    visibility: hidden;
+}
+
+.graph_lines_animate {
+    animation-name: graph_lines_animate;
+    animation-duration: 1s;
+    transform-box: fill-box;
+    transform-origin: bottom;
+    visibility: visible;
+}
+
+@keyframes graph_lines_animate {
+    0%{
+        transform: scale(1, 0);
+    }
+    100%{
+        transform: scale(1, 1);
+    }
+}
+
+.Axes {
+    stroke: white;
+    stroke-dasharray: 0;
+    stroke-width: 0.1;
+}
+
+.Axes:first-child, .Axes:last-child {
+    stroke-width: 2;
+}
+
+.AxesText{
+    font-size: 12px;
+    text-anchor : end;
+}
+
+.graph-legend-buttons {
+    display: flex;
+    Justify-content: center;
+}
+.graph-legend-buttons div {
+    display: flex;
+    Justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 30px;
+    background-color: #3dcc91;
+    margin: 5px;
+}
