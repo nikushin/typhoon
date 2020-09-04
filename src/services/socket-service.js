@@ -1,6 +1,6 @@
 import {initValue, ConnectStatus, GraphAdd, SetPhasesStatus, IncrementValue} from "../actions";
 import openSocket from "socket.io-client";
-const socket = openSocket('http://localhost:8080', {transports: ['websocket']});
+const socket = openSocket('192.168.0.120:8080', {transports: ['websocket']});
 
 class SocketService {
 
