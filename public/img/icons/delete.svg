@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+    <defs>
+        <style>.cls-1{fill:none;stroke:#231f20;stroke-linecap:round;stroke-linejoin:round;stroke-width:8px;}</style>
+    </defs><title>delete</title>
+    <g id="new">
+        <line class="cls-1" x1="19.44" y1="19.44" x2="50.56" y2="50.56"/>
+        <line class="cls-1" x1="50.56" y1="19.44" x2="19.44" y2="50.56"/>
+    </g>
+</svg>

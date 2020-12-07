@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70"><defs>
+    <style>.cls-1{fill:none;stroke:#231f20;stroke-linecap:round;stroke-linejoin:round;stroke-width:8px;}</style>
+</defs><title>add</title>
+    <g id="new">
+        <line class="cls-1" x1="13" y1="35" x2="57" y2="35"/>
+        <line class="cls-1" x1="35" y1="13" x2="35" y2="57"/>
+    </g>
+</svg>
