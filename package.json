@@ -1,22 +1,26 @@
 {
-  "name": "typhoon2",
+  "name": "typhoon",
   "version": "0.1.0",
   "private": true,
   "main": "main.js",
   "dependencies": {
-    "@blueprintjs/core": "^3.29.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/react-slider": "^1.0.0",
+    "async": "^3.2.0",
+    "electron": "^11.0.3",
     "modbus-serial": "^8.0.0",
     "mysql2": "^2.1.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-color": "^2.18.1",
+    "react-datepicker": "^3.3.0",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-slider": "^1.1.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
@@ -25,12 +29,12 @@
     "styled-components": "^5.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start2": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "nodemon src/server/server.js",
-    "electron": "electron ."
+    "start": "electron ."
   },
   "eslintConfig": {
     "extends": "react-app"

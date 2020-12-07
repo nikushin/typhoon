@@ -11,7 +11,6 @@ module.exports = {
       start_delay = setTimeout (()=>{
         this.start_delay = true;
         emitter.emit('phase_unloading_roaster_done');
-        console.log("phase_unloading_roaster_done")
       }, 3000);
     } else {
       clearTimeout(start_delay);

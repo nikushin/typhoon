@@ -1,81 +1,114 @@
-import React, {useContext, useState} from 'react';
-import './keyboard-num.css'
-// import {MyContext} from '../../index.js'
+import React, {Fragment, useLayoutEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setKeyboardParameter} from "../../actions";
+import {setKeyboardLetterParameter, setKeyboardParameter, hideKeyboard} from "../../actions";
+import {Container, ContainerInner, Button, SvgIcon, Display} from './keyboard-num-styled'
+
 
 const KeyboardNum = () => {
 
+  const refContainer = useRef(null);
   const [Input, setInput] = useState('0');
+  const [InitPress, setInitPress] = useState(false);
 
-  const keyboardOpen = useSelector(state => state.KeyboardDisplayKeeper.showKeyboard);
-  // const parameter = useSelector(state => state.KeyboardDisplayKeeper.parameter);
-  // const {SocketSendMessage} = useContext(MyContext);
+  const {startValue, top, left, min, max, func} = useSelector(state => state.KeyboardDisplayKeeper.num);
+
   const dispatch = useDispatch();
 
-  const setOnPressEnter = () => {
-    if (Input !== '') {
-      // console.log([parameter, Input]);
-      // SocketSendMessage([parameter, Input]);
-      dispatch(setKeyboardParameter(Input));
+  useLayoutEffect(() => {
+    setInput(startValue)
+  },[]);
+
+  const EnterPress = () => {
+    if (Input > max || Input < min) {return}
+    if (Input === '') {return}
+    func(Number(Input));
+    dispatch(hideKeyboard())
+  };
+
+  const BackspacePress = () => {
+    if (!InitPress) {
+      setInput('');
+      setInitPress(true);
     } else {
-      // SocketSendMessage({[parameter]:'0'});
-      dispatch(setKeyboardParameter('0'));
+      setInput( (i) => i.slice(0, -1) );
     }
-    setInput('0');
   };
 
   const onKeyPress = (button) => {
-    if (button === "✔") {
-      setOnPressEnter()
-    } else if (button === "⌫") {
-        setInput( (i) => i.slice(0, -1) );
+    if (!InitPress) {
+      setInput(button);
+      setInitPress(true);
+      return
     }
-    else if (button === 0) {
+
+   if (Input.length >= max.toString().length) {
+     return;
+   }
+
+   if (button === 0) {
       if (Input.slice(-1) !== '0') {
         setInput( (i) => i + button);
       }
+     return
     }
-    else {
-      if (Input.slice(0) === '0') {
-        setInput(button);
-      } else {
-        setInput( (i) => i + button);
-      }
+
+    if (Input.slice(0) === '0') {
+      setInput(button);
+      return;
     }
+    setInput( (i) => i + button);
+  };
+
+  const onContainerClick = (e) => {
+    if (e.target === refContainer.current) {dispatch(hideKeyboard())}
   };
 
   const keyboardOptions = {
-    layout: {
       default: [
         ['1', '2', '3'],
         ['4', '5', '6'],
         ['7', '8', '9'],
-        ['⌫', '0', '✔'],
+        ['backspace', '0', 'enter'],
       ]
-    },
-    display: {
-      'backspace': '⌫',
-      'enter': '✔'
-    }
   };
-  const buttons = keyboardOptions.layout.default.map((button_row) =>
+
+  const buttons = keyboardOptions.default.map((button_row, i_button_row) =>
     <div>
-      {button_row.map((button) =>
-        <button className={`buttons`} onClick={() => onKeyPress(button)}>
-            {button}
-        </button>
+      {button_row.map((button, i_button) => {
+          switch (button) {
+            case 'enter': {
+              return <Button top={i_button_row * 80 + 60} left={i_button * 80 + 25}
+                             onClick={EnterPress}>
+                <SvgIcon src='/img/keyboard/enter.svg'/>
+              </Button>
+            }
+            case 'backspace': {
+              return <Button top={i_button_row * 80 + 60} left={i_button * 80 + 25}
+                             onClick={BackspacePress}>
+                <SvgIcon src='/img/keyboard/backspace.svg'/>
+              </Button>
+            }
+            default : {
+              return <Button top={i_button_row * 80 + 60} left={i_button * 80 + 25}
+                             onClick={() => onKeyPress(button)}>
+                {button}
+              </Button>
+            }
+          }
+        }
       )}
     </div>
   );
 
   return (
-    <div className={`keyboardContainer ${keyboardOpen ? "" : "hidden"}`}>
+    <Container onClick={onContainerClick} ref={refContainer}>
+      <ContainerInner top={top} left={left}>
       <div data-placeholder="Enter">
         {Input}
       </div>
       {buttons}
-    </div>
+      </ContainerInner>
+    </Container>
   );
 };
 

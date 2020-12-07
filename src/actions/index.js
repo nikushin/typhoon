@@ -1,17 +1,25 @@
 import store from '../store';
 import socketService from '../services/socket-service'
 
+
+const testDispatch = () => {
+  return {
+    type: 'TEST'
+  };
+};
+
+const changePage = (menu, page) => {
+  return {
+    type: 'CHANGE_PAGE',
+    payload: [menu, page]
+  };
+};
+
 const changePhase = () => {
   return {
     type: 'CHANGE_PHASE'
   };
 };
-
-const GraphSaveViewParameters = (value) => {
-  return {
-    type: 'GRAPH_SAVE_VIEW_PARAMETERS',
-    payload: value
-    }};
 
 const changeGlobalColor = (color) => {
   return {
@@ -20,14 +28,6 @@ const changeGlobalColor = (color) => {
   };
 };
 
-const setKeyboardParameter = (value) => {
-  const parameter = store.getState().KeyboardDisplayKeeper.parameter;
-  socketService.SocketSendMessage([parameter, value]);
-  return {
-    type: 'NEW_VALUE_KEYBOARD',
-    payload: value
-  };
-};
 
 const setBoolParameter = () => {
   return {
@@ -35,10 +35,31 @@ const setBoolParameter = () => {
   };
 };
 
-const showKeyboard = (parameter) => {
+const setKeyboardParameter = (data) => {
+  return {
+    type: 'NEW_VALUE_KEYBOARD',
+    payload: data
+  };
+};
+
+const setKeyboardLetterParameter = (value) => {
+  return {
+    type: 'NEW_VALUE_KEYBOARD_LETTER',
+    payload: value
+  };
+};
+
+const showKeyboard = (data) => {
   return {
     type: 'SHOW_KEYBOARD',
-    payload: parameter
+    payload: data
+  };
+};
+
+const showKeyboardLetter = (parameter, keeper) => {
+  return {
+    type: 'SHOW_KEYBOARD_LETTER',
+    payload: {parameter : parameter, keeper : keeper}
   };
 };
 
@@ -58,11 +79,6 @@ const IncrementValue = (value) => {
   store.dispatch({type: 'INCREMENT_VALUE', payload: value});
 };
 
-
-const GraphAdd = (value) => {
-  store.dispatch({type: 'GRAPH_ADD_TEMP', payload: value});
-};
-
 const changeValue = (value) => {
   store.dispatch({type: 'CHANGE_VALUE', payload: value});
 };
@@ -71,16 +87,21 @@ const initValue = (value) => {
   store.dispatch({type: 'VALUE_INIT', payload: value});
 };
 
+const RecipeInit = (value) => {
+  store.dispatch({type: 'RECIPE_INIT', payload: value});
+};
+
+const memoryInit = (memory) => {
+  store.dispatch({type: 'MEMORY_INIT', payload: memory});
+};
+
 const ConnectStatus = (value) => {
   store.dispatch({type: 'CONNECT_STATUS', payload: value});
   if (value === false) {store.dispatch({type: 'CLEAR_GRAPH'});}
 };
 
-const SetPhasesStatus = (value) => {
-  store.dispatch({type: 'CHANGE_PHASE', payload: value});
-};
-
 export {
+  testDispatch,
   changeValue,
   showKeyboard,
   hideKeyboard,
@@ -89,10 +110,11 @@ export {
   setBoolParameter,
   changeGlobalColor,
   initValue,
+  RecipeInit,
   ConnectStatus,
-  GraphAdd,
-  GraphSaveViewParameters,
-  changePhase,
-  SetPhasesStatus,
-  IncrementValue
+  IncrementValue,
+  showKeyboardLetter,
+  setKeyboardLetterParameter,
+  changePage,
+  memoryInit
 };

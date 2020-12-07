@@ -1,23 +1,22 @@
 import React, {Fragment} from "react";
 
-const Axes = ({Xsteps, Xinterval, Ysteps, Yinterval}) =>  {
+const Axes = ({Xsteps, Xinterval, Ysteps, Yinterval,
+Xstart, Xfinish, Ystart, Yfinish, Xkoef, Ykoef, Axes}) =>  {
 
     let axisYarray = [];
     for (let i = 0; i < Ysteps; i++) {
-      axisYarray.push(20 -Yinterval * i)
+      axisYarray.push(-Yinterval * i* Ykoef)
     }
     let axisY = axisYarray.map((interval) =>
-      <Fragment>
-        <line className="Axes" x1="0" x2="900" y1={interval} y2={interval}/>
-      </Fragment>
+      <Axes x1={Xstart} x2={Xfinish} y1={interval} y2={interval}/>
     );
 
   let axisXarray = [];
   for (let i = 0; i < Xsteps; i++) {
-    axisXarray.push(Xinterval * i)
+    axisXarray.push(Xinterval * i * Xkoef)
   }
   let axisX = axisXarray.map((interval) =>
-      <line className="Axes" x1={interval} x2={interval} y1="-380" y2="20"/>
+      <Axes x1={interval} x2={interval} y1={Ystart} y2={Yfinish}/>
   );
 
   return (

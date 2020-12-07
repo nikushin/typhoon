@@ -1,14 +1,19 @@
-import updateValue from "./change-value"
 import KeyboardDisplay from "./keyboard-display"
 import analogParameters from "./analog-parameters";
 import Phases from "./phases";
-
+import graphParameters from "./graph";
+import graphSettingsParameters from "./graph-settings";
+import RecipeParameters from './recipe-parameters'
+import updateMain from "./main";
 const reducer = (state, action) => {
   return {
-    valueKeeper: updateValue(state, action),
+    mainKeeper: updateMain(state, action),
     KeyboardDisplayKeeper: KeyboardDisplay(state, action),
     analogParametersKeeper: analogParameters(state, action),
-    PhasesKeeper: Phases(state, action)
+    PhasesKeeper: Phases(state, action),
+    graphKeeper: graphParameters(state, action),
+    graphSettingsKeeper:graphSettingsParameters(state, action),
+    recipeKeeper:RecipeParameters(state, action),
   };
 };
 

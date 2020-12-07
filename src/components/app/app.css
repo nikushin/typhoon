@@ -3,18 +3,25 @@
 @import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
 
 .app {
-    width: 1024px;
-    height: 600px;
-    background-color: lightslategray;
+    width: 1980px;
+    height: 1024px;
+    background-color: rgba(15, 23, 36, 1.0);
     display: grid;
-    grid-template-rows: 1fr 9fr 1fr;
+    grid-template-rows: 110px auto;
 
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 1.28581;
     text-transform: none;
-    color: #182026;
-    font-family: "Arial", serif;
+    /*color: #182026;*/
+    color: white;
+    font-family: "TT Norms Regular", serif;
     user-select: none;
+    /*position: relative;*/
+    /*z-index: -1;*/
+}
+
+button {
+    color: inherit;
 }

@@ -1,3 +1,3 @@
-import Graph from './my_graph/my_graph';
+import GraphMain from './graph_main';
 
-export default Graph;
+export default GraphMain;

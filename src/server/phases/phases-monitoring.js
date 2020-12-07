@@ -13,55 +13,55 @@ const emitts_model = (socket, emitter) => {
     {name: 'Phases stop to HMI',
       observe: ['phase_stop'],
       compare: function () {return true},
-      do: () => {socket.emit("phases_status", {stop : stop.status}); console.log("phase_stop")}
+      do: () => {socket.emit("phases_status", {stop : stop.status})}
     },
 
     {name: 'Phases prepare to HMI',
       observe: ['phase_prepare'],
       compare: function () {return true},
-      do: () => {socket.emit("phases_status", {prepare: prepare.status}); console.log("phase_prepare")}
+      do: () => {socket.emit("phases_status", {prepare: prepare.status})}
     },
 
     {name: 'Phases prepare_start_delay to HMI',
       observe: ['phase_prepare_start_delay'],
       compare: function () {return true},
-      do: () => {socket.emit("phases_status", {prepare_done: prepare.start_delay}); console.log("phase_prepare_start_delay")}
+      do: () => {socket.emit("phases_status", {prepare_done: prepare.start_delay})}
     },
 
     {name: 'Phases loading_roaster to HMI',
       observe: ['phase_loading_roaster'],
       compare: function () {return true},
-      do: () => {socket.emit("phases_status", {loading_roaster: loading_roaster.status}); console.log("phase_loading_roaster")}
+      do: () => {socket.emit("phases_status", {loading_roaster: loading_roaster.status})}
     },
 
     {name: 'Phases loading_roaster_start_delay to HMI',
       observe: ['phase_loading_roaster_start_delay'],
       compare: function () {return true},
-      do: () => {socket.emit("phases_status", {loading_roaster_done: loading_roaster.start_delay}); console.log("phase_loading_roaster_start_delay")}
+      do: () => {socket.emit("phases_status", {loading_roaster_done: loading_roaster.start_delay})}
     },
 
     {name: 'Phases phase_roast to HMI',
       observe: ['phase_roast'],
       compare: function () {return true},
-      do: () => {socket.emit("phases_status", {roast: roast.status}); console.log("phase_roast")}
+      do: () => {socket.emit("phases_status", {roast: roast.status})}
     },
 
     {name: 'Phases unloading_roaster to HMI',
       observe: ['phase_unloading_roaster'],
       compare: function () {return true},
-      do: () => {socket.emit("phases_status", {unloading_roaster: unloading_roaster.status}); console.log("phase_unloading_roaster")}
+      do: () => {socket.emit("phases_status", {unloading_roaster: unloading_roaster.status})}
     },
 
     {name: 'Phases cooling to HMI',
       observe: ['phase_cooling'],
       compare: function () {return true},
-      do: () => {socket.emit("phases_status", {cooling: cooling.status}); console.log("phase_cooling")}
+      do: () => {socket.emit("phases_status", {cooling: cooling.status})}
     },
 
     {name: 'Phases unloading_cooler to HMI',
       observe: ['phase_unloading_cooler'],
       compare: function () {return true},
-      do: () => {socket.emit("phases_status", {unloading_cooler: unloading_cooler.status}); console.log("phase_unloading_cooler")}
+      do: () => {socket.emit("phases_status", {unloading_cooler: unloading_cooler.status})}
     },
 
     {name: 'Stop to prepare monitoring',
@@ -69,7 +69,7 @@ const emitts_model = (socket, emitter) => {
       compare: function () {return buttons_list.button_prepare === true &&
         stop.status === true},
       do: () => {
-        console.log("Stop to prepare");
+        //console.log("Stop to prepare");
         stop.SetStatus(false, emitter); prepare.SetStatus(true, emitter);
       }},
 
@@ -78,7 +78,7 @@ const emitts_model = (socket, emitter) => {
       compare: function () {return buttons_list.button_prepare === false &&
         prepare.status === true},
       do: () => {
-        console.log("Prepare to stop");
+        //console.log("Prepare to stop");
         stop.SetStatus(true, emitter); prepare.SetStatus(false, emitter);
       }},
 

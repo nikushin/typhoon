@@ -1,12 +1,12 @@
-module.exports = {
+const roast = {
   status : false,
+  roastSecond: 0,
   SetStatus : function (value, emitter) {
     this.status = value;
     emitter.emit('phase_roast', value);
-    if (value) {
-      this.timeover = setTimeout(() => emitter.emit('roast_time_out') , 100*1000)
-    } else {
-      clearTimeout(this.timeover)
-    }
-  }
+    if (value) {this.roastSecond = 0}
+  },
 };
+
+module.exports = roast;
+

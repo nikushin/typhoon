@@ -1,4 +1,4 @@
-let buttons_list = {
+const buttons_list = {
   button_start: false,
   button_stop: false,
   button_prepare: false,

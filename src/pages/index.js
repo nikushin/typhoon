@@ -1,5 +1,6 @@
 import HomePage from './home-page';
-import ManualPage from "./manual-page";
 import SettingsPage from "./settings-page";
+import TestPage from "./test-page";
 
-export {HomePage, ManualPage, SettingsPage};
+
+export {HomePage, SettingsPage, TestPage};

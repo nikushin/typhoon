@@ -1,3 +1,5 @@
+import store from "../store";
+
 const Phases = (state, action) => {
 
   if (state === undefined) {
@@ -16,6 +18,7 @@ const Phases = (state, action) => {
 
   switch (action.type) {
     case 'CHANGE_PHASE':
+
       if (action.payload.stop === undefined) {action.payload.stop = state.PhasesKeeper.stop}
       if (action.payload.prepare === undefined) {action.payload.prepare = state.PhasesKeeper.prepare}
       if (action.payload.prepare_done === undefined) {action.payload.prepare_done = state.PhasesKeeper.prepare_done}

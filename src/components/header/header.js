@@ -1,26 +1,26 @@
 import React from 'react';
-import './header.css';
-import { Button } from "@blueprintjs/core";
-import { Link } from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import {HeaderContainer, HeaderContainerInner, RecipeContainer} from './header-styled'
+import {changePage} from '../../actions/index'
+import {HomeIcon, SettingsIcon, AlarmIcon} from "./icons";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const name = useSelector(state => state.recipeKeeper.name);
+
     return (
-        <div className="header">
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <Button className="buttonMenu" icon="home" text="Home" />
-          </Link>
-
-          <Link to="/settings" style={{ textDecoration: 'none' }}>
-            <Button className="buttonMenu" icon="settings" text="Settings" />
-          </Link>
-
-          <Link to="/manual" style={{ textDecoration: 'none' }}>
-            <Button className="buttonMenu" icon="manual" text="Manual" />
-          </Link>
-          {/*<div className="recipe-bar">*/}
-            {/*    Header*/}
-            {/*</div>*/}
-        </div>
+        <HeaderContainer>
+          <HeaderContainerInner>
+          <RecipeContainer>
+            {name}
+          </RecipeContainer>
+          <div>
+            <AlarmIcon onClick={()=>dispatch(changePage('mainMenu', 'test'))}/>
+            <HomeIcon onClick={()=>dispatch(changePage('mainMenu', 'home'))}/>
+            <SettingsIcon onClick={()=>dispatch(changePage('mainMenu', 'settings'))}/>
+          </div>
+          </HeaderContainerInner>
+        </HeaderContainer>
     );
 };
 

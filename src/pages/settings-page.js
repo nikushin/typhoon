@@ -1,12 +1,23 @@
 import React from 'react';
-import Graph from "../components/graph";
-import "./setting-page.css"
+import {SettingsPageContainer} from "./styled-settings-pages";
+
+import {GraphSettings, NavigateMenu} from "../components/graph-settings";
+import RecipeMenu from "../components/recipe-menu";
+import ManualMenu from "../components/manual-menu";
+
 
 const SettingsPage = () => {
   return (
-    <div className="SettingsPage">
-      <Graph/>
-    </div>
+    <SettingsPageContainer>
+        <div>
+          <GraphSettings/>
+          <NavigateMenu/>
+        </div>
+        <div>
+          <RecipeMenu/>
+          <ManualMenu/>
+        </div>
+    </SettingsPageContainer>
   );
 };
 

@@ -1,6 +1,6 @@
 class CiclycalTimer {
 
-  constructor (interval, task ) {
+  constructor (interval, task) {
     this.interval = interval;
     this.task = task;
 }

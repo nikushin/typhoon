@@ -10,13 +10,11 @@
 .keyboardContainer > div:first-child {
     height: 35px;
     color: white;
-    /*width: calc(100% - 10px);*/
     font-size: 25px;
     border-radius: 5px;
     margin: auto;
     display: block;
     text-align: center;
-    /*background-color: ;*/
 }
 
 .keyboardContainer > div:first-child:empty:before {
