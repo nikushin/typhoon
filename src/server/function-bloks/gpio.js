@@ -13,8 +13,10 @@ module.exports = function gpioCreate (socket, emitter) {
     const cooler_starter = new Gpio('9', 'out');
     const blades_starter = new Gpio('9', 'out');
 
-    emitter.on('vvd', (value) => {
-        vvd.write(value);
+    let vvd_status = false;
+    socket.on('vvd', () => {
+        vvd_status = !vvd_status;
+        vvd.write(!vvd_status);
     });
 
     button_start.watch((err, value) => {

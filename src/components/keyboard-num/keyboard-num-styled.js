@@ -57,6 +57,7 @@ export const Button = styled.button`
   top: ${props =>props.top}px; left: ${props =>props.left}px;
   z-index: 100;
   background-color: rgba(51, 51, 51, 0.9);
+  font-size: 30px;
 `;
 export const SvgIcon = styled.img`
   position: absolute;
