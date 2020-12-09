@@ -19,6 +19,10 @@ module.exports = function gpioCreate (socket, emitter) {
         vvd.write(!vvd_status);
     });
 
+    emitter.on('button_alarm', (value) => {
+        socket.emit("test_button", value);
+    });
+
     button_start.watch((err, value) => {
         if (err) {console.log('button_start Error', err);}
         if (value===1) {emitter.emit('button_start');}

@@ -6,12 +6,18 @@ const analogParameters = (state, action) => {
             temp_alarm_value: 555,
             increment_value: 0,
             lamp_test: false,
+            lamp_test_gpio: false,
             heat_manual_sp: 0,
             vds_manual_sp: 0,
         };
     }
 
     switch (action.type) {
+
+
+
+        case 'TEST_GPIO_BUTTON' :
+            return {...state.analogParametersKeeper, lamp_test_gpio: action.payload};
 
         case 'NEW_VALUE' :
             const {newValue, keeper, parameter} = action.payload;

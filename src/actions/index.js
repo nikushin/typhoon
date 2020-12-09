@@ -1,6 +1,12 @@
 import store from '../store';
 import socketService from '../services/socket-service'
 
+const testGpioButton = () => {
+  return {
+    type: 'TEST_GPIO_BUTTON'
+  };
+};
+
 
 const testDispatch = () => {
   return {
@@ -116,5 +122,6 @@ export {
   showKeyboardLetter,
   setKeyboardLetterParameter,
   changePage,
-  memoryInit
+  memoryInit,
+  testGpioButton
 };

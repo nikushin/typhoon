@@ -6,8 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {showKeyboard, hideKeyboard, setBoolParameter, changeGlobalColor, changePhase, testDispatch} from "../../actions";
 
 import { ChromePicker } from 'react-color';
-import {createSelector} from "reselect";
-
 
 import VidgetInputOutput from "../vidget-input-output";
 import Tank from "../tank";
@@ -19,6 +17,7 @@ const Button = styled.div`
  width: 100px;
  height: 50px;
  background-color: rgba(90,90,90,0.57);
+ margin-bottom: 10px;
 `;
 
 const Body = () => {
@@ -34,13 +33,12 @@ const Body = () => {
                 <VidgetInputOutput keeper='analogParametersKeeper' parameter='temp_set_point' title='Подготовка'
                 min={0} max={100} top={300} left={300}/>
                 <VidgetInputOutput parameter='increment_value' title='modbus' keeper='analogParametersKeeper'/>
-                <Button icon="add" text="Show" onClick={() => dispatch(showKeyboard())}/>
-                <Button icon="delete" text="Hide" onClick={() => dispatch(hideKeyboard())}/>
                 <Button text="lamp" onClick={() => dispatch(setBoolParameter())}/>
                 <Tank parameter='temp_set_point'/>
             </div>
             <div>
                 <Lamp parameters={{parameter : 'lamp_test', keeper : 'analogParametersKeeper'}} />
+                <Lamp parameters={{parameter : 'lamp_test_gpio', keeper : 'analogParametersKeeper'}} />
             </div>
             <div style = {{paddingTop: "20px"}}>
                 <ChromePicker
@@ -54,6 +52,12 @@ const Body = () => {
                     Test
                 </Button>
 
+                <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:9999999,
+                    top: 300, left: 1200, func: (input) => {socketService.SocketEmmit('test_range', input)}}))}>Range</Button>
+                <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:9999999,
+                    top: 300, left: 1200, func: (input) => {socketService.SocketEmmit('test_frequency', input)}}))}>Frequency</Button>
+                <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:9999999,
+                    top: 300, left: 1200, func: (input) => {socketService.SocketEmmit('test_value', input)}}))}>Value</Button>
 
             </div>
           <div className="phases-container">

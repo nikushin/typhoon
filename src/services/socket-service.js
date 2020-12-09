@@ -1,4 +1,4 @@
-import {initValue, RecipeInit, memoryInit, ConnectStatus, IncrementValue} from "../actions/index";
+import {initValue, RecipeInit, memoryInit, ConnectStatus, IncrementValue, testGpioButton} from "../actions/index";
 import {SetPhasesStatus} from "../actions/phases";
 import {GraphAdd, HistoryAnswer, OneStoryAnswer, RoastFinish, RoastStart} from "../actions/graph";
 import {RoastRealTimeParameters} from '../actions/settings-graph-actions'
@@ -70,6 +70,11 @@ class SocketService {
         socket.on('increment', (data) => {
             IncrementValue(data);
         });
+
+        socket.on('test_button', (data) => {
+            testGpioButton(data);
+        });
+
     };
 }
 
