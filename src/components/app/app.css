@@ -1,10 +1,10 @@
-@import "~normalize.css";
-@import "~@blueprintjs/core/lib/css/blueprint.css";
-@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+/*@import "~normalize.css";*/
+/*@import "~@blueprintjs/core/lib/css/blueprint.css";*/
+/*@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";*/
 
 .app {
-    width: 1980px;
-    height: 1024px;
+    width: 1920px;
+    height: 1080px;
     background-color: rgba(15, 23, 36, 1.0);
     display: grid;
     grid-template-rows: 110px auto;
@@ -20,6 +20,9 @@
     user-select: none;
     /*position: relative;*/
     /*z-index: -1;*/
+}
+body{
+    margin: 0;
 }
 
 button {

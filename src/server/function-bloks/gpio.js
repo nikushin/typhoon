@@ -8,6 +8,15 @@ module.exports = function gpioCreate (socket, emitter) {
     const button_blades = new Gpio('8', 'in', 'rising');
     const switch_prepare = new Gpio('9', 'in', 'both');
 
+    const vvd = new Gpio('9', 'out');
+    const heat_starter = new Gpio('9', 'out');
+    const cooler_starter = new Gpio('9', 'out');
+    const blades_starter = new Gpio('9', 'out');
+
+    emitter.on('vvd', (value) => {
+        vvd.write(value);
+    });
+
     button_start.watch((err, value) => {
         if (err) {console.log('button_start Error', err);}
         if (value===1) {emitter.emit('button_start');}

@@ -12,11 +12,11 @@ const MyContext = createContext({});
 
 ReactDOM.render(
     <Provider store={store}>
-        <MyContext.Provider value={socketService}>
+        {/*<MyContext.Provider value={socketService}>*/}
           <Router>
               <App/>
           </Router>
-        </MyContext.Provider>
+        {/*</MyContext.Provider>*/}
     </Provider>,
     document.getElementById('root')
 );

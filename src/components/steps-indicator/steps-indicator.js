@@ -6,7 +6,7 @@ export const StepsContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 350px;
+    width: 300px;
     height: 65px;
     background-color: rgba(90,90,90,0.57);
     margin-bottom: 10px;

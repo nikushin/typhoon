@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NumericInput } from "@blueprintjs/core";
+//import { NumericInput } from "@blueprintjs/core";
 import './num-indicator.css';
 import {showKeyboard} from "../../actions";
 
@@ -10,7 +10,7 @@ const NumIndicator = () =>  {
     const showKeyBoard = () => {dispatch(showKeyboard('temp_set_point'))};
     return (
         <div>
-            <NumericInput
+            <input
                 disabled = {false}
                 value = {counter}
                 onFocus={showKeyBoard}

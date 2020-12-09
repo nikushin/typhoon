@@ -9,7 +9,7 @@ export const Container = styled.div`
   background-color: rgba(90,90,90,0.57);
   border-radius: 10px;
   height: 120px;
-  width: 300px;
+  width: 250px;
   font-size: 40px;
   display: flex;
   padding: 5px 15px 15px 15px;
