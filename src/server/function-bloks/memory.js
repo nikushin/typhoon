@@ -6,7 +6,7 @@ module.exports = {
     name: undefined,
     amount: undefined,
     data:{
-      heat_setting_arr: null,
+      heat_setting_arr: [[0,0]],
       cooling_time: 0,
       prepare_sp: 0,
     }

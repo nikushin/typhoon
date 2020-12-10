@@ -1,12 +1,6 @@
 import store from '../store';
 import socketService from '../services/socket-service'
 
-const testGpioButton = () => {
-  return {
-    type: 'TEST_GPIO_BUTTON'
-  };
-};
-
 
 const testDispatch = () => {
   return {
@@ -105,6 +99,8 @@ const ConnectStatus = (value) => {
   store.dispatch({type: 'CONNECT_STATUS', payload: value});
   if (value === false) {store.dispatch({type: 'CLEAR_GRAPH'});}
 };
+
+const testGpioButton = (value) => {store.dispatch({type: 'TEST_GPIO_BUTTON', payload: value})};
 
 export {
   testDispatch,
