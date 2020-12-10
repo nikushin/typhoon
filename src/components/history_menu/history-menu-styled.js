@@ -55,7 +55,7 @@ export const Container = styled.div`
 `;
 
 export const OneStoryContainer = styled.div`
-  width: 340px;
+  width: 300px;
   height: 100px;
   background-color: #5a5a5a;
   margin: 10px;

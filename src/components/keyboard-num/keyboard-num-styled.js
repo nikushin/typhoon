@@ -15,8 +15,8 @@ export const Display = styled.input`
 `;
 
 export const Container = styled.div`
-  width: 1980px;
-  height: 1024px;
+  width: 1920px;
+  height: 1080px;
   position: absolute;
   //margin: auto;
   //top: 0; left: 0; bottom: 0; right: 0;
