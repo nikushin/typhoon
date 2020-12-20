@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
-const WidthContainer = 280;
-const HeightContainer = 390;
+const WidthContainer = 290;
+const HeightContainer = 380;
+
 
 export const Display = styled.input`
   position: absolute;
@@ -21,11 +22,14 @@ export const Container = styled.div`
   //margin: auto;
   //top: 0; left: 0; bottom: 0; right: 0;
   z-index: 100;
-  //-webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(3px);
+  //-moz- backdrop-filter: blur(3px);
+  //-webkit-backdrop-filter: blur(10px);
 `;
 
 export const ContainerInner = styled.div`
+filter: none;
+
   width: ${WidthContainer}px;
   height: ${HeightContainer}px;
   margin-top: ${props =>props.top}px;

@@ -40,6 +40,27 @@ module.exports.ioConnect = async function ioConnect (socket, emitter, sql, memor
     WHERE name = '${data[0]}';`)
   });
 
+	socket.on('test_range', (data) => {
+		emitter.emit('test_range', data);
+	  });
+
+	  socket.on('test_frequency', (data) => {
+		emitter.emit('test_frequency', data);
+	  });
+
+	  socket.on('test_value', (data) => {
+		emitter.emit('test_value', data);
+	  });
+
+    socket.on('test_gpio', () => {
+        emitter.emit('test_gpio')
+    });
+
+    emitter.on('button_alarm', (value) => {
+        socket.emit("test_button", value);
+		console.log('bt', value)
+    });
+
   socket.on('memory_change', (data) => {
     if (data.heat_setting_arr) {
       memory.recipe.data.heat_setting_arr = data.heat_setting_arr

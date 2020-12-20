@@ -99,8 +99,7 @@ const ConnectStatus = (value) => {
   if (value === false) {store.dispatch({type: 'CLEAR_GRAPH'});}
 };
 
-const testGpioButton = () => {store.dispatch({type: 'TEST_GPIO_BUTTON'})};
-
+const testGpioButton = (value) => {store.dispatch({type: 'TEST_GPIO_BUTTON', payload: value})};
 
 export {
   testDispatch,
