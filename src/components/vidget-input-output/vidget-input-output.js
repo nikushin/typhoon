@@ -8,9 +8,9 @@ import {setKeyboardParameter} from '../../actions/index'
 export const Container = styled.div`
   background-color: rgba(90,90,90,0.57);
   border-radius: 10px;
-  height: 120px;
-  width: 250px;
-  font-size: 40px;
+  height: 70px;
+  width: 150px;
+  font-size: 30px;
   display: flex;
   padding: 5px 15px 15px 15px;
   flex-direction: column;

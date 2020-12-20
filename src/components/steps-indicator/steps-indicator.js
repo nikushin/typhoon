@@ -6,11 +6,11 @@ export const StepsContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 300px;
-    height: 65px;
+    width: 180px;
+    height: 40px;
     background-color: rgba(90,90,90,0.57);
     margin-bottom: 10px;
-    font-size: 30px;
+    font-size: 20px;
     padding-left: 10px;
     padding-right: 10px;
   }

@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
 
 const AxesText = ({Xsteps, Xinterval, Ysteps, Yinterval, Height, indent, HeightInner,
-                    Xkoef, Ykoef, XaxisTextOffset = 113, YaxisTextOffset = 0, TextTemp, TextTime,
+                    Xkoef, Ykoef, XaxisTextOffset = 85, YaxisTextOffset = 0, TextTemp, TextTime,
                     borderLeft,  borderRight, borderTop, borderBottom}) =>  {
 
   let axisYTextArray = [];

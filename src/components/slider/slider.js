@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {showKeyboard, setKeyboardParameter} from "../../actions";
 
 const img_size = 60;
-const width = 550;
+const width = 400;
 
 const sliderThumbStyles = (src_img) => (`
   width: ${img_size}px;
@@ -35,7 +35,7 @@ const Track = styled.div`
 
 const Container = styled.div`
   width: 100%;
-  height: 100px;
+  height: 90px;
   position: relative;
   align-items: center;
   div {
