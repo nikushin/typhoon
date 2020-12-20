@@ -1,7 +1,6 @@
 import store from '../store';
 import socketService from '../services/socket-service'
 
-
 const testDispatch = () => {
   return {
     type: 'TEST'

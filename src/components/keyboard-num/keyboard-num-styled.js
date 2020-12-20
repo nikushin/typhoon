@@ -23,7 +23,8 @@ export const Container = styled.div`
   //top: 0; left: 0; bottom: 0; right: 0;
   z-index: 100;
   backdrop-filter: blur(3px);
-  -moz- backdrop-filter: blur(3px);
+  //-moz- backdrop-filter: blur(3px);
+  //-webkit-backdrop-filter: blur(10px);
 `;
 
 export const ContainerInner = styled.div`
@@ -34,7 +35,7 @@ filter: none;
   margin-top: ${props =>props.top}px;
   margin-left: ${props =>props.left}px;
   background-color: rgba(35, 35, 35, 0.95);
-   box-shadow: 4px 4px 12px 0px #141414;
+  box-shadow: 4px 4px 12px 0px #141414;
   font-size: 30px;
   color: white;
   position: relative;

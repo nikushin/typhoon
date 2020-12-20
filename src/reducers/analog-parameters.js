@@ -14,8 +14,6 @@ const analogParameters = (state, action) => {
 
     switch (action.type) {
 
-
-
         case 'TEST_GPIO_BUTTON' :
             return {...state.analogParametersKeeper, lamp_test_gpio: action.payload};
 

@@ -9,11 +9,24 @@ module.exports = function pwmCreate (socket, emitter) {
     //const ssr = new Gpio(17, {mode: Gpio.OUTPUT});
 	console.log('ok')
 
+
     lamp_start.pwmRange(100);
     lamp_start.pwmFrequency(1);
     lamp_start.pwmWrite(100);
 	
 
+
+    emitter.on('test_range', (value) => {
+        lamp_start.pwmRange(value);
+    });
+
+    emitter.on('test_frequency', (value) => {
+        lamp_start.pwmFrequency(value);
+    });
+
+    emitter.on('test_value', (value) => {
+        lamp_start.pwmWrite(value);
+    });
 
     emitter.on('test_range', (value) => {
         lamp_start.pwmRange(value);
