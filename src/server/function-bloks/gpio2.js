@@ -7,8 +7,21 @@ module.exports = function pwmCreate (socket, emitter) {
     const lamp_blades = new Gpio(17, {mode: Gpio.OUTPUT});
     const ssr = new Gpio(17, {mode: Gpio.OUTPUT});
 
+
     lamp_start.pwmRange(100);
     lamp_start.pwmFrequency(1);
     lamp_start.pwmWrite(50);
+
+    emitter.on('test_range', (value) => {
+        lamp_start.pwmRange(value);
+    });
+
+    emitter.on('test_frequency', (value) => {
+        lamp_start.pwmFrequency(value);
+    });
+
+    emitter.on('test_value', (value) => {
+        lamp_start.pwmWrite(value);
+    });
 
 };
