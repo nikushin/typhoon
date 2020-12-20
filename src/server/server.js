@@ -20,8 +20,8 @@ const {emittSocket} = require ('./function-bloks/emitt-socket');
   await memory_init(sql, memory);
   emittSocket(io.sockets, emitter, sql);
   modbusCreate();
-  //gpioCreate(io.sockets, emitter);
-  //pwmCreate(io.sockets, emitter,);
+  gpioCreate(io.sockets, emitter);
+  pwmCreate(io.sockets, emitter,);
   io.on('connect', socket => {
     ioConnect(socket, emitter, sql, memory);
   });
