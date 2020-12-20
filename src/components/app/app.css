@@ -3,13 +3,13 @@
 /*@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";*/
 
 .app {
-    width: 1920px;
-    height: 1080px;
+    width: 1280px;
+    height: 720px;
     background-color: rgba(15, 23, 36, 1.0);
     display: grid;
-    grid-template-rows: 110px auto;
+    grid-template-rows: 70px auto;
 
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 1.28581;

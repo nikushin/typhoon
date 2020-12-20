@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HomePageContainer = styled.div`
   display: grid;
-  grid-template-columns: 1250px;
+  grid-template-columns: 880px;
   grid-template-rows: 120px;
   grid-template-areas:
   "graph menu"
@@ -22,10 +22,10 @@ export const HomePageContainer = styled.div`
  `;
 
 export const RealTimeContainer = styled.div`
-margin-top: 40px;
+  //margin-top: 10px;
   display: grid;
-  grid-template-rows: 250px auto;
-  grid-template-columns: 45% auto;
+  //grid-template-rows: 250px auto;
+  //grid-template-columns: 45% auto;
   grid-template-areas:
   "sliders sliders"
   "parameters steps";
@@ -47,7 +47,7 @@ export const StepsContainer = styled.div`
 
 export const VidgetContainer = styled.div`
   > div {
-    margin-bottom: 40px;
+    margin-bottom: 15px;
   }
    > div:last-child {
     margin-bottom: 0px;
@@ -55,18 +55,19 @@ export const VidgetContainer = styled.div`
 `;
 
 export const SliderContainer = styled.div`
-  padding-left: 70px;
+  //padding-left: 70px;
+  margin-bottom: 10px; 
   > div:first-child {
-   margin-bottom: 20px;  
+   //margin-bottom: 20px;  
   }
 `;
 
 export const RoastModeContainer = styled.div`
-  width: 300px;
-  height: 80px;
+  width: 150px;
+  height: 65px;
   margin: 10px 20px 10px 10px;
   background-color: rgba(70, 70, 70, 0.9);
-  font-size: 40px;
+  font-size: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,7 +76,7 @@ export const RoastModeContainer = styled.div`
 export const HistoryIconContainer = styled.div`
   background-color: rgba(70, 70, 70, 0.9);
   width: 200px;
-  height: 80px;
+  height: 65px;
   margin: 10px 0px 10px 10px;
   display: flex;
   justify-content: center;
@@ -83,8 +84,8 @@ export const HistoryIconContainer = styled.div`
 `;
 
 export const SvgIconHistory = styled.svg`
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   fill: ${props => props.on ? "rgba(255,206,0,1.0)" : 'white'};
 `;
 

@@ -1,10 +1,10 @@
-const Width = 1250;
+const Width = 900;
 const Xstart = - 60;
 const Ystart = -25;
 
 const GraphVirtualWidth = 960;
 const GraphVirtualHeight = 400;
-const GraphHeight = 700;
+const GraphHeight = 500;
 const GraphBorderLeft = 50;
 const GraphBorderRight = 50;
 const GraphBorderTop = 25;
@@ -15,7 +15,7 @@ const GraphHeightInner = GraphHeight-GraphBorderTop-GraphBorderBottom;
 const Xkoef = GraphWidthInner/GraphVirtualWidth;
 const GraphYkoef = GraphHeightInner/GraphVirtualHeight;
 
-const PowerHeight = 200;
+const PowerHeight = 120;
 const PowerVirtualHeight = 100;
 const PowerIndent = 10;
 const PowerBorderRight = GraphBorderRight + PowerIndent/2;

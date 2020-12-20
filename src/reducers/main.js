@@ -6,8 +6,8 @@ const updateMain = (state, action) => {
             st: {r: 247, g: 223, b: 79, a: 1}},
             connectStatus: false,
             route: {
-                // mainMenu:'home',
-                mainMenu:'settings',
+                mainMenu:'home',
+                // mainMenu:'settings',
                 homePageMode: 'realtime',
                 // homePageMode: 'history'
             }

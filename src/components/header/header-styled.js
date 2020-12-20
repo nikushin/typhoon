@@ -5,11 +5,11 @@ export const HeaderContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding-top: 10px;
-    padding-bottom: 10px;
+    //padding-bottom: 10px;
 `;
 
 export const HeaderContainerInner = styled.div`
-    height: 100%;
+    height: 50px;
     width: 100%;
     background-color: rgba(90,90,90,1.0);
     display: flex;
@@ -31,7 +31,7 @@ export const HeaderContainerInner = styled.div`
 
 export const RecipeContainer = styled.div`
   margin-left: 30px;
-  font-size: 45px;
+  font-size: 30px;
   color: white;
 `;
 
@@ -39,15 +39,15 @@ export const IconContainerBase = styled.div`
   position: relative;
   >div{
     position: absolute;
-    width: 100px;
+    width: 70px;
     height: 4px;
-    top: 87px;
+    top: 50px;
     left: -10px;
     border-radius: 4px;
   }
   svg{
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     fill: none;
     stroke-linecap:round;
     stroke-miterlimit:10;
