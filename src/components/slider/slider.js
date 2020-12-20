@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {showKeyboard, setKeyboardParameter} from "../../actions";
 
 const img_size = 60;
-const width = 600;
+const width = 550;
 
 const sliderThumbStyles = (src_img) => (`
   width: ${img_size}px;
