@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import {useDispatch, useSelector} from "react-redux";
 import {showKeyboard, hideKeyboard, setBoolParameter, changeGlobalColor, changePhase, testDispatch} from "../../actions";
-
+import {VdsSwitch} from '../../actions/parameters'
 import { ChromePicker } from 'react-color';
 
 import VidgetInputOutput from "../vidget-input-output";
@@ -25,6 +25,8 @@ const Body = () => {
     const dispatch = useDispatch();
     // const {SocketEmmit} = useContext(MyContext);
     const color = useSelector(state => state.mainKeeper.globalColor);
+    const vds_fr_feedback = useSelector(state => state.analogParametersKeeper.vds_fr_feedback);
+    const vds_status_feedback = useSelector(state => state.analogParametersKeeper.vds_status_feedback);
 
     return (
         <div className="body">
@@ -35,10 +37,20 @@ const Body = () => {
                 <VidgetInputOutput parameter='increment_value' title='modbus' keeper='analogParametersKeeper'/>
                 <Button text="lamp" onClick={() => dispatch(setBoolParameter())}/>
                 <Tank parameter='temp_set_point'/>
-            </div>
-            <div>
                 <Lamp parameters={{parameter : 'lamp_test', keeper : 'analogParametersKeeper'}} />
                 <Lamp parameters={{parameter : 'lamp_test_gpio', keeper : 'analogParametersKeeper'}} />
+            </div>
+
+            <div>
+                <Button onClick={() => dispatch(VdsSwitch())}>on/off</Button>
+                <Lamp parameters={{parameter : 'vds_switch', keeper : 'analogParametersKeeper'}} />
+
+                <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:100,
+                    top: 200, left: 500, func: (input) => {socketService.SocketEmmit('vds_set_fr', input)}}))}>fr</Button>
+
+                <Button>fr {vds_fr_feedback}</Button>
+                <Button>status {vds_status_feedback}</Button>
+
             </div>
             <div style = {{paddingTop: "20px"}}>
                 <ChromePicker
@@ -53,11 +65,11 @@ const Body = () => {
                 </Button>
 
                 <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:9999999,
-                    top: 300, left: 1200, func: (input) => {socketService.SocketEmmit('test_range', input)}}))}>Range</Button>
+                    top: 200, left: 500, func: (input) => {socketService.SocketEmmit('test_range', input)}}))}>Range</Button>
                 <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:9999999,
-                    top: 300, left: 1200, func: (input) => {socketService.SocketEmmit('test_frequency', input)}}))}>Frequency</Button>
+                    top: 200, left: 500, func: (input) => {socketService.SocketEmmit('test_frequency', input)}}))}>Frequency</Button>
                 <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:9999999,
-                    top: 300, left: 1200, func: (input) => {socketService.SocketEmmit('test_value', input)}}))}>Value</Button>
+                    top: 200, left: 500, func: (input) => {socketService.SocketEmmit('test_value', input)}}))}>Value</Button>
 
             </div>
           <div className="phases-container">

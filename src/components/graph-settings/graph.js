@@ -7,7 +7,7 @@ import {SVGgraph, SVGadditional, SVGbackground, SVGcontainer, SVGcursor,
 
 const GraphSettings = ({parameters = {}}) => {
 
-  const {Width = 1300, Height = 600, borderTop = 25, borderBottom = 50, indent = 15} = parameters;
+  const {Width = 800, Height = 400, borderTop = 25, borderBottom = 50, indent = 15} = parameters;
 
   const borderRight = 40 - indent/2;
   const borderLeft = 60 - indent/2;

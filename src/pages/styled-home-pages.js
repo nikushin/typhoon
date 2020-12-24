@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const HomePageContainer = styled.div`
   display: grid;
   grid-template-columns: 880px;
-  grid-template-rows: 120px;
+  grid-template-rows: 100px;
   grid-template-areas:
   "graph menu"
   "graph main";
@@ -56,7 +56,7 @@ export const VidgetContainer = styled.div`
 
 export const SliderContainer = styled.div`
   //padding-left: 70px;
-  margin-bottom: 10px; 
+  margin: 20px 0 0 0; 
   > div:first-child {
    //margin-bottom: 20px;  
   }

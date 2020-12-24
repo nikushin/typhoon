@@ -44,7 +44,7 @@ const NavigateMenu = () => {
     <Container step={step}>
       <div>
         <div>
-          <div onClick={() => dispatch(showKeyboard({startValue: cursor_y, min: 0, max: 100, top: 500, left:250,
+          <div onClick={() => dispatch(showKeyboard({startValue: cursor_y, min: 0, max: 100, top: 250, left:250,
             func: (value) => {dispatch(SettingsCursorManual(value))}
           }))}>
             {cursor_y}
