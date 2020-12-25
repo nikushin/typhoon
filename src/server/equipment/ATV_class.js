@@ -17,6 +17,7 @@ class atv_class {
 
     switchPower = (data) => {
         this.power = data;
+        emitter.emit(this.name + '_gpio_power', this.power);
         if (!this.loop_busy) {
             this.loop_busy = true;
             this.switchPowerLoop()
