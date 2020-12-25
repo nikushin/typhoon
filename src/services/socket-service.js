@@ -2,6 +2,7 @@ import {initValue, RecipeInit, memoryInit, ConnectStatus, IncrementValue, testGp
 import {SetPhasesStatus} from "../actions/phases";
 import {GraphAdd, HistoryAnswer, OneStoryAnswer, RoastFinish, RoastStart} from "../actions/graph";
 import {RoastRealTimeParameters} from '../actions/settings-graph-actions'
+import {ReceiveVdsStatusFeedBack, ReceiveVdsFrFeedBack} from "../actions/parameters";
 import openSocket from "socket.io-client";
 import store from "../store";
 const socket = openSocket('http://localhost:8080', {transports: ['websocket']});
@@ -73,6 +74,14 @@ class SocketService {
 
         socket.on('test_button', (data) => {
             testGpioButton(data);
+        });
+
+        socket.on('vds_status_feedback', (data) => {
+            ReceiveVdsStatusFeedBack(data);
+        });
+
+        socket.on('vds_fr_feedback', (data) => {
+            ReceiveVdsFrFeedBack(data);
         });
 
     };

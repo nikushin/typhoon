@@ -35,12 +35,12 @@ const HomePage = () => {
           <div>
             <Slider keeper={'analogParametersKeeper'} parameter={'vds_manual_sp'}
                     color={'#64c3ef'} src_img={'/img/icons/fan2.svg'}
-            top={280} left={950} min={0} max={100}/>
+            top={150} left={550} min={0} max={100}/>
           </div>
           <div>
             <Slider keeper={'analogParametersKeeper'} parameter={'heat_manual_sp'}
                     color={'#ef1b14'} src_img={'/img/icons/fire.svg'}
-                    top={370} left={950} min={0} max={100}/>
+                    top={250} left={550} min={0} max={100}/>
           </div>
         </SliderContainer>
 
@@ -48,17 +48,17 @@ const HomePage = () => {
         <div>
           <VidgetInputOutput keeper='analogParametersKeeper' parameter='temp_set_point' title='Зерно'
                              test_value = {186.7}
-                             min={0} max={100} top={450} left={950} color={"rgb(17, 236, 229)"} inputMode={true}/>
+                             min={0} max={100} top={250} left={550} color={"rgb(17, 236, 229)"} inputMode={true}/>
         </div>
           <div>
             <VidgetInputOutput keeper='analogParametersKeeper' parameter='temp_set_point' title='Воздух'
                                test_value = {201.4}
-                               min={0} max={100} top={450} left={950} color={"#e3e619"} inputMode={true}/>
+                               min={0} max={100} top={275} left={550} color={"#e3e619"} inputMode={true}/>
           </div>
           <div>
             <VidgetInputOutput keeper='analogParametersKeeper' parameter='temp_set_point' title='ROR'
                                test_value = {-5.8}
-                               min={0} max={100} top={450} left={950} color={"#3f99e6"} inputMode={true}/>
+                               min={0} max={100} top={300} left={550} color={"#3f99e6"} inputMode={true}/>
           </div>
         </VidgetContainer>
 

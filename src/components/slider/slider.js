@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {showKeyboard, setKeyboardParameter} from "../../actions";
 
 const img_size = 60;
-const width = 380;
+const width = 390;
 
 const sliderThumbStyles = (src_img) => (`
   width: ${img_size}px;
@@ -50,12 +50,15 @@ const Container = styled.div`
     height: 20px;
     background: transparent;
     outline: none;
-
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
       ${props => sliderThumbStyles(props.src_img)}
     }
+    &::-moz-range-thumb {
+    ${props => sliderThumbStyles(props.src_img)}
+    }
+    
   }
 `;
 

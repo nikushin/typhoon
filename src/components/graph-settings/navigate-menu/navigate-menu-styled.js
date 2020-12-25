@@ -1,21 +1,21 @@
 import styled from "styled-components";
 
 export const SvgIcon = styled.svg`
-  width: 90px;
-  height: 90px;
+  width: 60px;
+  height: 60px;
   fill: white;
 `;
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 350px 150px 300px;
+  grid-template-columns: 250px 150px 300px;
   grid-template-areas:
   "navigate steps";
   > div:nth-child(1) {
     grid-area: navigate;
     display: grid;
-    grid-template-columns: 100px 150px 100px;
-    grid-template-rows: 100px 100px 100px;
+    grid-template-columns: 80px 100px 80px;
+    grid-template-rows: 80px 80px 80px;
     grid-template-areas:
     "  .    up    ."
     "left value right"
@@ -29,10 +29,10 @@ export const Container = styled.div`
     grid-area: value;
     flex-direction: column;
       > div:first-child {
-      font-size: 65px;
+      font-size: 45px;
       }
       > div:last-child {
-      font-size: 30px;
+      font-size: 25px;
       }
     }
     > div:nth-child(2) {
@@ -64,8 +64,8 @@ export const Container = styled.div`
    > div:nth-child(2) {
     grid-area: steps;
     >div {
-    height: 60px;
-    font-size: 50px;
+    height: 50px;
+    font-size: 40px;
     text-align: center;
     }
   }

@@ -14,7 +14,7 @@ const HistoryMenu = () => {
 
   const chooseNumberOfPage = () => {
     dispatch(showKeyboard({startValue: (history_offset + 1), min: 1, max:Math.ceil(history.count/10),
-      top: 300, left: 1200, func: (input) => {dispatch(HistoryRequest(input-1))}}));
+      top: 150, left: 680, func: (input) => {dispatch(HistoryRequest(input-1))}}));
   };
 
   const DisplayHistory = history.history.map((oneStory) =>

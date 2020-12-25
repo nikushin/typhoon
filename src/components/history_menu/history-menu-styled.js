@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: grid;
-  grid-template-rows: 50px 100px;
+  grid-template-rows: 50px 80px;
   grid-template-areas:
   "total-count"
   "navigate"
@@ -30,11 +30,11 @@ export const Container = styled.div`
       padding: 0 20px 0 20px;
     }
     >div:nth-child(1), >div:nth-child(3) {
-      font-size: 70px;
+      font-size: 50px;
       padding-bottom: 13px;
     } 
      >div:nth-child(2) {
-      min-width: 180px;
+      min-width: 100px;
     } 
   }
    > div:nth-child(3) {
@@ -49,20 +49,21 @@ export const Container = styled.div`
     justify-items: center;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-    font-size: 30px;
-    
+    font-size: 15px;
+    //margin: 10px;
   }
 `;
 
 export const OneStoryContainer = styled.div`
-  width: 300px;
-  height: 100px;
+  width: 170px;
+  height: 60px;
   background-color: #5a5a5a;
-  margin: 10px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 0 5px 0 5px;
+  margin-bottom: 20px;
   > div:first-child {
    display: flex;
    justify-content: space-between;

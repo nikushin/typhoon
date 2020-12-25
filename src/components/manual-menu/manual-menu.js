@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-margin-top: 50px;
+margin-top: 25px;
 padding-top: 20px;
-width: 500px;
-height: 500px;
-font-size: 40px;
+width: 420px;
+height: 410px;
+font-size: 30px;
 background-color: rgba(61,61,61,0.57);
     > div:first-child{
     margin-bottom: 15px;
