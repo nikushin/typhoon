@@ -55,6 +55,10 @@ const Container = styled.div`
       -webkit-appearance: none;
       appearance: none;
       ${props => sliderThumbStyles(props.src_img)}
+    &::-moz-range-thumb {
+    ${props => sliderThumbStyles(props.src_img)}
+    }
+    
     }
   }
 `;

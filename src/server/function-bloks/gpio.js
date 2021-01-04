@@ -9,6 +9,7 @@ module.exports = function gpioCreate (socket, emitter) {
     //const switch_prepare = new Gpio('9', 'in', 'both');
 
     const vvd = new Gpio(20, 'out');
+    const vds = new Gpio(13, 'out');
     //const heat_starter = new Gpio('9', 'out');
     //const cooler_starter = new Gpio('9', 'out');
     //const blades_starter = new Gpio('9', 'out');
@@ -21,6 +22,14 @@ module.exports = function gpioCreate (socket, emitter) {
 		})
 		
     });
+
+    emitter.on('vds_gpio_power', (data) => {
+        console.log(data);
+        vds.write(data?1:0, err => {
+            if (err) {console.log('err')}
+        })
+    });
+
 
     // button_start.watch((err, value) => {
         // if (err) {console.log('button_start Error', err);}

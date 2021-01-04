@@ -7,7 +7,7 @@ const cooling = require('../phases/cooling');
 const unloading_cooler = require('../phases/unloading-cooler');
 const {discret_input_create} = require('../equipment/buttons-lamps');
 const {recipeInit, recipeChange, recipeDelete} = require('./sql-utilities');
-
+const {vds} = require('../equipment/ATV');
 
 module.exports.ioConnect = async function ioConnect (socket, emitter, sql, memory) {
   socket.on('disconnect', socket => {
@@ -16,6 +16,17 @@ module.exports.ioConnect = async function ioConnect (socket, emitter, sql, memor
   discret_input_create(socket, emitter, sql, memory);
 // console.log(memory);
   socket.emit("memory_init", memory);
+
+  socket.on('vds_switch_power', (data) => {
+    // console.log(data);
+    vds.switchPower(data)
+  });
+
+  socket.on('vds_set_fr', (data) => {
+    // console.log(typeof(data) , data)
+    vds.setFr(data)
+  });
+
 
   socket.on('test_gpio', () => {
     console.log('work')

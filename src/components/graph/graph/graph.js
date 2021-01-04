@@ -212,7 +212,7 @@ const Graph = ({parameters}) => {
     };
 
   const bean_color = "#4bee25";
-  const air_color = "#e3e619";
+  const air_color = "#e6dc4f";
   const ror_color = "#3f99e6";
 
   const graph_path_beans_fill = graph_path_beans + "V 0 H " + graph_start_time;
