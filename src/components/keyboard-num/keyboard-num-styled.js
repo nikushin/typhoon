@@ -16,13 +16,13 @@ export const Display = styled.input`
 `;
 
 export const Container = styled.div`
-  width: 1920px;
-  height: 1080px;
+  width: 1280px;
+  height: 720px;
   position: absolute;
   //margin: auto;
   //top: 0; left: 0; bottom: 0; right: 0;
   z-index: 100;
-  backdrop-filter: blur(3px);
+  //backdrop-filter: blur(3px);
   //-moz- backdrop-filter: blur(3px);
   //-webkit-backdrop-filter: blur(10px);
 `;

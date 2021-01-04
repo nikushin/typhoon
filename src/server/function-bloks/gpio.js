@@ -23,7 +23,8 @@ module.exports = function gpioCreate (socket, emitter) {
 		
     });
 
-    emitter.on('_gpio_power', (data) => {
+    emitter.on('vds_gpio_power', (data) => {
+		console.log(data);
         vds.write(data?1:0, err => {
             if (err) {console.log('err')}
         })

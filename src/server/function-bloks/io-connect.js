@@ -19,7 +19,7 @@ module.exports.ioConnect = async function ioConnect (socket, emitter, sql, memor
   socket.emit("memory_init", memory);
 
   socket.on('vds_switch_power', (data) => {
-    // console.log(data);
+    console.log(data);
     vds.switchPower(data)
   });
 

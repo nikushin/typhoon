@@ -25,7 +25,6 @@ class atv_class {
     };
     switchPowerLoop = () => {
         if  (this.power === true) { //пуск
-            console.log('status ',this.status);
             if (this.status === 8 && this.last_cmd !== 128) { //если неисправность, сбросим её
                 this.last_cmd = 128;
                 emitter.emit(this.name + '_set_cmd', this.last_cmd);
@@ -49,7 +48,7 @@ class atv_class {
                 this.loop_busy = false;
             }
         } else { //остановка
-            console.log('status ',this.status);
+            //console.log('status ',this.status);
             if (this.status === 39 && this.last_cmd !== 4111) { // ?????
                 this.last_cmd = 4111;
                 emitter.emit(this.name + '_set_cmd', this.last_cmd);

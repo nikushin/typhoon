@@ -45,7 +45,7 @@ const Body = () => {
                 <Button onClick={() => dispatch(VdsSwitch())}>on/off</Button>
                 <Lamp parameters={{parameter : 'vds_switch', keeper : 'analogParametersKeeper'}} />
 
-                <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:100,
+                <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:500,
                     top: 200, left: 500, func: (input) => {socketService.SocketEmmit('vds_set_fr', input)}}))}>fr</Button>
 
                 <Button>fr {vds_fr_feedback}</Button>
