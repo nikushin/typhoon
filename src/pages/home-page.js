@@ -46,17 +46,17 @@ const HomePage = () => {
 
         <VidgetContainer>
         <div>
-          <VidgetInputOutput keeper='analogParametersKeeper' parameter='temp_set_point' title='Зерно'
+          <VidgetInputOutput keeper='analogParametersKeeper' parameter='tempBeans' title='Зерно'
                              test_value = {186.7}
                              min={0} max={100} top={450} left={950} color={"rgb(17, 236, 229)"} inputMode={true}/>
         </div>
           <div>
-            <VidgetInputOutput keeper='analogParametersKeeper' parameter='temp_set_point' title='Воздух'
+            <VidgetInputOutput keeper='analogParametersKeeper' parameter='tempAir' title='Воздух'
                                test_value = {201.4}
                                min={0} max={100} top={450} left={950} color={"#e3e619"} inputMode={true}/>
           </div>
           <div>
-            <VidgetInputOutput keeper='analogParametersKeeper' parameter='temp_set_point' title='ROR'
+            <VidgetInputOutput keeper='analogParametersKeeper' parameter='ror' title='ROR'
                                test_value = {-5.8}
                                min={0} max={100} top={450} left={950} color={"#3f99e6"} inputMode={true}/>
           </div>

@@ -8,8 +8,12 @@ const unloading_cooler = require('./unloading-cooler');
 const {buttons_list} = require('../equipment/buttons-lamps');
 const {emittsCreator} = require('../function-bloks/emitts-creator');
 
-const emitts_model = (socket, emitter) => {
-  return [
+const socket = global.socket;
+const emitter = global.emitter;
+
+
+const emitts_model =
+  [
     {name: 'Phases stop to HMI',
       observe: ['phase_stop'],
       compare: function () {return true},
@@ -69,8 +73,8 @@ const emitts_model = (socket, emitter) => {
       compare: function () {return buttons_list.button_prepare === true &&
         stop.status === true},
       do: () => {
-        //console.log("Stop to prepare");
-        stop.SetStatus(false, emitter); prepare.SetStatus(true, emitter);
+        console.log("Stop to prepare");
+        stop.SetStatus(false); prepare.SetStatus(true);
       }},
 
     {name: 'Prepare to stop monitoring',
@@ -78,8 +82,8 @@ const emitts_model = (socket, emitter) => {
       compare: function () {return buttons_list.button_prepare === false &&
         prepare.status === true},
       do: () => {
-        //console.log("Prepare to stop");
-        stop.SetStatus(true, emitter); prepare.SetStatus(false, emitter);
+        console.log("Prepare to stop");
+        stop.SetStatus(true); prepare.SetStatus(false);
       }},
 
     {name: 'Prepare to loading-roaster monitoring',
@@ -87,7 +91,7 @@ const emitts_model = (socket, emitter) => {
       compare: function () {return prepare.start_delay === true},
       do: () => {
         // console.log("Prepare to loading-roaster");
-        loading_roaster.SetStatus(true, emitter); prepare.SetStatus(false, emitter);
+        loading_roaster.SetStatus(true); prepare.SetStatus(false);
       }},
 
     {name: 'Loading-roaster to roast monitoring',
@@ -95,7 +99,7 @@ const emitts_model = (socket, emitter) => {
       compare: function () {return loading_roaster.start_delay === true},
       do: () => {
         // console.log("Loading-roaster to roast");
-        loading_roaster.SetStatus(false, emitter); roast.SetStatus(true, emitter);
+        loading_roaster.SetStatus(false); roast.SetStatus(true);
       }},
 
     {name: 'Roast to unload-roaster monitoring',
@@ -103,7 +107,7 @@ const emitts_model = (socket, emitter) => {
       compare: function () {return roast.status === true},
       do: () => {
         // console.log("Roast to unload-roaster");
-        roast.SetStatus(false, emitter); unloading_roaster.SetStatus(true, emitter);
+        roast.SetStatus(false); unloading_roaster.SetStatus(true);
       }},
 
     {name: 'Unload-roaster to cooling monitoring',
@@ -111,7 +115,7 @@ const emitts_model = (socket, emitter) => {
       compare: function () {return true},
       do: () => {
         // console.log("Unload-roaster to cooling");
-        unloading_roaster.SetStatus(false, emitter); cooling.SetStatus(true, emitter);
+        unloading_roaster.SetStatus(false); cooling.SetStatus(true);
       }},
 
     {name: 'Cooling to Unloading-cooler monitoring',
@@ -119,21 +123,19 @@ const emitts_model = (socket, emitter) => {
       compare: function () {return true},
       do: () => {
         // console.log("Cooling to Unloading-cooler");
-        cooling.SetStatus(false, emitter); unloading_cooler.SetStatus(true, emitter);
+        cooling.SetStatus(false); unloading_cooler.SetStatus(true);
       }},
 
     {name: 'Unloading-cooler done monitoring',
       observe: ['phase_unloading_cooler_done'],
       compare: function () {return true},
       do: () => {
-        unloading_cooler.SetStatus(false, emitter); stop.SetStatus(true, emitter);
+        unloading_cooler.SetStatus(false); stop.SetStatus(true);
       }},
 
   ];
-};
 
-const PhasesEmittsCreator = function (socket, emitter) {
-  emittsCreator(emitter, emitts_model(socket, emitter))
+module.exports.PhasesEmittsCreator = () => {
+  emittsCreator(emitts_model);
+  emitter.emit('step_stop_set_status', true);
 };
-
-module.exports.PhasesEmittsCreator = PhasesEmittsCreator;

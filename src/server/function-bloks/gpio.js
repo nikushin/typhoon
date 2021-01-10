@@ -1,6 +1,8 @@
 const { Gpio } = require( 'onoff' );
+const socket = global.socket;
+const emitter = global.emitter;
 
-module.exports = function gpioCreate (socket, emitter) {
+module.exports = function gpioCreate () {
     //const button_start = new Gpio('4', 'in', 'rising');
     //const button_stop = new Gpio('5', 'in', 'falling');
     const button_alarm = new Gpio(12, 'in', 'both');

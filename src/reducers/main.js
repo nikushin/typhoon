@@ -20,8 +20,11 @@ const updateMain = (state, action) => {
             state.analogParametersKeeper.heat_manual_sp = action.payload.retain.heat_manual_sp;
             state.analogParametersKeeper.vds_manual_sp = action.payload.retain.vds_manual_sp;
             state.graphSettingsKeeper.step = action.payload.retain.step;
+            state.analogParametersKeeper.vds_prepare_fr = action.payload.retain.vds_prepare_fr;
+            state.analogParametersKeeper.cooling_time = action.payload.retain.cooling_time;
+            state.analogParametersKeeper.rest_of_cooling_time = action.payload.retain.cooling_time;
+            state.analogParametersKeeper.temp_prepare_sp = action.payload.retain.temp_prepare_sp;
             return {...state.mainKeeper};
-
 
         case 'CHANGE_PAGE':
             return {

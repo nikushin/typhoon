@@ -1,13 +1,20 @@
-const {emitter} = require("../server");
-const {vds} = require('../equipment/ATV');
+// const {emitter} = require("../server");
+// const emitter = global.e
+// const {vds} = require('../equipment/ATV');
 const ModbusRTU = require("modbus-serial");
 const Modbusclient = new ModbusRTU();
 Modbusclient.setTimeout(1000);
 Modbusclient.setID(1);
 	
-module.exports.modbusCreate = function modbusCreate () {
+module.exports = function modbusCreate () {
     modbusInit();
 };
+const readStack = [
+    () => {},
+    () => {},
+];
+const writeStack = [];
+
 
 // const readModbus = async () => {
 //     await Modbusclient.readHoldingRegisters(0, 1).then((data)=> {
@@ -21,12 +28,11 @@ module.exports.modbusCreate = function modbusCreate () {
 //     setTimeout(readModbus, 1000);
 // };
 
-
 const readModbus = async () => {
     await Modbusclient.readHoldingRegisters(3201, 2).then((data)=> {
     // console.log(data.data[0], data.data[1]);
-        vds.statusFeedBack(data.data[0]);
-        vds.frFeedBack(data.data[1]);
+        global.vds.statusFeedBack(data.data[0]);
+        global.vds.frFeedBack(data.data[1]);
     }).catch(err=>console.log(err.message));
     setTimeout(readModbus, 1000);
 };
@@ -44,16 +50,15 @@ function modbusInit () {
       readModbus();})
 }
 
-emitter.on('vds_set_cmd', (data) => {
+global.emitter.on('vds_set_cmd', (data) => {
         Modbusclient.writeRegisters(8501, [data]).catch(function(err) {
             console.log(err);
-            emitter.emit('vds_set_cmd', data);
         });
     });
 
-emitter.on('vds_set_fr', (data) => {
+global.emitter.on('vds_set_fr', (data) => {
         Modbusclient.writeRegisters(8502, [data]).catch(function(err) {
             console.log(err);
-            emitter.emit('vds_set_fr', data);
+            // global.emitter.emit('vds_set_fr', data);
         });
     });

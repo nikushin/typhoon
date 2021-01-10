@@ -4,11 +4,21 @@ const analogParameters = (state, action) => {
 
     if (state === undefined) {
         return {
-            temp_set_point: 30,
-            temp_alarm_value: 555,
-            increment_value: 0,
             heat_manual_sp: 0,
             vds_manual_sp: 0,
+            vds_prepare_fr: 0,
+
+            cooling_time: 0,
+            rest_of_cooling_time: 0,
+
+            temp_prepare_sp: 0,
+            temp_set_point: 30,
+            tempBeans: 0,
+            tempAir: 0,
+            ror: undefined,
+
+            temp_alarm_value: 555,
+            increment_value: 0,
             lamp_test: false,
             lamp_test_gpio: false,
 
@@ -31,7 +41,8 @@ const analogParameters = (state, action) => {
             socketService.SocketEmmit('vds_switch_power', state.analogParametersKeeper.vds_switch);
             return {...state.analogParametersKeeper};
 
-
+        case 'COOLING_REAL_TIME_PARAMETERS':
+            return {...state.analogParametersKeeper, rest_of_cooling_time: action.payload};
 
         case 'TEST_GPIO_BUTTON' :
             return {...state.analogParametersKeeper, lamp_test_gpio: action.payload};

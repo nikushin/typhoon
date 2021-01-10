@@ -73,6 +73,12 @@ const Body = () => {
                     top: 300, left: 1200, func: (input) => {socketService.SocketEmmit('test_value', input)}}))}>Value</Button>
 
             </div>
+            <div>
+                <div>vds<Lamp parameters={{parameter : 'stop', keeper : 'PhasesKeeper'}} /></div>
+                <div>cooler<Lamp parameters={{parameter : 'stop', keeper : 'PhasesKeeper'}} /></div>
+                <div>blades<Lamp parameters={{parameter : 'stop', keeper : 'PhasesKeeper'}} /></div>
+                <Button>heat {vds_fr_feedback}</Button>
+            </div>
           <div className="phases-container">
 
             <Button text="bPrepare" style={{backgroundColor: selectorPrepare ? "green" : "rgba(90,90,90,0.57)" }}

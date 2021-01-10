@@ -1,18 +1,20 @@
 import styled from "styled-components";
 
-const WidthContainer = 290;
-const HeightContainer = 380;
+const WidthContainer = 380;
+const HeightContainer = 570;
 
 
 export const Display = styled.input`
   position: absolute;
   top: 10px;
-  left: 40px;
-  font-size: 50px;
+  left: 0;
+  font-size: 75px;
   color: white;
   border-style: none;
   outline: none;
   background: none;
+  width: ${WidthContainer}px;
+  text-align: center;
 `;
 
 export const Container = styled.div`
@@ -36,25 +38,24 @@ filter: none;
   margin-left: ${props =>props.left}px;
   background-color: rgba(35, 35, 35, 0.95);
   box-shadow: 4px 4px 12px 0px #141414;
-  font-size: 30px;
   color: white;
   position: relative;
   > div:first-child {
     //padding-left: 30px;
-    text-align: center;
-    padding-top: 5px;
-    height: 50px;
-    font-size: 40px;
-    :empty:before{
-      content:attr(data-placeholder);
-      color:gray;
-    }
+    //text-align: center;
+    //padding-top: 5px;
+    //height: 50px;
+    //font-size: 40px;
+    //:empty:before{
+    //  content:attr(data-placeholder);
+    //  color:gray;
+    //}
   }
 `;
 
 export const Button = styled.button`
-  width: ${props => props.width ? props.width : 70}px;
-  height: 70px;
+  width: ${props => props.width ? props.width : 100}px;
+  height: 100px;
   border: none; outline: none; 
   border-radius: 7px;
   position: absolute;
@@ -62,7 +63,7 @@ export const Button = styled.button`
   top: ${props =>props.top}px; left: ${props =>props.left}px;
   z-index: 100;
   background-color: rgba(51, 51, 51, 0.9);
-  font-size: 30px;
+  font-size: 50px;
 `;
 export const SvgIcon = styled.img`
   position: absolute;

@@ -1,30 +1,21 @@
-const memory = require('./function-bloks/memory');
-const memory_init = require('./function-bloks/memory_init');
-const sql_create = require('./mysql.js');
-const io = require('socket.io')(8080, {transports: ['polling', 'websocket']} );
-module.exports.socket_all = io.sockets;
-const EventEmitter = new require('events').EventEmitter;
-const emitter = new EventEmitter();
-module.exports.emitter = emitter;
-
-//const gpioCreate = require('./function-bloks/gpio');
-//const pwmCreate = require('./function-bloks/gpio2');
-
-const {vds} = require('./equipment/ATV');
-const {modbusCreate} = require('./modbus/modbus');
-const {ioConnect} = require ('./function-bloks/io-connect');
-const {emittSocket} = require ('./function-bloks/emitt-socket');
-
-
 (async function () {
-  const sql = await sql_create();
-  await memory_init(sql, memory);
-  emittSocket(io.sockets, emitter, sql);
-  await modbusCreate();
-  //gpioCreate(io.sockets, emitter);
-  //pwmCreate(io.sockets, emitter,);
-  io.on('connect', socket => {
-    ioConnect(socket, emitter, sql, memory);
+  global.memory = require('./function-bloks/memory');
+  global.sql = await require('./mysql.js')();
+  await require('./function-bloks/memory_init')();
+  global.socket = require('socket.io')(8080, {transports: ['polling', 'websocket']} ).sockets;
+  const EventEmitter = new require('events').EventEmitter;
+  global.emitter = new EventEmitter();
+  // await require('./modbus/modbus')();
+  // require('./function-bloks/gpio')();
+  // require('./function-bloks/gpio2')();
+  require('./equipment/equipment_init');
+  require('./phases/steps_init');
+
+  require ('./function-bloks/emitt-socket')();
+
+  const {ioConnect} = require ('./function-bloks/io-connect');
+  global.socket.on('connect', socket => {
+    ioConnect(socket);
   });
 
 })();

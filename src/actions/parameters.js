@@ -1,5 +1,9 @@
 import store from '../store';
 
+export const CoolingRealTimeParameters = (data) => {
+    store.dispatch({type: 'COOLING_REAL_TIME_PARAMETERS', payload: data});
+};
+
 export const VdsSwitch = () => {
     return {type: 'VDS_SWITCH'};
 };

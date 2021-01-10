@@ -1,3 +1,5 @@
+import socketService from "../services/socket-service";
+
 const KeyboardDisplay = (state, action) => {
 
     if (state === undefined) {
@@ -6,6 +8,7 @@ const KeyboardDisplay = (state, action) => {
                 show: false,
                 // parameter: '',
                 // keeper: '',
+                type: 'simple',
                 startValue: '',
                 top: 0,
                 left: 0,
@@ -38,7 +41,7 @@ const KeyboardDisplay = (state, action) => {
         case 'SHOW_KEYBOARD':
             return {...state.KeyboardDisplayKeeper,
                 num: {...state.KeyboardDisplayKeeper.num,
-                    func: action.payload.func,
+                    func: action.payload.func, type :action.payload.type,
                     startValue: action.payload.startValue,
                     top: action.payload.top, left: action.payload.left,
                     min: action.payload.min, max: action.payload.max,
@@ -48,6 +51,7 @@ const KeyboardDisplay = (state, action) => {
       case 'NEW_VALUE_KEYBOARD':
           state[action.payload.keeper]
             [action.payload.parameter] = action.payload.value;
+          socketService.SocketEmmit('memory_change', {[action.payload.parameter]: action.payload.value});
           return {...state.KeyboardDisplayKeeper};
 
         // case 'NEW_VALUE_KEYBOARD':

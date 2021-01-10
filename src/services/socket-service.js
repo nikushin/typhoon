@@ -2,7 +2,7 @@ import {initValue, RecipeInit, memoryInit, ConnectStatus, IncrementValue, testGp
 import {SetPhasesStatus} from "../actions/phases";
 import {GraphAdd, HistoryAnswer, OneStoryAnswer, RoastFinish, RoastStart} from "../actions/graph";
 import {RoastRealTimeParameters} from '../actions/settings-graph-actions'
-import {ReceiveVdsStatusFeedBack, ReceiveVdsFrFeedBack} from "../actions/parameters";
+import {ReceiveVdsStatusFeedBack, ReceiveVdsFrFeedBack, CoolingRealTimeParameters} from "../actions/parameters";
 import openSocket from "socket.io-client";
 import store from "../store";
 const socket = openSocket('http://localhost:8080', {transports: ['websocket']});
@@ -44,8 +44,10 @@ class SocketService {
 
         socket.on('every_second_data', (data) => {
             // console.log(data);
-            GraphAdd(data.temp);
+            if (data.temp) {GraphAdd(data.temp)};
             if (data.roastData) {RoastRealTimeParameters(data.roastData)}
+            if (data.coolingData) {CoolingRealTimeParameters(data.coolingData)}
+
         });
 
         socket.on('connect', () => {
@@ -57,6 +59,7 @@ class SocketService {
         });
 
         socket.on('phases_status', (phases_status) => {
+            console.log(phases_status);
             if (phases_status.roast === true && store.getState().PhasesKeeper.roast === false) {
                 RoastStart()
             }

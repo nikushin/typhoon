@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {useDispatch, useSelector } from 'react-redux';
 import {showKeyboard} from "../../actions";
 import styled from "styled-components";
@@ -8,7 +8,7 @@ import {setKeyboardParameter} from '../../actions/index'
 export const Container = styled.div`
   background-color: rgba(90,90,90,0.57);
   border-radius: 10px;
-  height: 120px;
+  height: ${props => props.height}px;
   width: 250px;
   font-size: 40px;
   display: flex;
@@ -26,25 +26,36 @@ export const Container = styled.div`
   }
 `;
 
-const VidgetInputOutput = ({test_value, keeper, parameter, min, max, top, left, title, color, inputMode = true}) =>  {
+const VidgetInputOutput = ({height = 120, keeper, parameter, min, max,
+                               top, left, title, color, type='simple' ,inputMode = true}) =>  {
     const value = useSelector(state => state[keeper][parameter]);
-    const dispatch = useDispatch();
+    const [VisibleValue, setVisibleValue] = useState(undefined);
 
+    useLayoutEffect(() => {
+        if (type ==='simple') {setVisibleValue(value)}
+        if (type === 'time') {
+            const minutes = Math.floor(value/60);
+            const seconds = value - minutes*60;
+            setVisibleValue(minutes.toString() + ":" + ((String(seconds).length) > 1 ? '' : '0' ) + seconds.toString());
+        }
+
+    },[value]);
+
+    const dispatch = useDispatch();
     const showKeyboardOnClick = () => {
-        if (inputMode) {dispatch(showKeyboard({startValue: value, min, max, top, left,
+        if (inputMode) {dispatch(showKeyboard({startValue: value, min, max, top, left, type,
             func: (value) => {dispatch(setKeyboardParameter({value, keeper, parameter }))}
         }));}
     };
 
     return (
-      <Container onClick={showKeyboardOnClick} color={color}>
+      <Container onClick={showKeyboardOnClick} color={color} height={height}>
         <div>
             {title}
         </div>
 
         <div>
-            {/*{test_value}*/}
-           {value?value:'н/д'}
+           {VisibleValue !== undefined ? VisibleValue :'н/д'}
         </div>
       </Container>
     )

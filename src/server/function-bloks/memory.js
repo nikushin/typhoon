@@ -7,23 +7,29 @@ module.exports = {
     amount: undefined,
     data:{
       heat_setting_arr: [[0,0]],
-      cooling_time: 0,
-      prepare_sp: 0,
     }
   },
   retain:{
+    cooling_time: 0,
+    vds_prepare_fr: 100,
     heat_manual_sp: 0,
     vds_manual_sp: 0,
     roast_mode_auto: true,
     step: 60,
+    temp_prepare_sp: 0,
+    manual: {
+      vds_power: 0,
+      temp_sp: 0,
+    }
   },
   operative:{
+    temp_beans: undefined,
+    temp_air: undefined,
+    button_prepare: undefined,
     manual: {
       on: false,
       vds: false,
-      vds_power: 0,
       heat: false,
-      heat_power: 0,
       cooler: false,
       blades: false,
     }

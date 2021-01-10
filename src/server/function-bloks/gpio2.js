@@ -1,7 +1,9 @@
-const pigpio = require('pigpio');
+const pigpio = require('pigpio').Gpio;
 const Gpio = pigpio.Gpio;
+const socket = global.socket;
+const emitter = global.emitter;
 
-module.exports = function pwmCreate (socket, emitter) {
+module.exports = function pwmCreate () {
 	pigpio.configureClock(10, pigpio.CLOCK_PCM);
     const lamp_start = new Gpio(19, {mode: Gpio.OUTPUT});
     //const lamp_cooler = new Gpio(17, {mode: Gpio.OUTPUT});

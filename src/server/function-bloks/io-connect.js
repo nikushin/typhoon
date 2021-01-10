@@ -1,30 +1,25 @@
-const stop = require('../phases/stop');
-const prepare = require('../phases/prepare');
-const loading_roaster = require('../phases/./loading-roaster');
-const roast = require('../phases/roast');
-const unloading_roaster = require('../phases/unloading-roaster');
-const cooling = require('../phases/cooling');
-const unloading_cooler = require('../phases/unloading-cooler');
 const {discret_input_create} = require('../equipment/buttons-lamps');
 const {recipeInit, recipeChange, recipeDelete} = require('./sql-utilities');
-const {vds} = require('../equipment/ATV');
 
-module.exports.ioConnect = async function ioConnect (socket, emitter, sql, memory) {
+const memory = global.memory;
+const emitter = global.emitter;
+const sql = global.sql;
+
+module.exports.ioConnect = async function ioConnect (socket) {
   socket.on('disconnect', socket => {
     // emitter.removeAllListeners();
   });
+
   discret_input_create(socket, emitter, sql, memory);
-// console.log(memory);
+
   socket.emit("memory_init", memory);
 
   socket.on('vds_switch_power', (data) => {
-    // console.log(data);
-    vds.switchPower(data)
+    global.vds.switchPower(data)
   });
 
   socket.on('vds_set_fr', (data) => {
-    // console.log(typeof(data) , data)
-    vds.setFr(data)
+    global.vds.setFr(data)
   });
 
 
@@ -51,30 +46,36 @@ module.exports.ioConnect = async function ioConnect (socket, emitter, sql, memor
     WHERE name = '${data[0]}';`)
   });
 
-	socket.on('test_range', (data) => {
-		emitter.emit('test_range', data);
-	  });
+  socket.on('test_range', (data) => {
+    emitter.emit('test_range', data);
+  });
 
-	  socket.on('test_frequency', (data) => {
-		emitter.emit('test_frequency', data);
-	  });
+  socket.on('test_frequency', (data) => {
+    emitter.emit('test_frequency', data);
+  });
 
-	  socket.on('test_value', (data) => {
-		emitter.emit('test_value', data);
-	  });
+  socket.on('test_value', (data) => {
+    global.emitter.emit('test_value', data);
+  });
 
-    socket.on('test_gpio', () => {
-        emitter.emit('test_gpio')
-    });
+  socket.on('test_gpio', () => {
+      emitter.emit('test_gpio')
+  });
 
-    emitter.on('button_alarm', (value) => {
-        socket.emit("test_button", value);
-		console.log('bt', value)
-    });
+  emitter.on('button_alarm', (value) => {
+      socket.emit("test_button", value);
+      console.log('bt', value)
+  });
 
   socket.on('memory_change', (data) => {
-    if (data.heat_setting_arr) {
+    console.log(data);
+    if (data.heat_setting_arr !== undefined) {
       memory.recipe.data.heat_setting_arr = data.heat_setting_arr
+    }
+    if (data.vds_manual_sp !== undefined) {
+      memory.retain.vds_manual_sp = data.vds_manual_sp;
+      sql.query(`UPDATE parameters 
+      SET vds_manual_sp = ${data.vds_manual_sp};`)
     }
     if (data.roast_mode_auto !== undefined) {
       memory.retain.roast_mode_auto = data.roast_mode_auto;
@@ -85,6 +86,24 @@ module.exports.ioConnect = async function ioConnect (socket, emitter, sql, memor
       memory.retain.step = data.step;
       sql.query(`UPDATE parameters 
       SET step = ${data.step};`)
+    }
+    if (data.vds_prepare_fr !== undefined) {
+      memory.retain.vds_prepare_fr = data.vds_prepare_fr;
+      emitter.emit('vds_new_prepare_fr');
+      sql.query(`UPDATE parameters 
+      SET vds_prepare_fr = ${data.vds_prepare_fr};`)
+    }
+    if (data.cooling_time !== undefined) {
+      memory.retain.cooling_time = data.cooling_time;
+      emitter.emit('new_cooling_time', data.cooling_time);
+      sql.query(`UPDATE parameters 
+      SET cooling_time = ${data.cooling_time};`)
+    }
+    if (data.temp_prepare_sp !== undefined) {
+      memory.retain.temp_prepare_sp = data.temp_prepare_sp;
+      emitter.emit('new_temp_prepare_sp');
+      sql.query(`UPDATE parameters 
+      SET temp_prepare_sp = ${data.temp_prepare_sp};`)
     }
   });
 
@@ -149,15 +168,13 @@ module.exports.ioConnect = async function ioConnect (socket, emitter, sql, memor
     SET recipe_data = '${JSON.stringify(data.data)}', name = '${data.name}' WHERE id = ${data.id};`);
   });
 
-  socket.emit("phases_status", {stop : stop.status,
-    prepare: prepare.status,
-    prepare_done: prepare.start_delay,
-    loading_roaster: loading_roaster.status,
-    loading_roaster_done: loading_roaster.start_delay,
-    roast: roast.status,
-    unloading_roaster: unloading_roaster.status,
-    cooling: cooling.status,
-    unloading_cooler: unloading_cooler.status,
+  socket.emit("phases_status", {stop : global.steps.stop.status,
+    prepare: global.steps.prepare.status,
+    prepare_done: global.steps.prepare.start_delay,
+    loading_roaster: global.steps.loading_roaster.status,
+    roast: global.steps.roast.status,
+    cooling: global.steps.cooling.status,
+    unloading_cooler: global.steps.unloading_cooler.status,
   });
 
 };

@@ -127,13 +127,17 @@ const graphParameters = (state, action) => {
 
             ++state.graphKeeper.graph_time;
 
+            state.analogParametersKeeper.tempBeans = action.payload.tempBeans;
+            state.analogParametersKeeper.tempAir = action.payload.tempAir;
+            state.analogParametersKeeper.ror = action.payload.ror;
+
             const tempBeans = -action.payload.tempBeans;
             const tempAir = -action.payload.tempAir;
             const ror = -action.payload.ror;
 
             state.graphKeeper.data_beans.push([state.graphKeeper.graph_time, tempBeans]);
             state.graphKeeper.data_air.push([state.graphKeeper.graph_time, tempAir]);
-            if (ror) {state.graphKeeper.data_ror.push([state.graphKeeper.graph_time, -ror*10]);}
+            if (ror) {state.graphKeeper.data_ror.push([state.graphKeeper.graph_time, ror*10]);}
 
             if (state.graphKeeper.real_time) {
                 return {
@@ -204,7 +208,7 @@ const graphParameters = (state, action) => {
                 data_arr_done_last_roast: state.graphKeeper.data_arr_done.slice(),
 
                 roast_time_last_roast: state.graphKeeper.roast_second,
-                roast_second: 0,
+                //roast_second: 0,
                 data_arr_done: [],
                 graph_save_request: true
             };

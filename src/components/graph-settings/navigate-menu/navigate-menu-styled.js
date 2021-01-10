@@ -8,7 +8,7 @@ export const SvgIcon = styled.svg`
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 350px 150px 300px;
+  grid-template-columns: 350px 150px;
   grid-template-areas:
   "navigate steps";
   > div:nth-child(1) {

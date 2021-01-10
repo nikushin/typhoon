@@ -1,8 +1,11 @@
-
-module.exports = async function memoryInit (sql, memory) {
+const sql = global.sql;
+const memory = global.memory;
+module.exports = async function memoryInit () {
 // mysql to memory
   await sql.query("SELECT current_recipe FROM service;").then(
-    result => memory.recipe.current_id = result[0][0].current_recipe);
+    result => {
+        memory.recipe.current_id = result[0][0].current_recipe
+    });
 
   await sql.query(`SELECT * FROM recipes WHERE id = ${memory.recipe.current_id};`).then(
     result => {
@@ -24,13 +27,17 @@ module.exports = async function memoryInit (sql, memory) {
       });
     });
 
-  await sql.query("SELECT heat_manual_sp, vds_manual_sp, roast_mode_auto FROM parameters;").then(
+  await sql.query(`SELECT heat_manual_sp, vds_manual_sp, roast_mode_auto, step, vds_prepare_fr, 
+  cooling_time, temp_prepare_sp FROM parameters;`).then(
     result => {
-      memory.retain.heat_manual_sp = result[0][0].heat_manual_sp;
-      memory.retain.vds_manual_sp = result[0][0].vds_manual_sp;
-      memory.retain.roast_mode_auto = result[0][0].roast_mode_auto;
+        memory.retain.heat_manual_sp = result[0][0].heat_manual_sp;
+        memory.retain.vds_manual_sp = result[0][0].vds_manual_sp;
+        memory.retain.roast_mode_auto = result[0][0].roast_mode_auto;
+        memory.retain.step = result[0][0].step;
+        memory.retain.vds_prepare_fr = result[0][0].vds_prepare_fr;
+        memory.retain.cooling_time = result[0][0].cooling_time;
+        memory.retain.temp_prepare_sp = result[0][0].temp_prepare_sp;
     });
-
 
   //console.log(memory)
 };

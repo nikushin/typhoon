@@ -73,7 +73,6 @@ const Slider = ({keeper, parameter, src_img, color, min, max, top, left}) => {
     const progress = (valueGlobal / max) * 100;
     setTrackProgress(`linear-gradient(90deg, ${color} 0% ${progress}%, ${inactive} ${progress}% 100%)`);
   },[valueGlobal]);
-    console.log(parameter);
   const handleChange = () => (event) => {
     const value = event.target.value;
     dispatch(setKeyboardParameter({value:Number(value), keeper, parameter}));

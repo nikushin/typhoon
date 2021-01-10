@@ -1,24 +1,40 @@
-let start_delay = null;
 
-module.exports = {
-  status : false,
-  start_delay : false,
-  SetStatus : function (value, emitter) {
-    //console.log("phase_loading_roaster " + value);
+class step_loading_roaster {
+  constructor() {
+    global.emitter.on('button_start', () => this.toRoast());
+  }
+
+  status = false;
+  start_delay = false;
+  start_delay_timeout = undefined;
+
+  SetStatus = (value) => {
     this.status = value;
-    emitter.emit('phase_loading_roaster');
+    global.socket.emit("phases_status", {loading_roaster : this.status});
 
     if (value) {
-      start_delay = setTimeout (()=>{
+
+      global.vds.switchPower(false);
+      global.heater.SwitchAllow(false);
+
+      this.start_delay_timeout = setTimeout (()=>{
         this.start_delay = true;
-        //console.log("phase_loading_roaster_start_delay " + this.start_delay);
-        emitter.emit('phase_loading_roaster_start_delay');
+        global.socket.emit("loading_roaster_done", {loading_roaster : this.start_delay});
       }, 3000);
     } else {
-      clearTimeout(start_delay);
+      clearTimeout(this.start_delay_timeout);
       this.start_delay = false;
-      //console.log("phase_loading_roaster_start_delay " + this.start_delay);
-      emitter.emit('phase_loading_roaster_start_delay');
+      global.socket.emit("loading_roaster_done", {loading_roaster : this.start_delay});
+    }
+  };
+
+  toRoast = () => {
+    if (this.start_delay === true) {
+      this.SetStatus (false);
+      global.steps.roast.SetStatus(true);
     }
   }
-};
+
+}
+
+module.exports = new step_loading_roaster();

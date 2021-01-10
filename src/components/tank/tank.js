@@ -9,7 +9,7 @@ const Tank = ({parameter}) => {
   const tankStyle = {background: `linear-gradient(0deg, rgba(0, 0, 0, 0.7) 30%, rgba(255, 255, 255, 0.7) 100%) rgb(${color.color})`,
           boxShadow: `rgba(${color.color}, 0.7) 0 0 6px 1px`,
           height: fill + 'px'};
-  console.log('tank')
+  // console.log('tank')
   return (
     <div className={'tank-container'}>
       <div style={ tankStyle } className={'tank-fill'}>
