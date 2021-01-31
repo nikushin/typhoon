@@ -11,7 +11,7 @@ const GraphPower = ({parameters}) => {
   const { Width, PowerHeight, PowerIndent, PowerBorderRight, PowerBorderTop,
     PowerBorderBottom, PowerBorderLeft, PowerWidthInner, PowerHeightInner, PowerWidthWorkPlot, PowerHeightWorkPlot,
      PowerYkoef , Xkoef} = parameters;
-const PowerYkoefText = PowerYkoef;
+  const PowerYkoefText = PowerYkoef;
   const heat_setting_arr = useSelector(state => state.graphSettingsKeeper.heat_setting_arr);
   const heat_arr_done = useSelector(state => state.graphSettingsKeeper.heat_arr_done);
   const heat_arr_done_history = useSelector(state => state.graphSettingsKeeper.heat_arr_done_history);

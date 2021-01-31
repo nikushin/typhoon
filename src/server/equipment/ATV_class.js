@@ -13,9 +13,10 @@ class atv_class {
     fr_feedback = 0;
     status = undefined;
 
-    switchPower = (value) => {
+    SwitchPower = (value) => {
         this.power = value;
         global.emitter.emit(this.name + '_gpio_power', this.power);
+        global.socket.emit('memory_change', {lamps:{[this.name + '_lamp'] : this.power}});
     };
 
     setFr = (value) => {

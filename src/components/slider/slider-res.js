@@ -1,7 +1,6 @@
-import React, {memo, useState, useLayoutEffect, useEffect, useRef} from 'react';
+import React, {memo, useState, useLayoutEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
-import socketService from "../../services/socket-service";
 // import {newValue} from "../../actions/parameters"
 import {showKeyboard, setKeyboardParameter} from "../../actions";
 
@@ -66,7 +65,7 @@ const Container = styled.div`
 
 const inactive = '#546568';
 
-export const Slider = memo(({keeper, parameter, src_img, color, min, max, top, left}) => {
+const Slider = ({keeper, parameter, src_img, color, min, max, top, left}) => {
   const dispatch = useDispatch();
   const [trackProgress, setTrackProgress] = useState(`linear-gradient(90deg, ${color} 0% 0%, ${inactive} 0% 100%)`);
   const valueGlobal = useSelector(state => state[keeper][parameter]);
@@ -97,58 +96,9 @@ export const Slider = memo(({keeper, parameter, src_img, color, min, max, top, l
       </ValueDiv>
     </Container>
   )
-});
-
-export const SliderHeat = memo(({src_img, min, max, top, left}) => {
-    const dispatch = useDispatch();
-    const [Color, setColor] = useState('#ef1b14');
-    const [VisibleValue, setVisibleValue] = useState(0);
-    const [trackProgress, setTrackProgress] = useState(`linear-gradient(90deg, ${Color} 0% 0%, ${inactive} 0% 100%)`);
-    const heat_power_indicator = useSelector(state => state.analogParametersKeeper.heat_power_indicator);
-    const HeatOn = useSelector(state => state.analogParametersKeeper.heat_lamp);
-    const roast_mode_auto = useSelector(state => state.graphKeeper.roast_mode_auto);
-
-    useLayoutEffect(() => {
-        if (HeatOn) {
-            setColor('#ef1b14')
-        } else {
-            setColor('#ef5851')
-        }
-    },[HeatOn]);
-
-    useLayoutEffect(() => {
-        setVisibleValue(heat_power_indicator[0]);
-    },[heat_power_indicator]);
+};
 
 
-    useLayoutEffect(() => {
-        const progress = (VisibleValue / max) * 100;
-        setTrackProgress(`linear-gradient(90deg, ${Color} 0% ${progress}%, ${inactive} ${progress}% 100%)`);
-    },[VisibleValue]);
 
-    const handleChange = () => (event) => {
-        const value = event.target.value;
-        setVisibleValue(value);
-        socketService.SocketEmmit('memory_change', {'heat_manual_sp': Number(value)});
-    };
 
-    const onClick = (leftBase) => {
-        const  left = leftBase + VisibleValue*(width-img_size)/max;
-        dispatch(showKeyboard({startValue: VisibleValue, min, max, top, left,
-            func: (value) => {
-                socketService.SocketEmmit('memory_change', {'heat_manual_sp': value});
-                setVisibleValue(value);
-        }}));};
-
-    return (
-        <Container value={VisibleValue} src_img={src_img} >
-            <Track bg={trackProgress}/>
-            <input type="range" value={VisibleValue} min={min} max={max} disabled={!!roast_mode_auto}
-                   onChange={handleChange()}/>
-            <ValueDiv value={VisibleValue} max={max}
-                      onClick={() => onClick(left)}>
-                {VisibleValue}
-            </ValueDiv>
-        </Container>
-    )
-});
+export default memo(Slider)

@@ -26,7 +26,7 @@ class heater {
     SwitchAllow = (value) => {
         this.allow = value;
         if (this.allow === true) {
-            if (global.vds.frFeedBack > global.vds.min_fr) {
+            if (global.vds.fr_feedback >= global.vds.min_fr) {
                 this.SwitchOn(true)
             } else if (global.vds.frFeedBack < global.vds.min_fr - 1) {
                 this.SwitchOn(false)
@@ -51,6 +51,7 @@ class heater {
         } else {
             global.emitter.emit('heater_gpio_switch_power', 0);
         }
+        global.socket.emit('memory_change', {heat_lamp: this.on});
     };
 
     SetRoastPower = (value) => {

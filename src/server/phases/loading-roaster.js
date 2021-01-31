@@ -14,7 +14,7 @@ class step_loading_roaster {
 
     if (value) {
 
-      global.vds.switchPower(false);
+      global.vds.SwitchPower(false);
       global.heater.SwitchAllow(false);
 
       this.start_delay_timeout = setTimeout (()=>{

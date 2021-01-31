@@ -59,7 +59,6 @@ class SocketService {
         });
 
         socket.on('phases_status', (phases_status) => {
-            console.log(phases_status);
             if (phases_status.roast === true && store.getState().PhasesKeeper.roast === false) {
                 RoastStart()
             }
@@ -87,6 +86,10 @@ class SocketService {
             ReceiveVdsFrFeedBack(data);
         });
 
+        socket.on('memory_change', data => {
+            // console.log('memory_change', data);
+            store.dispatch({type: 'MEMORY_CHANGE', payload: data});
+        });
     };
 }
 

@@ -9,7 +9,7 @@ class step_cooling {
     this.status = value;
     if (value) {
 
-      global.vds.switchPower(false);
+      global.vds.SwitchPower(false);
       global.heater.SwitchAllow(false);
       global.cooler.SwitchPower(true);
       global.blades.SwitchPower(true);

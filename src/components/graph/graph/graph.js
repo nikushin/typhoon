@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState, useLayoutEffect, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {GraphSaveViewParameters, GraphSaveAnswer} from "../../../actions/graph"
+import {GraphSaveViewParameters, GraphSaveAnswer, RealTimeOn} from "../../../actions/graph"
 import Axes from "./axes"
 import AxesText from "./axes-text"
 import {SVGgraph, SVGadditional, SVGbackground, SVGcontainer, SaveRuqest,
@@ -229,8 +229,20 @@ const Graph = ({parameters}) => {
 
     <SVGcontainer width={Width} height={GraphHeight}>
 
-      <SaveRuqest visible={graph_save_request}>Сохранить?
-        <button onClick={() => GraphSaveAnswer(true)}>Да</button>  <button onClick={() => GraphSaveAnswer(false)}>Нет</button>
+      <SaveRuqest visible={graph_save_request}>
+        <div>Сохранить?</div>
+        <div>
+          <div onClick={() => {
+              GraphSaveAnswer(true);
+              dispatch(RealTimeOn())
+            }
+          }>Да</div>
+          <div onClick={() => {
+              GraphSaveAnswer(false)
+              dispatch(RealTimeOn())
+            }
+          }>Нет</div>
+        </div>
       </SaveRuqest>
 
       <SVGadditional viewBox={"0 "+ (-GraphHeight) + " " + Width + " " + GraphHeight}

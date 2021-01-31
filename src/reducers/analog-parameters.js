@@ -4,12 +4,18 @@ const analogParameters = (state, action) => {
 
     if (state === undefined) {
         return {
-            heat_manual_sp: 0,
             vds_manual_sp: 0,
             vds_prepare_fr: 0,
 
             cooling_time: 0,
             rest_of_cooling_time: 0,
+
+            heat_power_indicator: [0],
+            cooler_lamp: false,
+            blades_lamp: false,
+            cooler_manual_lamp: false,
+            blades_manual_lamp: false,
+            heat_lamp: false,
 
             temp_prepare_sp: 0,
             temp_set_point: 30,
@@ -29,6 +35,49 @@ const analogParameters = (state, action) => {
     }
 
     switch (action.type) {
+
+        case 'MEMORY_CHANGE' :
+            // console.log(action.payload);
+            if (action.payload.lamps !== undefined) {
+                if (action.payload.lamps.vds_lamp !== undefined)
+                {state.analogParametersKeeper.vds_switch = action.payload.lamps.vds_lamp}
+                if (action.payload.lamps.cooler_lamp !== undefined)
+                {state.analogParametersKeeper.cooler_lamp = action.payload.lamps.cooler_lamp}
+                if (action.payload.lamps.cooler_manual_lamp  !== undefined)
+                {state.analogParametersKeeper.cooler_manual_lamp = action.payload.lamps.cooler_manual_lamp}
+                if (action.payload.lamps.blades_lamp  !== undefined)
+                {state.analogParametersKeeper.blades_lamp = action.payload.lamps.blades_lamp}
+                if (action.payload.lamps.blades_manual_lamp !== undefined)
+                {state.analogParametersKeeper.blades_manual_lamp = action.payload.lamps.blades_manual_lamp}
+            }
+            if (action.payload.heat_power_indicator !== undefined)
+            {
+                state.analogParametersKeeper.heat_power_indicator = Object.assign([], [action.payload.heat_power_indicator]);
+            }
+            if (action.payload.heat_lamp !== undefined)
+            {state.analogParametersKeeper.heat_lamp = action.payload.heat_lamp}
+
+            if (action.payload.manual !== undefined)
+            {
+                if (action.payload.manual.on !== undefined) {
+                    state.ManualKeeper.on = action.payload.manual.on;
+                }
+                if (action.payload.manual.cooler !== undefined) {
+                    state.ManualKeeper.cooler = action.payload.manual.cooler;
+                }
+                if (action.payload.manual.blades !== undefined) {
+                    state.ManualKeeper.blades = action.payload.manual.blades;
+                }
+                if (action.payload.manual.vds !== undefined) {
+                    state.ManualKeeper.vds = action.payload.manual.vds;
+                }
+                if (action.payload.manual.heat !== undefined) {
+                    state.ManualKeeper.heat = action.payload.manual.heat;
+                }
+            }
+
+
+            return {...state.analogParametersKeeper};
 
         case 'RECEIVE_VDS_STATUS_FEEDBACK' :
             return {...state.analogParametersKeeper, vds_status_feedback: action.payload};

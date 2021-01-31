@@ -15,7 +15,7 @@ module.exports.ioConnect = async function ioConnect (socket) {
   socket.emit("memory_init", memory);
 
   socket.on('vds_switch_power', (data) => {
-    global.vds.switchPower(data)
+    global.vds.SwitchPower(data)
   });
 
   socket.on('vds_set_fr', (data) => {
@@ -64,46 +64,61 @@ module.exports.ioConnect = async function ioConnect (socket) {
 
   emitter.on('button_alarm', (value) => {
       socket.emit("test_button", value);
-      console.log('bt', value)
+      // console.log('bt', value)
   });
 
   socket.on('memory_change', (data) => {
-    console.log(data);
+    // console.log(data);
     if (data.heat_setting_arr !== undefined) {
-      memory.recipe.data.heat_setting_arr = data.heat_setting_arr
+      global.memory.recipe.data.heat_setting_arr = data.heat_setting_arr
+    }
+    if (data.heat_manual_sp !== undefined) {
+      memory.retain.heat_manual_sp = data.heat_manual_sp;
+      sql.query(`UPDATE parameters SET heat_manual_sp = ${data.heat_manual_sp};`)
     }
     if (data.vds_manual_sp !== undefined) {
       memory.retain.vds_manual_sp = data.vds_manual_sp;
-      sql.query(`UPDATE parameters 
-      SET vds_manual_sp = ${data.vds_manual_sp};`)
+      sql.query(`UPDATE parameters SET vds_manual_sp = ${data.vds_manual_sp};`)
     }
     if (data.roast_mode_auto !== undefined) {
       memory.retain.roast_mode_auto = data.roast_mode_auto;
-      sql.query(`UPDATE parameters 
-      SET roast_mode_auto = ${data.roast_mode_auto};`)
+      emitter.emit('new_roast_mode');
+      sql.query(`UPDATE parameters SET roast_mode_auto = ${data.roast_mode_auto};`)
     }
     if (data.step !== undefined) {
       memory.retain.step = data.step;
-      sql.query(`UPDATE parameters 
-      SET step = ${data.step};`)
+      sql.query(`UPDATE parameters SET step = ${data.step};`)
     }
     if (data.vds_prepare_fr !== undefined) {
       memory.retain.vds_prepare_fr = data.vds_prepare_fr;
       emitter.emit('vds_new_prepare_fr');
-      sql.query(`UPDATE parameters 
-      SET vds_prepare_fr = ${data.vds_prepare_fr};`)
+      sql.query(`UPDATE parameters SET vds_prepare_fr = ${data.vds_prepare_fr};`)
     }
     if (data.cooling_time !== undefined) {
       memory.retain.cooling_time = data.cooling_time;
       emitter.emit('new_cooling_time', data.cooling_time);
-      sql.query(`UPDATE parameters 
-      SET cooling_time = ${data.cooling_time};`)
+      sql.query(`UPDATE parameters SET cooling_time = ${data.cooling_time};`)
     }
     if (data.temp_prepare_sp !== undefined) {
       memory.retain.temp_prepare_sp = data.temp_prepare_sp;
       emitter.emit('new_temp_prepare_sp');
-      sql.query(`UPDATE parameters 
-      SET temp_prepare_sp = ${data.temp_prepare_sp};`)
+      sql.query(`UPDATE parameters SET temp_prepare_sp = ${data.temp_prepare_sp};`)
+    }
+    if (data.manual !== undefined) {
+      if (data.manual.vds_fr !== undefined) {
+        memory.retain.manual.vds_fr = data.manual.vds_fr;
+        emitter.emit('new_manual_vds_fr');
+        sql.query(`UPDATE parameters SET manual_vds = ${data.manual.vds_fr};`)
+      }
+      if (data.manual.temp_sp !== undefined) {
+        memory.retain.manual.temp_sp = data.manual.temp_sp;
+        emitter.emit('new_manual_temp_sp');
+        sql.query(`UPDATE parameters SET manual_heat = ${data.manual.temp_sp};`)
+      }
+      if (data.manual.switch !== undefined) {
+        // console.log(data.manual.switch);
+        emitter.emit('new_manual_switch_'+ data.manual.switch);
+      }
     }
   });
 
@@ -123,7 +138,7 @@ module.exports.ioConnect = async function ioConnect (socket) {
   });
 
   socket.on('save_graph', (data) => {
-    console.log(data);
+    // console.log(data);
     sql.query(`INSERT saved_graphs(name, time, date, beans, air, ror, arr_done) 
     VALUES ("${data.name}","${data.time}","${data.date}","${JSON.stringify(data.beans)}",
     "${JSON.stringify(data.air)}", "${JSON.stringify(data.ror)}","${JSON.stringify(data.heat_arr_done)}");`)
@@ -139,6 +154,8 @@ module.exports.ioConnect = async function ioConnect (socket) {
     const [result] = await sql.query("SELECT current_recipe FROM service;");
       recipeInit(sql, socket, result[0]['current_recipe']);
   })();
+
+  global.steps.roast.NewRoastMode();
 
   // recipe change
   socket.on('recipe_change', (id) => {

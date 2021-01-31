@@ -114,7 +114,9 @@ const graphSettingsParameters = (state, action) => {
 
         case 'SETTING_CURSOR_MANUAL':
             const new_arr_manual = arr_change(action.payload);
-            state.graphKeeper.path_arr_heat = get_path_arr_heat(new_arr_manual,0);
+            if (state.graphKeeper.real_time) {
+                state.graphKeeper.path_arr_heat = get_path_arr_heat(new_arr_manual, 0);
+            }
             socketService.SocketEmmit('memory_change', {heat_setting_arr: new_arr_manual});
             return {...state.graphSettingsKeeper,
                 arr_heat: Object.assign([], new_arr_manual),
@@ -123,7 +125,9 @@ const graphSettingsParameters = (state, action) => {
 
         case 'SETTING_CURSOR_UP':
             const new_arr_up = arr_change(state.graphSettingsKeeper.cursor_y + 5);
-            state.graphKeeper.path_arr_heat = get_path_arr_heat(new_arr_up,0);
+            if (state.graphKeeper.real_time) {
+                state.graphKeeper.path_arr_heat = get_path_arr_heat(new_arr_up,0);
+            }
             socketService.SocketEmmit('memory_change', {heat_setting_arr: new_arr_up});
             return {...state.graphSettingsKeeper,
                 arr_heat: Object.assign([], new_arr_up),
@@ -132,7 +136,9 @@ const graphSettingsParameters = (state, action) => {
 
         case 'SETTING_CURSOR_DOWN':
             const new_arr_down = arr_change(state.graphSettingsKeeper.cursor_y - 5);
-            state.graphKeeper.path_arr_heat = get_path_arr_heat(new_arr_down,0);
+            if (state.graphKeeper.real_time) {
+                state.graphKeeper.path_arr_heat = get_path_arr_heat(new_arr_down, 0);
+            }
             socketService.SocketEmmit('memory_change', {heat_setting_arr: new_arr_down});
             return {...state.graphSettingsKeeper,
                 arr_heat: Object.assign([], new_arr_down),
@@ -141,7 +147,9 @@ const graphSettingsParameters = (state, action) => {
 
         case 'SETTING_CURSOR_ALINE':
             const new_arr_aline = arr_aline();
-            state.graphKeeper.path_arr_heat = get_path_arr_heat(new_arr_aline,0);
+            if (state.graphKeeper.real_time) {
+                state.graphKeeper.path_arr_heat = get_path_arr_heat(new_arr_aline, 0);
+            }
             socketService.SocketEmmit('memory_change', {heat_setting_arr: new_arr_aline});
             return {...state.graphSettingsKeeper,
                 arr_heat: Object.assign([], new_arr_aline)};

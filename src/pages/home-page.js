@@ -3,11 +3,11 @@ import GraphMain from "../components/graph";
 import HistoryMenu from '../components/history_menu/history-menu'
 import {HomePageContainer, HistoryIconContainer, RoastModeContainer, VidgetContainer,
   RealTimeContainer, SliderContainer, StepsContainer} from "./styled-home-pages";
-import Slider from "../components/slider";
+import {Slider, SliderHeat} from "../components/slider/slider";
 import {HistoryIcon} from "./icons";
 import {useDispatch, useSelector} from "react-redux";
 import {changePage} from "../actions";
-import {changeRoastMode, HistoryRequest} from "../actions/graph";
+import {changeRoastMode, HistoryRequest, RealTimeOn} from "../actions/graph";
 import VidgetInputOutput from "../components/vidget-input-output";
 import StepsIndicator from '../components/steps-indicator'
 
@@ -19,6 +19,7 @@ const HomePage = () => {
   const changeHistoryMode = () => {
     if (selectedMenu === 'history') {
       dispatch(changePage('homePageMode', 'realtime'))
+      dispatch(RealTimeOn())
     } else {
       dispatch(changePage('homePageMode', 'history'));
       dispatch(HistoryRequest())
@@ -38,7 +39,7 @@ const HomePage = () => {
             top={280} left={950} min={0} max={100}/>
           </div>
           <div>
-            <Slider keeper={'analogParametersKeeper'} parameter={'heat_manual_sp'}
+            <SliderHeat keeper={'analogParametersKeeper'} parameter={'heat_power_indicator'}
                     color={'#ef1b14'} src_img={'/img/icons/fire.svg'}
                     top={370} left={950} min={0} max={100}/>
           </div>

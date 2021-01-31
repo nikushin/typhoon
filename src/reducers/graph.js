@@ -161,6 +161,7 @@ const graphParameters = (state, action) => {
                         arr.push([action.payload.roast_second, action.payload.roast_power]);
                     }
                 }
+                state.analogParametersKeeper.heat_power_indicator = Object.assign([], [action.payload.roast_power]);
             return {...state.graphKeeper,
                 roast_second: action.payload.roast_second,
                 roast_power: action.payload.roast_power,
@@ -216,7 +217,7 @@ const graphParameters = (state, action) => {
         case 'GRAPH_SAVE_ANSWER':
 
             if (action.payload === true) {
-                console.log(state.graphKeeper.data_arr_done_last_roast);
+                // console.log(state.graphKeeper.data_arr_done_last_roast);
                 socketService.SocketEmmit('save_graph', {
                     name: "test",
                     date: state.graphKeeper.date_start_roast,
@@ -290,19 +291,20 @@ const graphParameters = (state, action) => {
             }}
 
         case 'REAL_TIME_ON':
-            console.log(state.graphKeeper.data_arr_done, state.graphKeeper.roast_second);
+            // console.log(state.graphKeeper.data_arr_done, state.graphKeeper.roast_second);
             if (state.graphKeeper.data_beans.length === 0) {
                 return {...state.graphKeeper}
             } else if (!state.graphKeeper.real_time) {
                 return {
                     ...state.graphKeeper,
+                    roast_second: 0,
                     graph_start_time: state.graphKeeper.data_beans[0][0],
                     real_time: true,
                     path_beans: svgPath(state.graphKeeper.data_beans),
                     path_air: svgPath(state.graphKeeper.data_air),
                     path_ror: svgPath(state.graphKeeper.data_ror),
-                    path_arr_heat: get_path_arr_heat(state.graphSettingsKeeper.arr_heat, state.graphKeeper.roast_second),
-                    path_arr_done: get_path_arr_done(state.graphKeeper.data_arr_done, state.graphKeeper.roast_second),
+                    path_arr_heat: get_path_arr_heat(state.graphSettingsKeeper.arr_heat, 0),
+                    path_arr_done: get_path_arr_done(state.graphKeeper.data_arr_done, 0),
                 };
             } else {
                 return {...state.graphKeeper}

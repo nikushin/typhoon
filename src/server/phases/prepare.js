@@ -9,12 +9,12 @@ class step_prepare {
   SetStatus = (value) => {
     this.status = value;
     if (value) {
-      this.start_delay_timeout = setTimeout (()=>{
+      this.start_delay_timeout = setTimeout (()=> {
         this.start_delay = true;
         global.socket.emit("phases_status", {prepare_done : this.start_delay});
       }, 3000);
 
-      global.vds.switchPower(true);
+      global.vds.SwitchPower(true);
       global.heater.SwitchAllow(true);
 
     } else {
@@ -28,10 +28,13 @@ class step_prepare {
   ButtonPrepare = (value) => {
     if (this.status === true && value === false) {
       this.SetStatus (false);
-      global.steps.stop.SetStatus(true);
+      if (!global.steps.loading_roaster.status && !global.steps.roast.status &&
+          !global.steps.cooling.status && !global.steps.unloading_cooler.status) {
+        global.steps.stop.SetStatus(true);
+      }
     }
 
-    if (this.status === false && !global.steps.stop.status && !global.steps.loading_roaster.status &&
+    if (value === true && this.status === false && !global.steps.stop.status && !global.steps.loading_roaster.status &&
         !global.steps.roast.status && !global.steps.roast.roast_finish_delay) {
       this.SetStatus (true);
     }

@@ -44,7 +44,7 @@ const GraphSettings = ({parameters = {}}) => {
       return buffer
       }, `M`);
     set_heat_setting_arr_path(d);
-    console.log(d)
+    // console.log(d)
   },[heat_setting_arr]);
 
   const AxesConst = <Axes Ysteps={12}

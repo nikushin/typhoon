@@ -16,6 +16,7 @@ const updateMain = (state, action) => {
     switch (action.type) {
 
         case 'MEMORY_INIT' :
+            // console.log(action.payload);
             state.graphKeeper.roast_mode_auto = action.payload.retain.roast_mode_auto;
             state.analogParametersKeeper.heat_manual_sp = action.payload.retain.heat_manual_sp;
             state.analogParametersKeeper.vds_manual_sp = action.payload.retain.vds_manual_sp;
@@ -24,6 +25,9 @@ const updateMain = (state, action) => {
             state.analogParametersKeeper.cooling_time = action.payload.retain.cooling_time;
             state.analogParametersKeeper.rest_of_cooling_time = action.payload.retain.cooling_time;
             state.analogParametersKeeper.temp_prepare_sp = action.payload.retain.temp_prepare_sp;
+            state.ManualKeeper.vds_fr = action.payload.retain.manual.vds_fr;
+            state.ManualKeeper.temp_sp = action.payload.retain.manual.temp_sp;
+
             return {...state.mainKeeper};
 
         case 'CHANGE_PAGE':

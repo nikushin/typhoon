@@ -24,11 +24,13 @@ module.exports = async function mysql_create_connect () {
     step TINYINT,
     vds_prepare_fr TINYINT,
     cooling_time SMALLINT,
-    temp_prepare_sp SMALLINT)`).then(
+    temp_prepare_sp SMALLINT,
+    manual_vds TINYINT,
+    manual_heat SMALLINT)`).then(
     async (result) => {if (result[0].warningStatus === 0) {
       await connection.query(`INSERT parameters(heat_manual_sp, vds_manual_sp, roast_mode_auto, step, 
-      vds_prepare_fr, cooling_time, temp_prepare_sp) 
-      VALUES (0, 0, TRUE, 60, 100, 60, 180)`);
+      vds_prepare_fr, cooling_time, temp_prepare_sp, manual_vds, manual_heat) 
+      VALUES (0, 0, TRUE, 60, 100, 60, 180, 100, 200)`);
     }});
 
     await connection.query(`CREATE TABLE IF NOT EXISTS saved_graphs (

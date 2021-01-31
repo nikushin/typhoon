@@ -18,7 +18,7 @@ module.exports = {
     step: 60,
     temp_prepare_sp: 0,
     manual: {
-      vds_power: 0,
+      vds_fr: 0,
       temp_sp: 0,
     }
   },

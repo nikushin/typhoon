@@ -3,6 +3,7 @@ const buttons_list = {
   button_stop: false,
   button_prepare: false,
   button_cooler: false,
+  button_blades: false,
 };
 
 function discret_input_create (socket, emitter) {

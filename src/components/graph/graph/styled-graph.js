@@ -107,12 +107,31 @@ export const SVGLegendsButton = styled.div`
 
 export const SaveRuqest = styled.div`
   ${props => props.visible ? "" : "display:none"};
-  width: 200px;
-  height: 50px;
+  width: 300px;
+  height: 120px;
   position: absolute;
   z-index: 1;
-  left: 300px;
+  left: 450px;
   top: 25px;
-  color: black;
-  background-color: white;
+  color: white;
+  background-color: #ff913e;
+  opacity: 0.7;
+  font-size: 30px;
+  > div:first-child{
+    text-align: center;
+  }
+  > div:last-child{
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    >div{
+    width: 100px;
+    height: 45px;
+    background-color: #ff661e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+  }
 `;

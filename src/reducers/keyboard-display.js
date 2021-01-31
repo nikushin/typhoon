@@ -49,17 +49,13 @@ const KeyboardDisplay = (state, action) => {
             };
 
       case 'NEW_VALUE_KEYBOARD':
-          state[action.payload.keeper]
-            [action.payload.parameter] = action.payload.value;
-          socketService.SocketEmmit('memory_change', {[action.payload.parameter]: action.payload.value});
+          state[action.payload.keeper][action.payload.parameter] = action.payload.value;
+          if (action.payload.keeper === 'ManualKeeper') {
+              socketService.SocketEmmit('memory_change', {manual: {[action.payload.parameter]: action.payload.value}});
+          } else {
+              socketService.SocketEmmit('memory_change', {[action.payload.parameter]: action.payload.value});
+          }
           return {...state.KeyboardDisplayKeeper};
-
-        // case 'NEW_VALUE_KEYBOARD':
-        //     state[state.KeyboardDisplayKeeper.num.keeper]
-        //       [state.KeyboardDisplayKeeper.num.parameter] = action.payload;
-        //     return {...state.KeyboardDisplayKeeper,
-        //         num: {...state.KeyboardDisplayKeeper.num, show: false}
-        //     };
 
         case 'SHOW_KEYBOARD_LETTER':
             return {

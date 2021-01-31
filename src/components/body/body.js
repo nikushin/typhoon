@@ -44,7 +44,6 @@ const Body = () => {
 
             <div>
                 <Button onClick={() => dispatch(VdsSwitch())}>on/off</Button>
-                <Lamp parameters={{parameter : 'vds_switch', keeper : 'analogParametersKeeper'}} />
 
                 <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:100,
                     top: 200, left: 500, func: (input) => {socketService.SocketEmmit('vds_set_fr', input)}}))}>fr</Button>
@@ -74,10 +73,13 @@ const Body = () => {
 
             </div>
             <div>
-                <div>vds<Lamp parameters={{parameter : 'stop', keeper : 'PhasesKeeper'}} /></div>
-                <div>cooler<Lamp parameters={{parameter : 'stop', keeper : 'PhasesKeeper'}} /></div>
-                <div>blades<Lamp parameters={{parameter : 'stop', keeper : 'PhasesKeeper'}} /></div>
-                <Button>heat {vds_fr_feedback}</Button>
+                <div>vds<Lamp parameters={{parameter : 'vds_switch', keeper : 'analogParametersKeeper'}} /></div>
+                <div>cooler<Lamp parameters={{parameter : 'cooler_lamp', keeper : 'analogParametersKeeper'}} /></div>
+                <div>cooler_m<Lamp parameters={{parameter : 'cooler_manual_lamp', keeper : 'analogParametersKeeper'}} /></div>
+                <div>blades<Lamp parameters={{parameter : 'blades_lamp', keeper : 'analogParametersKeeper'}} /></div>
+                <div>blades_m<Lamp parameters={{parameter : 'blades_manual_lamp', keeper : 'analogParametersKeeper'}} /></div>
+                <div>heat<Lamp parameters={{parameter : 'heat_lamp', keeper : 'analogParametersKeeper'}} /></div>
+                <div></div>
             </div>
           <div className="phases-container">
 
@@ -94,7 +96,15 @@ const Body = () => {
             <Button text="bStop"
                     onMouseDown={() => socketService.SocketEmmit('button_stop')}>
                 Stop
+            </Button>
+            <Button text="bBlades"
+                    onMouseDown={() => socketService.SocketEmmit('button_blades')}>
+                Blades
           </Button>
+                <Button text="bCooler"
+                        onMouseDown={() => socketService.SocketEmmit('button_cooler')}>
+                    Cooler
+                </Button>
 
             <div>stop<Lamp parameters={{parameter : 'stop', keeper : 'PhasesKeeper'}} /></div>
             <div>prepare<Lamp parameters={{parameter : 'prepare', keeper : 'PhasesKeeper', blink : 'prepare_done'}}/></div>
