@@ -263,16 +263,16 @@ const graphParameters = (state, action) => {
             };
 
         case 'ONE_STORY_ANSWER':
-            state.graphSettingsKeeper.heat_arr_done_history = action.payload[0].arr_done;
-            state.graphSettingsKeeper.roast_time_history = action.payload[0].arr_done;
+            state.graphSettingsKeeper.heat_arr_done_history = action.payload.arr_done;
+            state.graphSettingsKeeper.roast_time_history = action.payload.arr_done;
             return {
                 ...state.graphKeeper,
-                graph_start_time: action.payload[0].beans[0][0],
+                graph_start_time: action.payload.beans[0][0],
                 real_time: false,
-                path_beans: svgPath(action.payload[0].beans),
-                path_air : svgPath(action.payload[0].air),
-                path_ror : svgPath(action.payload[0].ror),
-                path_arr_done: get_path_arr_done(action.payload[0].arr_done, action.payload[0].time),
+                path_beans: svgPath(action.payload.beans),
+                path_air : svgPath(action.payload.air),
+                path_ror : svgPath(action.payload.ror),
+                path_arr_done: get_path_arr_done(action.payload.arr_done, action.payload.time),
                 path_arr_heat: start_point,
             };
 

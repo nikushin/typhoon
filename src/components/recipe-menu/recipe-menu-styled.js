@@ -11,7 +11,7 @@ export const Container = styled.div`
         width: 100%;
         margin: 30px 20px 20px 10px;
         padding: 15px 15px 15px 15px;
-        background-color: rgba(90,90,90,0.57);
+        background-color: rgb(90,90,90);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -36,7 +36,7 @@ export const Container = styled.div`
         }
         > div:nth-child(1) { //лево право
             > div:nth-child(2), > div:nth-child(3) { //цифры 
-              background-color: rgba(90,90,90,0.57);
+              background-color: rgb(90,90,90);
             }
             > div:nth-child(2) { //отступ между цифрами
               margin-right: 10px;

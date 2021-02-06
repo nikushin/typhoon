@@ -13,6 +13,9 @@ module.exports.recipeInit = function recipeInit (sql, socket, recipe_id) {
               results.forEach(function(item, i, arr) {
                 if (item.id === recipe_id) {send.current = item.n;}
               });
+              if (typeof(send.recipe_data) === "string") {
+                  send.recipe_data = JSON.parse(send.recipe_data);
+              }
               socket.emit("recipe_init", send);
               if (send.recipe_data && send.recipe_data.heat_setting_arr) {
                   global.memory.recipe.data.heat_setting_arr = send.recipe_data.heat_setting_arr

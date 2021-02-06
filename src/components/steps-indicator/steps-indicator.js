@@ -19,7 +19,7 @@ export const StepsContainer = styled.div`
 `;
 
 const OneStepContainer = styled.div`
-  background-color: ${props => props.on ? "#4dc4d0" : "rgba(90,90,90,0.57)"};
+  background-color: ${props => props.on ? "#4dc4d0" : "rgb(90,90,90)"};
   > div {
       > div {
         height: 100%;

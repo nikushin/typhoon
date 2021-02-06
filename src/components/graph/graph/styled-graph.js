@@ -20,9 +20,13 @@ const css_real_time_lines_animate_down = (t) => css`animation:
    ${t}s 
    ease-out`;
 
+
+// ${props => props.Visible ? (props => css_real_time_lines_animate_up(props.Transform)) :
+// (props => css_real_time_lines_animate_down(props.Transform))};
+// вниз
 export const SVGrealTimeLineG = styled.g`
-   ${props => props.Visible ? (props => css_real_time_lines_animate_up(props.Transform)) :
-   (props => css_real_time_lines_animate_down(props.Transform))};
+
+
    transform-box: fill-box;
    transform-origin: bottom;
    animation-fill-mode: forwards;

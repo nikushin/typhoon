@@ -5,7 +5,7 @@
 .app {
     width: 1920px;
     height: 1080px;
-    background-color: rgba(15, 23, 36, 1.0);
+    background-color: rgb(15, 23, 36);
     display: grid;
     grid-template-rows: 110px auto;
 

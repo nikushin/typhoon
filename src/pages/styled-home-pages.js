@@ -65,7 +65,7 @@ export const RoastModeContainer = styled.div`
   width: 300px;
   height: 80px;
   margin: 10px 20px 10px 10px;
-  background-color: rgba(70, 70, 70, 0.9);
+  background-color: rgb(99, 99, 99);
   font-size: 40px;
   display: flex;
   justify-content: center;
@@ -73,7 +73,7 @@ export const RoastModeContainer = styled.div`
 `;
 
 export const HistoryIconContainer = styled.div`
-  background-color: rgba(70, 70, 70, 0.9);
+  background-color: rgb(99, 99, 99);
   width: 200px;
   height: 80px;
   margin: 10px 0px 10px 10px;
@@ -85,7 +85,7 @@ export const HistoryIconContainer = styled.div`
 export const SvgIconHistory = styled.svg`
   width: 80px;
   height: 80px;
-  fill: ${props => props.on ? "rgba(255,206,0,1.0)" : 'white'};
+  fill: ${props => props.on ? "rgb(255,206,0)" : 'white'};
 `;
 
 export const SvgIconFan = styled.svg`

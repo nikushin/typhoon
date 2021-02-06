@@ -37,7 +37,7 @@ filter: none;
   margin-top: ${props =>props.top}px;
   margin-left: ${props =>props.left}px;
   background-color: rgba(35, 35, 35, 0.95);
-  box-shadow: 4px 4px 12px 0px #141414;
+  //box-shadow: 4px 4px 12px 0px #141414;
   color: white;
   position: relative;
   > div:first-child {

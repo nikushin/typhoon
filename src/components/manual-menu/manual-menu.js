@@ -9,7 +9,7 @@ padding-top: 20px;
 width: 500px;
 height: 500px;
 font-size: 40px;
-background-color: rgba(61,61,61,0.57);
+background-color: rgb(61,61,61);
     >div{
         margin: 10px 30px 25px 30px;
         padding: 10px 15px 10px 15px;
@@ -23,7 +23,7 @@ background-color: rgba(61,61,61,0.57);
 `;
 
 const OneBarDiv = styled.div`
-  background-color: ${props => props.on ? "#2ea58f" : "rgba(90,90,90,0.57)"};
+  background-color: ${props => props.on ? "#2ea58f" : "rgb(90,90,90)"};
 `;
 
 const OneBarRightSide = ({second_param}) => {

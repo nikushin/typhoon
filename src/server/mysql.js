@@ -38,16 +38,16 @@ module.exports = async function mysql_create_connect () {
       name CHAR(20), 
       time SMALLINT, 
       date DATETIME, 
-      beans JSON, 
-      air JSON, 
-      ror JSON, 
-      arr_done JSON 
+      beans LONGTEXT, 
+      air LONGTEXT, 
+      ror LONGTEXT, 
+      arr_done LONGTEXT 
       )`);
 
     await connection.query("CREATE TABLE IF NOT EXISTS `recipes` (" +
       "id INT PRIMARY KEY AUTO_INCREMENT," +
       "name CHAR(20)," +
-      "recipe_data JSON" +
+      "recipe_data LONGTEXT" +
       ")").then(
       async (result) => {if (result[0].warningStatus === 0) {
         await connection.query("INSERT recipes(name) VALUES ('first_recipe')");

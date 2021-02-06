@@ -11,7 +11,7 @@ export const HeaderContainer = styled.div`
 export const HeaderContainerInner = styled.div`
     height: 100%;
     width: 100%;
-    background-color: rgba(90,90,90,1.0);
+    background-color: rgb(90,90,90);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -57,30 +57,30 @@ export const IconContainerBase = styled.div`
 
 export const IconHomeContainer = styled(IconContainerBase)`
   >div {
-    background-color: ${props => props.on ? "rgba(35,255,1,1.0)" : 'transparent'};
+    background-color: ${props => props.on ? "rgb(35,255,1)" : 'transparent'};
   }
   svg{
-    stroke: ${props => props.on ? "rgba(35,255,1,1.0)" : 'white'};
+    stroke: ${props => props.on ? "rgb(35,255,1)" : 'white'};
   }
 `;
 
 export const IconSettingsContainer = styled(IconContainerBase)`
   >div {
-    background-color: ${props => props.on ? "rgba(255,245,3,1.0)" : 'transparent'};
+    background-color: ${props => props.on ? "rgb(255,245,3)" : 'transparent'};
   }
   svg{
       margin-top: 3px;
-      stroke: ${props => props.on ? "rgba(255,245,3,1.0)" : 'white'};
+      stroke: ${props => props.on ? "rgb(255,245,3)" : 'white'};
   }
 `;
 
 export const IconAlarmContainer = styled(IconContainerBase)`
   >div {
-    background-color: ${props => props.on ? "rgba(239,27,20,1.0)" : 'transparent'};
+    background-color: ${props => props.on ? "rgb(239,27,20)" : 'transparent'};
   }
   svg{
     margin-top: 7px;
-    stroke: ${props => props.on ? "rgba(239,27,20,1.0)" : 'white'};
+    stroke: ${props => props.on ? "rgb(239,27,20)" : 'white'};
     path{
       stroke-width:1px;
     }

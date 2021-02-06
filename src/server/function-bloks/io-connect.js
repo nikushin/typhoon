@@ -133,7 +133,12 @@ module.exports.ioConnect = async function ioConnect (socket) {
   socket.on('one_story_request', (id) => {
     (async function () {
     const [result] = await sql.query(`SELECT beans, air, ror, arr_done, time FROM saved_graphs WHERE id = ${id};`);
-    socket.emit("one_story_answer", result)
+      result[0].beans = JSON.parse(result[0].beans);
+      result[0].air = JSON.parse(result[0].air);
+      result[0].ror = JSON.parse(result[0].ror);
+      result[0].arr_done = JSON.parse(result[0].arr_done);
+      console.log(result[0].time)
+      socket.emit("one_story_answer", result[0]);
     })()
   });
 

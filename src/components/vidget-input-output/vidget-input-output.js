@@ -2,11 +2,10 @@ import React, {useLayoutEffect, useState} from 'react';
 import {useDispatch, useSelector } from 'react-redux';
 import {showKeyboard} from "../../actions";
 import styled from "styled-components";
-import {HistoryRequest} from "../../actions/graph";
 import {setKeyboardParameter} from '../../actions/index'
 
-export const Container = styled.div`
-  background-color: rgba(90,90,90,0.57);
+const Container = styled.div`
+  background-color: rgb(99,99,99);
   border-radius: 10px;
   height: ${props => props.height}px;
   width: 250px;
