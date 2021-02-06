@@ -24,14 +24,14 @@ export const Container = styled.div`
   //margin: auto;
   //top: 0; left: 0; bottom: 0; right: 0;
   z-index: 100;
-  backdrop-filter: blur(3px);
+   background-color: rgba(0, 0, 0, 0.3);
+  //backdrop-filter: blur(3px);
   //-moz- backdrop-filter: blur(3px);
   //-webkit-backdrop-filter: blur(10px);
 `;
 
 export const ContainerInner = styled.div`
 filter: none;
-
   width: ${WidthContainer}px;
   height: ${HeightContainer}px;
   margin-top: ${props =>props.top}px;

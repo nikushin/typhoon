@@ -14,6 +14,11 @@ module.exports.recipeInit = function recipeInit (sql, socket, recipe_id) {
                 if (item.id === recipe_id) {send.current = item.n;}
               });
               socket.emit("recipe_init", send);
+              if (send.recipe_data && send.recipe_data.heat_setting_arr) {
+                  global.memory.recipe.data.heat_setting_arr = send.recipe_data.heat_setting_arr
+              } else {
+                  global.memory.recipe.data.heat_setting_arr = [[0,0]]
+              }
             });
         });
     });

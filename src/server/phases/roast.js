@@ -57,6 +57,7 @@ class step_roast {
 
   RoastTick = () => {
     const arr = global.memory.recipe.data.heat_setting_arr;
+    console.log(arr);
     if (!this.status) {return undefined}
     if (this.roastSecond > 500) {
       this.toUnloadingRoaster();
