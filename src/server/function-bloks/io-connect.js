@@ -22,11 +22,6 @@ module.exports.ioConnect = async function ioConnect (socket) {
     global.vds.setFr(data)
   });
 
-
-  socket.on('test_gpio', () => {
-    console.log('work')
-  });
-
   socket.on('test_range', (data) => {
     emitter.emit('test_range', data);
   });

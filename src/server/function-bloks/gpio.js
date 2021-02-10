@@ -3,65 +3,105 @@ const socket = global.socket;
 const emitter = global.emitter;
 
 module.exports = function gpioCreate () {
-    //const button_start = new Gpio('4', 'in', 'rising');
-    //const button_stop = new Gpio('5', 'in', 'falling');
-    const button_alarm = new Gpio(12, 'in', 'both');
-    //const button_cooler = new Gpio('7', 'in', 'rising');
-    //const button_blades = new Gpio('8', 'in', 'rising');
-    //const switch_prepare = new Gpio('9', 'in', 'both');
+    const button_start = new Gpio('18', 'in', 'rising');
+    const button_stop = new Gpio('23', 'in', 'falling');
+    const button_alarm = new Gpio('24', 'in', 'both');
+    const button_cooler = new Gpio('25', 'in', 'rising');
+    const button_blades = new Gpio('12', 'in', 'rising');
+    const switch_prepare = new Gpio('16', 'in', 'both');
 
-    const vvd = new Gpio(20, 'out');
-    const vds = new Gpio(13, 'out');
-    //const heat_starter = new Gpio('9', 'out');
-    //const cooler_starter = new Gpio('9', 'out');
-    //const blades_starter = new Gpio('9', 'out');
+    // const vvd = new Gpio(20, 'out'); //test
+    const vds = new Gpio('13', 'out');
+    const heat_starter = new Gpio('27', 'out');
+    const cooler_starter = new Gpio('22', 'out');
+    const blades_starter = new Gpio('5', 'out');
+    //const cyclone_starter = new Gpio('5', 'out');
+    const lamp_cooler = new Gpio('26', 'out');
+    const lamp_blades = new Gpio('21', 'out');
 
-    let vvd_status = false;
-    emitter.on('test_gpio', () => {
-        (vvd_status === 0) ? vvd_status = 1 : vvd_status = 0;
-        vvd.write(vvd_status, err => {
-			if (err) {console.log('err')}
-		})
-		
+    // let vvd_status = false;
+    // emitter.on('test_gpio', () => {
+    //     (vvd_status === 0) ? vvd_status = 1 : vvd_status = 0;
+    //     vvd.write(vvd_status, err => {
+	// 		if (err) {console.log('err')}
+	// 	})
+    // });
+
+    //outputs
+
+    emitter.on('blades_gpio_switch_lamp', (data) => {
+        lamp_blades.write(data?1:0, err => {
+            if (err) {console.log('err lamp_blades')}
+        })
     });
 
+    emitter.on('blades_gpio_switch_power', (data) => {
+        blades_starter.write(data?1:0, err => {
+            if (err) {console.log('err blades_starter')}
+        })
+    });
+
+    emitter.on('cooler_gpio_switch_power', (data) => {
+        cooler_starter.write(data?1:0, err => {
+            if (err) {console.log('err cooler_starter')}
+        })
+    });
+
+    emitter.on('cooler_gpio_switch_lamp', (data) => {
+        lamp_cooler.write(data?1:0, err => {
+            if (err) {console.log('err lamp_cooler')}
+        })
+    });
+
+
     emitter.on('vds_gpio_power', (data) => {
-        console.log(data);
         vds.write(data?1:0, err => {
             if (err) {console.log('err')}
         })
     });
 
+    emitter.on('heater_gpio_switch_power', (data) => {
+        vds.write(data?1:0, err => {
+            if (err) {console.log('err')}
+        })
+    });
 
-    // button_start.watch((err, value) => {
-        // if (err) {console.log('button_start Error', err);}
-        // if (value===1) {emitter.emit('button_start');}
-    // });
+    heat_starter.write(1, err => {
+        if (err) {console.log('err heat_starter')}
+    });
 
-    // button_stop.watch((err, value) => {
-        // if (err) {console.log('button_stop Error', err);}
-        // if (value===0) {emitter.emit('button_stop');}
-    // });
+    //inputs
+
+    button_cooler.watch((err, value) => {
+        if (err) {console.log('button_cooler Error', err); return}
+        if (value===1) {emitter.emit('button_cooler');}
+    });
+
+    button_blades.watch((err, value) => {
+        if (err) {console.log('button_blades Error', err); return}
+        if (value===1) {emitter.emit('button_blades');}
+    });
+
+    button_start.watch((err, value) => {
+        if (err) {console.log('button_start Error', err); return}
+        if (value===1) {emitter.emit('button_start');}
+    });
+
+    button_stop.watch((err, value) => {
+        if (err) {console.log('button_stop Error', err); return}
+        if (value===0) {emitter.emit('button_stop');}
+    });
 
     button_alarm.watch((err, value) => {
-        if (err) {console.log('button_alarm Error', err);}
+        if (err) {console.log('button_alarm Error', err); return}
         if (value===1) {emitter.emit('button_alarm', true);}
         if (value===0) {emitter.emit('button_alarm', false);}
     });
 
-    // button_cooler.watch((err, value) => {
-        // if (err) {console.log('button_cooler Error', err);}
-        // if (value===1) {emitter.emit('button_cooler', true);}
-    // });
+    switch_prepare.watch((err, value) => {
+        if (err) {console.log('switch_prepare Error', err); return}
+        if (value===1) {emitter.emit('button_prepare', true);}
+        if (value===0) {emitter.emit('button_prepare', false);}
+    });
 
-    // button_blades.watch((err, value) => {
-        // if (err) {console.log('button_blades Error', err);}
-        // if (value===1) {emitter.emit('button_blades', true);}
-    // });
-
-    // switch_prepare.watch((err, value) => {
-        // if (err) {console.log('switch_prepare Error', err);}
-        // if (value===1) {emitter.emit('switch_prepare', true);}
-        // if (value===0) {emitter.emit('switch_prepare', false);}
-    // });
  };

@@ -3,48 +3,47 @@
 // const {vds} = require('../equipment/ATV');
 const ModbusRTU = require("modbus-serial");
 const Modbusclient = new ModbusRTU();
-Modbusclient.setTimeout(1000);
-Modbusclient.setID(1);
+Modbusclient.setTimeout(300);
 	
 module.exports = function modbusCreate () {
     modbusInit();
 };
+
+// const readStack = [
+//     async () => {
+//        await Modbusclient.readHoldingRegisters(0, 1).then((data)=> {
+//         console.log(data.data[0]);
+//         global.vds.statusFeedBack(data.data[0]);
+//     }).catch(err=>console.log(err.message));
+//     },
+//     async () => {
+//         await Modbusclient.readHoldingRegisters(1, 1).then((data)=> {
+//         console.log(data.data[0]);
+//         global.vds.frFeedBack(data.data[0]);
+//     }).catch(err=>console.log(err.message));
+//     },
+// ];
+
 const readStack = [
     async () => {
-       await Modbusclient.readHoldingRegisters(0, 1).then((data)=> {
-        // console.log(data.data[0]);
-        global.vds.statusFeedBack(data.data[0]);
+        Modbusclient.setID(1);
+        await Modbusclient.readHoldingRegisters(0, 2).then((data) => { //3201
+            //console.log(data.data[0], data.data[1]);
+            global.vds.statusFeedBack(data.data[0]);
     }).catch(err=>console.log(err.message));
     },
     async () => {
-        await Modbusclient.readHoldingRegisters(1, 1).then((data)=> {
-        // console.log(data.data[0]);
-        global.vds.frFeedBack(data.data[0]);
-    }).catch(err=>console.log(err.message));
+        Modbusclient.setID(16);
+        await Modbusclient.readHoldingRegisters(1, 6).then((data) => {
+            global.memory.operative.temp_beans = data.data[0];
+            global.memory.operative.temp_air = data.data[6];
+            //console.log(data.data[0], data.data[6]);
+        }).catch(err=>console.log(err.message));
     },
 ];
+
 const writeStack = [];
 
-// const readModbus = async () => {
-//     await Modbusclient.readHoldingRegisters(0, 1).then((data)=> {
-//         // console.log(data.data[0]);
-//         vds.statusFeedBack(data.data[0]);
-//     }).catch(err=>console.log(err.message));
-//     await Modbusclient.readHoldingRegisters(1, 1).then((data)=> {
-//         // console.log(data.data[0]);
-//         vds.frFeedBack(data.data[0]);
-//     }).catch(err=>console.log(err.message));
-//     setTimeout(readModbus, 1000);
-// };
-
-// const readModbus = async () => {
-//     await Modbusclient.readHoldingRegisters(3201, 2).then((data)=> {
-//     // console.log(data.data[0], data.data[1]);
-//         global.vds.statusFeedBack(data.data[0]);
-//         global.vds.frFeedBack(data.data[1]);
-//     }).catch(err=>console.log(err.message));
-//     setTimeout(readModbus, 1000);
-// };
 let n = 0;
 const readModbus = async () => {
     if (writeStack.length !== 0) {
@@ -72,22 +71,7 @@ function modbusInit () {
 
 global.emitter.on('vds_set_fr', (data) => {
     writeStack.push(
-        async () => await Modbusclient.writeRegisters(2, [data]).catch(function(err) {
-            console.log(err);
-        })
-    );
-
-    });
-
-// global.emitter.on('vds_set_cmd', (data) => {
-//         Modbusclient.writeRegisters(8501, [data]).catch(function(err) {
-//             console.log(err);
-//         });
-//     });
-//
-// global.emitter.on('vds_set_fr', (data) => {
-//         Modbusclient.writeRegisters(8502, [data]).catch(function(err) {
-//             console.log(err);
-//             // global.emitter.emit('vds_set_fr', data);
-//         });
-//     });
+        async () => {
+            Modbusclient.setID(1);
+            await Modbusclient.writeRegisters(2, [data]).catch(function(err) {console.log(err.message)})
+})});

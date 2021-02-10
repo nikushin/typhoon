@@ -45,14 +45,29 @@ module.exports = function emittSocket () {
     return {tempBeans: tempBeans.toFixed(1), tempAir: tempAir.toFixed(1), ror: ror}
   };
 
+  const TempCalc = () => {
+
+    if (global.memory.operative.temp_beans) {
+      tempBeansArr.push(tempBeans);
+    }
+
+    if (tempBeansArr.length > 10) {
+      ror = -(tempBeansArr[0] - tempBeansArr[9]).toFixed(1);
+      tempBeansArr.shift()
+    }
+
+    return {tempBeans: global.memory.operative.temp_beans, tempAir: global.memory.operative.temp_air, ror: ror}
+  };
+
   const EverySecondSendData = () => {
 
     const tempSimulatorValues = TempSimulator();
+    const temp = TempCalc();
     const roastData = global.steps.roast.RoastTick();
     const coolingData = global.steps.cooling.CoolingTick();
 
     socket.emit("every_second_data", {
-      temp: tempSimulatorValues,
+      temp: temp,
       roastData: roastData,
       coolingData: coolingData,
     });

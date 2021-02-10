@@ -50,6 +50,7 @@ const GraphSettings = ({parameters = {}}) => {
   set_heat_setting_arr_path(buffer);
   },[heat_setting_arr]);
 
+
   const AxesConst = <Axes Ysteps={12}
                           Yinterval={10}
                           Xsteps={18}
@@ -90,7 +91,7 @@ const GraphSettings = ({parameters = {}}) => {
         (-HeightInner+indent/2)+ " " +
         (WidthInner)+ " " +
         (HeightInner)}>
-        <g >{AxesConst}</g>
+        <g>{AxesConst}</g>
       </SVGbackground>
 
       <SVGgraph width={WidthInner} height={HeightInner} preserveAspectRatio="none"
