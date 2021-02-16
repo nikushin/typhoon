@@ -4,7 +4,7 @@ const socket = global.socket;
 const emitter = global.emitter;
 
 module.exports = function pwmCreate () {
-	pigpio.configureClock(10, pigpio.CLOCK_PCM);
+    pigpio.configureClock(10, pigpio.CLOCK_PCM);
 
     const lamp_start = new Gpio(20, {mode: Gpio.OUTPUT});
     const ssr = new Gpio(19, {mode: Gpio.OUTPUT});
@@ -18,11 +18,13 @@ module.exports = function pwmCreate () {
     ssr.pwmWrite(0);
 
     emitter.on('heater_gpio_switch_power', (value) => {
-        ssr.pwmRange(value);
+		console.log('heater_gpio_switch_power ' + value);
+        ssr.pwmWrite(value);
     });
 
     emitter.on('lamp_start', (value) => {
-        lamp_start.pwmRange(value);
+		console.log('lamp_start ' + value);
+        lamp_start.pwmWrite(value);
     });
 
     // emitter.on('test_range', (value) => {

@@ -37,16 +37,15 @@ module.exports = function emittSocket () {
       tempAir -= ((Math.random() - 0.20) * 2);
     }
 
-    emitter.emit('temp_beans_new_value', tempBeans);
-
     if (tempBeansArr.length > 10) {
       ror = -(tempBeansArr[0] - tempBeansArr[9]).toFixed(1);
       tempBeansArr.shift()
     }
 
+    emitter.emit('temp_beans_new_value', tempBeans);
+
     global.memory.operative.temp_beans = tempBeans.toFixed(1);
     global.memory.operative.temp_air = tempAir.toFixed(1);
-
 
     return {tempBeans: tempBeans.toFixed(1), tempAir: tempAir.toFixed(1), ror: ror}
   };

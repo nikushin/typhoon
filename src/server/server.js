@@ -5,9 +5,9 @@
   global.socket = require('socket.io')(8080, {transports: ['polling', 'websocket']} ).sockets;
   const EventEmitter = new require('events').EventEmitter;
   global.emitter = new EventEmitter();
-  //await require('./modbus/modbus')();
-  // require('./function-bloks/gpio')();
-  // require('./function-bloks/gpio2')();
+  await require('./modbus/modbus')();
+  require('./function-bloks/gpio')();
+  require('./function-bloks/gpio2')();
   require('./equipment/equipment_init');
   require('./phases/steps_init');
 

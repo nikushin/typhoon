@@ -99,6 +99,7 @@ module.exports.ioConnect = async function ioConnect (socket) {
     if (data.temp_prepare_sp !== undefined) {
       memory.retain.temp_prepare_sp = data.temp_prepare_sp;
       emitter.emit('new_temp_prepare_sp');
+	  console.log('new_temp_prepare_sp ' + memory.retain.temp_prepare_sp);
       sql.query(`UPDATE parameters SET temp_prepare_sp = ${data.temp_prepare_sp};`)
     }
     if (data.manual !== undefined) {

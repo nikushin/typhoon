@@ -1,4 +1,4 @@
- import socketService from "../services/socket-service";
+import socketService from "../services/socket-service";
 
 const KeyboardDisplay = (state, action) => {
 
@@ -49,9 +49,10 @@ const KeyboardDisplay = (state, action) => {
             };
 
       case 'NEW_VALUE_KEYBOARD':
+	   
           state[action.payload.keeper][action.payload.parameter] = action.payload.value;
-          // console.log(action.payload);
-          if (action.payload.keeper === 'ManualKeeper') { 
+          if (action.payload.keeper === 'ManualKeeper') {
+			  console.log(action.payload);
               socketService.SocketEmmit('memory_change', {manual: {[action.payload.parameter]: action.payload.value}});
           } else {
               socketService.SocketEmmit('memory_change', {[action.payload.parameter]: action.payload.value});

@@ -55,13 +55,15 @@ class step_roast {
       global.steps.cooling.SetStatus(true);
   };
 
-  RoastTick = () => {
-    const arr = global.memory.recipe.data.heat_setting_arr;
+  RoastTick = () => { 
+ 
     if (!this.status) {return undefined}
+	console.log('this.status ', this.status);
     if (this.roastSecond > 500) {
       this.toUnloadingRoaster();
       return undefined
     }
+	const arr = global.memory.recipe.data.heat_setting_arr;
     let roast_power = 0;
     if (global.memory.retain.roast_mode_auto) {
       arr.forEach( (item) => {
