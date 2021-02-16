@@ -42,6 +42,11 @@ module.exports = function emittSocket () {
       tempBeansArr.shift()
     }
 
+    emitter.emit('temp_beans_new_value', tempBeans);
+
+    global.memory.operative.temp_beans = tempBeans.toFixed(1);
+    global.memory.operative.temp_air = tempAir.toFixed(1);
+
     return {tempBeans: tempBeans.toFixed(1), tempAir: tempAir.toFixed(1), ror: ror}
   };
 
@@ -62,12 +67,12 @@ module.exports = function emittSocket () {
   const EverySecondSendData = () => {
 
     const tempSimulatorValues = TempSimulator();
-    const temp = TempCalc();
+    //const temp = TempCalc();
     const roastData = global.steps.roast.RoastTick();
     const coolingData = global.steps.cooling.CoolingTick();
 
     socket.emit("every_second_data", {
-      temp: temp,
+      temp: tempSimulatorValues,
       roastData: roastData,
       coolingData: coolingData,
     });

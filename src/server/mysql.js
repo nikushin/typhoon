@@ -4,7 +4,7 @@ module.exports = async function mysql_create_connect () {
 
     const connection = await mysql.createConnection({
     host: "127.0.0.1",
-    user: "root",
+    user: "admin",
     password: "83528352",
     //timezone: 'utc'
   });

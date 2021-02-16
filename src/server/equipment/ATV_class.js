@@ -3,8 +3,14 @@ class atv_class {
         this.name = name;
         this.address = address;
         this.min_fr = min_fr;
-        global.emitter.on( this.name + '_new_prepare_fr', (value) => {
-            if (global.steps.prepare.status) {this.setFr(value)}
+        global.emitter.on( this.name + '_new_prepare_fr', ( ) => {
+            if (global.steps.prepare.status) {this.setFr(global.memory.retain.vds_prepare_fr)}
+        });
+        global.emitter.on('new_manual_vds_fr', () => {
+            if (global.memory.operative.manual.vds) {this.setFr(global.memory.retain.manual.vds_fr)}
+        });
+        global.emitter.on('vds_new_manual_sp', () => {
+            if (global.steps.roast.status) {this.setFr(global.memory.retain.vds_manual_sp)}
         });
     }
 
@@ -17,6 +23,9 @@ class atv_class {
         this.power = value;
         global.emitter.emit(this.name + '_gpio_power', this.power);
         global.socket.emit('memory_change', {lamps:{[this.name + '_lamp'] : this.power}});
+        if (global.steps.prepare.status) {this.setFr(global.memory.retain.vds_prepare_fr)}
+        if (global.memory.operative.manual.vds) {this.setFr(global.memory.retain.manual.vds_fr)}
+        if (global.steps.roast.status) {this.setFr(global.memory.retain.vds_manual_sp)}
     };
 
     setFr = (value) => {
