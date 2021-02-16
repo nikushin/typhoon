@@ -19,6 +19,7 @@ module.exports.ioConnect = async function ioConnect (socket) {
   });
 
   socket.on('vds_set_fr', (data) => {
+    console.log('vds_set_fr' + data);
     global.vds.setFr(data)
   });
 
@@ -72,6 +73,7 @@ module.exports.ioConnect = async function ioConnect (socket) {
       sql.query(`UPDATE parameters SET heat_manual_sp = ${data.heat_manual_sp};`)
     }
     if (data.vds_manual_sp !== undefined) {
+      emitter.emit('vds_new_manual_sp');
       memory.retain.vds_manual_sp = data.vds_manual_sp;
       sql.query(`UPDATE parameters SET vds_manual_sp = ${data.vds_manual_sp};`)
     }
@@ -106,6 +108,7 @@ module.exports.ioConnect = async function ioConnect (socket) {
         sql.query(`UPDATE parameters SET manual_vds = ${data.manual.vds_fr};`)
       }
       if (data.manual.temp_sp !== undefined) {
+        console.log(data.manual.temp_sp);
         memory.retain.manual.temp_sp = data.manual.temp_sp;
         emitter.emit('new_manual_temp_sp');
         sql.query(`UPDATE parameters SET manual_heat = ${data.manual.temp_sp};`)
@@ -132,7 +135,7 @@ module.exports.ioConnect = async function ioConnect (socket) {
       result[0].air = JSON.parse(result[0].air);
       result[0].ror = JSON.parse(result[0].ror);
       result[0].arr_done = JSON.parse(result[0].arr_done);
-      console.log(result[0].time)
+      console.log(result[0].time);
       socket.emit("one_story_answer", result[0]);
     })()
   });

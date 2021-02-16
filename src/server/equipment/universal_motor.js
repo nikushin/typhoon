@@ -13,13 +13,21 @@ class universal_motor {
             global.emitter.emit(this.name + '_gpio_switch_lamp', this.manual);
             global.socket.emit('memory_change', {lamps:{[this.name + '_manual_lamp'] : this.manual}});
         }
+
         global.emitter.emit(this.name + '_gpio_switch_power', this.power);
-        global.socket.emit('memory_change', {lamps:{[this.name + '_lamp'] : this.power}});
+        global.socket.emit('memory_change', {lamps:{
+                [this.name + '_lamp'] : this.manual,
+                [this.name + '_manual_lamp'] : this.manual
+            }});
     };
 
-    ManualSwitchPower = () => {
+    ManualSwitchPower = (value) => {
         if (!global.global.steps.cooling.status && !global.memory.operative.manual.on) {
-            this.manual = !this.manual;
+            if (value !== undefined) {
+                this.manual = value;
+            } else {
+                this.manual = !this.manual;
+            }
             global.emitter.emit(this.name + '_gpio_switch_power', this.manual);
             global.emitter.emit(this.name + '_gpio_switch_lamp', this.manual);
 

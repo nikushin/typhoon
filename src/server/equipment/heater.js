@@ -3,7 +3,7 @@ class heater {
     constructor() {
         global.emitter.on('temp_beans_new_value', () => {
             if (global.steps.prepare.status) {this.SetPreparePower()}
-            if (global.memory.operative.manual.on) {this.SetManualPower()}
+            if (global.memory.operative.manual.heat) {this.SetManualPower()}
         });
 
         global.emitter.on('new_temp_prepare_sp', () => {
@@ -75,6 +75,9 @@ class heater {
             this.power = 0;
         }
         if (this.on) {global.emitter.emit('heater_gpio_switch_power', this.power);}
+        // console.log('temp_beans' + global.memory.operative.temp_beans);
+        // console.log('temp_sp' + global.memory.retain.manual.temp_sp);
+        // console.log('SetManualPower' + this.power)
     };
 
 }

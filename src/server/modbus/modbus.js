@@ -59,7 +59,8 @@ const readModbus = async () => {
 function modbusInit () {
     //Modbusclient.connectRTUBuffered('/dev/ttyUSB0', {baudRate: 19200, parity: "even", dataBits: 8, stopBits: 1 }, (err) => {
     //Modbusclient.connectRTUBuffered('/dev/serial0', {baudRate: 9600, parity: "even", dataBits: 8, stopBits: 1 }, (err) => {
-    // Modbusclient.connectRTUBuffered('COM30', {baudRate: 19200, parity: "even", dataBits: 8, stopBits: 1 }, (err) => {
+    //Modbusclient.connectRTUBuffered('COM30', {baudRate: 19200, parity: "even", dataBits: 8, stopBits: 1 }, (err) => {
+    //Modbusclient.connectRTUBuffered('/dev/ttyAMA1', {baudRate: 9600, parity: "even", dataBits: 8, stopBits: 1}, (err) => {
     Modbusclient.connectRTUBuffered('COM31', {baudRate: 9600, parity: "even", dataBits: 8, stopBits: 1 }, (err) => {
         if (err) {
             console.log(err);
