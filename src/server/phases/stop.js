@@ -14,10 +14,10 @@ class step_stop {
   SetStatus = (value, toPrepare) => {
     this.status = value;
     if (this.status === true) {
-      global.cooler.SwitchPower(false);
-      global.blades.SwitchPower(false);
-      global.vds.SwitchPower(false);
-      global.heater.SwitchAllow(false);
+      if (global.cooler.power) {global.cooler.SwitchPower(false)}
+      if (global.blades.power) {global.blades.SwitchPower(false)}
+      if (global.vds.power) {global.vds.SwitchPower(false)}
+      if (global.heater.allow) {global.heater.SwitchAllow(false)}
     }
     this.ManualChange(false, toPrepare);
     global.socket.emit("phases_status", {stop : this.status});
