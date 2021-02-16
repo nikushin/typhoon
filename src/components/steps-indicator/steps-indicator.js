@@ -104,7 +104,7 @@ const StepsIndicator = () => {
         <OneStep name={'Загрузка'} parameter={'loading_roaster'}/>
         <OneStepRoast/>
         <OneStepCooling/>
-        <OneStep name={'Выгрузка'} parameter={'unloading_cooler'}/>
+        {/*<OneStep name={'Выгрузка'} parameter={'unloading_cooler'}/>*/}
     </StepsContainer>
   )
 };

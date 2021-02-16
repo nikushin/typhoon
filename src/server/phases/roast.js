@@ -55,10 +55,8 @@ class step_roast {
       global.steps.cooling.SetStatus(true);
   };
 
-  RoastTick = () => { 
- 
+  RoastTick = () => {
     if (!this.status) {return undefined}
-	console.log('this.status ', this.status);
     if (this.roastSecond > 500) {
       this.toUnloadingRoaster();
       return undefined

@@ -29,7 +29,7 @@ class step_prepare {
     if (this.status === true && value === false) {
       this.SetStatus (false);
       if (!global.steps.loading_roaster.status && !global.steps.roast.status &&
-          !global.steps.cooling.status && !global.steps.unloading_cooler.status) {
+          !global.steps.cooling.status) {
         global.steps.stop.SetStatus(true);
       }
     }

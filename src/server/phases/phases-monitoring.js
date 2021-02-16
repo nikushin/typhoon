@@ -4,7 +4,7 @@ const loading_roaster = require('./loading-roaster');
 const roast = require('./roast');
 const unloading_roaster = require('./unloading-roaster');
 const cooling = require('./cooling');
-const unloading_cooler = require('./unloading-cooler');
+//const unloading_cooler = require('./unloading-cooler');
 const {buttons_list} = require('../equipment/buttons-lamps');
 const {emittsCreator} = require('../function-bloks/emitts-creator');
 
@@ -62,11 +62,11 @@ const emitts_model =
       do: () => {socket.emit("phases_status", {cooling: cooling.status})}
     },
 
-    {name: 'Phases unloading_cooler to HMI',
-      observe: ['phase_unloading_cooler'],
-      compare: function () {return true},
-      do: () => {socket.emit("phases_status", {unloading_cooler: unloading_cooler.status})}
-    },
+    // {name: 'Phases unloading_cooler to HMI',
+    //   observe: ['phase_unloading_cooler'],
+    //   compare: function () {return true},
+    //   do: () => {socket.emit("phases_status", {unloading_cooler: unloading_cooler.status})}
+    // },
 
     {name: 'Stop to prepare monitoring',
       observe: ['button_prepare', 'phase_stop'],
@@ -118,20 +118,20 @@ const emitts_model =
         unloading_roaster.SetStatus(false); cooling.SetStatus(true);
       }},
 
-    {name: 'Cooling to Unloading-cooler monitoring',
-      observe: ['phase_cooling_done'],
-      compare: function () {return true},
-      do: () => {
-        // console.log("Cooling to Unloading-cooler");
-        cooling.SetStatus(false); unloading_cooler.SetStatus(true);
-      }},
-
-    {name: 'Unloading-cooler done monitoring',
-      observe: ['phase_unloading_cooler_done'],
-      compare: function () {return true},
-      do: () => {
-        unloading_cooler.SetStatus(false); stop.SetStatus(true);
-      }},
+    // {name: 'Cooling to Unloading-cooler monitoring',
+    //   observe: ['phase_cooling_done'],
+    //   compare: function () {return true},
+    //   do: () => {
+    //     // console.log("Cooling to Unloading-cooler");
+    //     cooling.SetStatus(false); unloading_cooler.SetStatus(true);
+    //   }},
+    //
+    // {name: 'Unloading-cooler done monitoring',
+    //   observe: ['phase_unloading_cooler_done'],
+    //   compare: function () {return true},
+    //   do: () => {
+    //     unloading_cooler.SetStatus(false); stop.SetStatus(true);
+    //   }},
 
   ];
 

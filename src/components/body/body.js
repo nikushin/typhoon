@@ -75,9 +75,7 @@ const Body = () => {
             <div>
                 <div>vds<Lamp parameters={{parameter : 'vds_switch', keeper : 'analogParametersKeeper'}} /></div>
                 <div>cooler<Lamp parameters={{parameter : 'cooler_lamp', keeper : 'analogParametersKeeper'}} /></div>
-                <div>cooler_m<Lamp parameters={{parameter : 'cooler_manual_lamp', keeper : 'analogParametersKeeper'}} /></div>
                 <div>blades<Lamp parameters={{parameter : 'blades_lamp', keeper : 'analogParametersKeeper'}} /></div>
-                <div>blades_m<Lamp parameters={{parameter : 'blades_manual_lamp', keeper : 'analogParametersKeeper'}} /></div>
                 <div>heat<Lamp parameters={{parameter : 'heat_lamp', keeper : 'analogParametersKeeper'}} /></div>
                 <div></div>
             </div>

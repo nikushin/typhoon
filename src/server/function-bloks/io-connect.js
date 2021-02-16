@@ -14,6 +14,14 @@ module.exports.ioConnect = async function ioConnect (socket) {
 
   socket.emit("memory_init", memory);
 
+  // socket.on('button_cooler', () => {
+  //   emitter.emit('button_cooler');
+  // });
+  //
+  // socket.on('button_blades', () => {
+  //   emitter.emit('button_blades');
+  // });
+
   socket.on('vds_switch_power', (data) => {
     global.vds.SwitchPower(data)
   });
@@ -23,39 +31,11 @@ module.exports.ioConnect = async function ioConnect (socket) {
     global.vds.setFr(data)
   });
 
-  socket.on('test_range', (data) => {
-    emitter.emit('test_range', data);
-  });
-
-  socket.on('test_frequency', (data) => {
-    emitter.emit('test_frequency', data);
-  });
-
-  socket.on('test_value', (data) => {
-    emitter.emit('test_value', data);
-  });
-
   //!!!
   socket.on('msg', (data) => {
     sql.query(`UPDATE parameters 
     SET value = ${data[1]}
     WHERE name = '${data[0]}';`)
-  });
-
-  socket.on('test_range', (data) => {
-    emitter.emit('test_range', data);
-  });
-
-  socket.on('test_frequency', (data) => {
-    emitter.emit('test_frequency', data);
-  });
-
-  socket.on('test_value', (data) => {
-    global.emitter.emit('test_value', data);
-  });
-
-  socket.on('test_gpio', () => {
-      emitter.emit('test_gpio')
   });
 
   emitter.on('button_alarm', (value) => {
@@ -195,7 +175,7 @@ module.exports.ioConnect = async function ioConnect (socket) {
     loading_roaster: global.steps.loading_roaster.status,
     roast: global.steps.roast.status,
     cooling: global.steps.cooling.status,
-    unloading_cooler: global.steps.unloading_cooler.status,
+    //unloading_cooler: global.steps.unloading_cooler.status,
   });
 
 };

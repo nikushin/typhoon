@@ -29,34 +29,25 @@ module.exports = function gpioCreate () {
 
     //outputs
 
-    emitter.on('blades_gpio_switch_lamp', (data) => {
-		console.log('blades_gpio_switch_lamp ', data);
-        lamp_blades.write(data?1:0, err => {
-            if (err) {console.log('err lamp_blades')}
-        })
-    });
-
     emitter.on('blades_gpio_switch_power', (data) => {
 		console.log('blades_gpio_switch_power ', data);
         blades_starter.write(data?1:0, err => {
             if (err) {console.log('err blades_starter')}
-        })
+        });
+        lamp_blades.write(data?1:0, err => {
+            if (err) {console.log('err lamp_blades')}
+        });
     });
 
     emitter.on('cooler_gpio_switch_power', (data) => {
 		console.log('cooler_gpio_switch_power ', data);
         cooler_starter.write(data?1:0, err => {
             if (err) {console.log('err cooler_starter')}
-        })
-    });
-
-    emitter.on('cooler_gpio_switch_lamp', (data) => {
-		console.log('cooler_gpio_switch_lamp ', data);
+        });
         lamp_cooler.write(data?1:0, err => {
             if (err) {console.log('err lamp_cooler')}
-        })
+        });
     });
-
 
     emitter.on('vds_gpio_power', (data) => {
 	console.log('vds_gpio_power ', data);
