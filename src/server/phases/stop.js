@@ -19,7 +19,9 @@ class step_stop {
       if (global.vds.power) {global.vds.SwitchPower(false)}
       if (global.heater.allow) {global.heater.SwitchAllow(false)}
     }
-    this.ManualChange(false, toPrepare);
+    if (global.memory.operative.manual.on) {
+      this.ManualChange(false, toPrepare);
+    }
     global.socket.emit("phases_status", {stop : this.status});
   };
 
