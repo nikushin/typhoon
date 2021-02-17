@@ -3,7 +3,7 @@ class heater {
     constructor() {
         global.emitter.on('temp_beans_new_value', () => {
             if (global.steps.prepare.status) {this.SetPreparePower()}
-            if (global.memory.operative.manual.on) {this.SetManualPower()}
+            if (global.memory.operative.manual.heat) {this.SetManualPower()}
         });
 
         global.emitter.on('new_temp_prepare_sp', () => {
@@ -11,7 +11,7 @@ class heater {
         });
 
         global.emitter.on('new_manual_temp_sp', () => {
-            if (global.memory.operative.manual.on) {this.SetManualPower()}
+            if (global.memory.operative.manual.heat) {this.SetManualPower()}
         });
 
         global.emitter.on('vds_fr_feedback',() => {
@@ -49,6 +49,7 @@ class heater {
                 this.SetManualPower(global.memory.operative.temp_beans)
             }
         } else {
+			this.power = 0;
             global.emitter.emit('heater_gpio_switch_power', 0);
         }
         global.socket.emit('memory_change', {heat_lamp: this.on});
@@ -84,7 +85,7 @@ class heater {
         if (this.on && this.power!== new_power) {
 			this.power = new_power;
 			global.emitter.emit('heater_gpio_switch_power', this.power);
-			}
+		}
         //console.log('temp_beans' + global.memory.operative.temp_beans);
         //console.log('temp_sp' + global.memory.retain.manual.temp_sp);
         //console.log('SetManualPower' + this.power)

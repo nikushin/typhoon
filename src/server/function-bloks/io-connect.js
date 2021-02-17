@@ -14,21 +14,25 @@ module.exports.ioConnect = async function ioConnect (socket) {
 
   socket.emit("memory_init", memory);
 
-  // socket.on('button_cooler', () => {
-  //   emitter.emit('button_cooler');
-  // });
-  //
-  // socket.on('button_blades', () => {
-  //   emitter.emit('button_blades');
-  // });
-
   socket.on('vds_switch_power', (data) => {
     global.vds.SwitchPower(data)
   });
 
   socket.on('vds_set_fr', (data) => {
     console.log('vds_set_fr' + data);
-    global.vds.setFr(data)
+    global.vds.setFr(data);
+  });
+
+  socket.on('test_range', (data) => {
+    emitter.emit('test_range', data);
+  });
+
+  socket.on('test_frequency', (data) => {
+    emitter.emit('test_frequency', data);
+  });
+
+  socket.on('test_value', (data) => {
+    emitter.emit('test_value', data);
   });
 
   //!!!
@@ -36,6 +40,22 @@ module.exports.ioConnect = async function ioConnect (socket) {
     sql.query(`UPDATE parameters 
     SET value = ${data[1]}
     WHERE name = '${data[0]}';`)
+  });
+
+  socket.on('test_range', (data) => {
+    emitter.emit('test_range', data);
+  });
+
+  socket.on('test_frequency', (data) => {
+    emitter.emit('test_frequency', data);
+  });
+
+  socket.on('test_value', (data) => {
+    global.emitter.emit('test_value', data);
+  });
+
+  socket.on('test_gpio', () => {
+      emitter.emit('test_gpio')
   });
 
   emitter.on('button_alarm', (value) => {
@@ -53,8 +73,8 @@ module.exports.ioConnect = async function ioConnect (socket) {
       sql.query(`UPDATE parameters SET heat_manual_sp = ${data.heat_manual_sp};`)
     }
     if (data.vds_manual_sp !== undefined) {
+	  memory.retain.vds_manual_sp = data.vds_manual_sp;
       emitter.emit('vds_new_manual_sp');
-      memory.retain.vds_manual_sp = data.vds_manual_sp;
       sql.query(`UPDATE parameters SET vds_manual_sp = ${data.vds_manual_sp};`)
     }
     if (data.roast_mode_auto !== undefined) {
@@ -116,7 +136,7 @@ module.exports.ioConnect = async function ioConnect (socket) {
       result[0].air = JSON.parse(result[0].air);
       result[0].ror = JSON.parse(result[0].ror);
       result[0].arr_done = JSON.parse(result[0].arr_done);
-      console.log(result[0].time);
+      console.log(result[0].time)
       socket.emit("one_story_answer", result[0]);
     })()
   });
@@ -175,7 +195,6 @@ module.exports.ioConnect = async function ioConnect (socket) {
     loading_roaster: global.steps.loading_roaster.status,
     roast: global.steps.roast.status,
     cooling: global.steps.cooling.status,
-    //unloading_cooler: global.steps.unloading_cooler.status,
   });
 
 };

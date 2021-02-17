@@ -14,12 +14,14 @@ class step_stop {
   SetStatus = (value, toPrepare) => {
     this.status = value;
     if (this.status === true) {
-      if (global.cooler.power) {global.cooler.SwitchPower(false)}
-      if (global.blades.power) {global.blades.SwitchPower(false)}
-      if (global.vds.power) {global.vds.SwitchPower(false)}
-      if (global.heater.allow) {global.heater.SwitchAllow(false)}
+      //global.cooler.SwitchPower(false);
+      //global.blades.SwitchPower(false);
+      global.vds.SwitchPower(false);
+      global.heater.SwitchAllow(false);
     }
-    this.ManualChange(false, toPrepare);
+    if (global.memory.operative.manual.on) {
+      this.ManualChange(false, toPrepare);
+    }
     global.socket.emit("phases_status", {stop : this.status});
   };
 
@@ -37,13 +39,14 @@ class step_stop {
       global.memory.operative.manual.on = !global.memory.operative.manual.on;
     }
       if (!global.memory.operative.manual.on) {
+        global.memory.operative.manual.on = false;
         global.memory.operative.manual.heat = false;
         global.memory.operative.manual.vds = false;
         global.memory.operative.manual.blades = false;
         global.memory.operative.manual.cooler = false;
         global.cooler.SwitchPower(false);
         global.blades.SwitchPower(false);
-        if (toPrepare !== true) {
+        if (toPrepare === true) {
           global.vds.SwitchPower(false);
           global.heater.SwitchAllow(false);
         }

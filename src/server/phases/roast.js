@@ -70,7 +70,9 @@ class step_roast {
     } else {
       roast_power = global.memory.retain.heat_manual_sp;
     }
-    global.heater.SetRoastPower(roast_power);
+    if (global.heater.power !== roast_power) {
+      global.heater.SetRoastPower(roast_power);
+    }
     const data = {roast_power: roast_power, roast_second: this.roastSecond};
     this.roastSecond +=1;
     return data
