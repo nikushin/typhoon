@@ -27,12 +27,12 @@ module.exports = async function memoryInit () {
       });
     });
 
-  await sql.query(`SELECT heat_manual_sp, vds_manual_sp, roast_mode_auto, step, vds_prepare_fr, 
+  await sql.query(`SELECT heat_manual_sp, vds_manual_sp, roast_mode, step, vds_prepare_fr, 
   cooling_time, temp_prepare_sp, manual_vds, manual_heat FROM parameters;`).then(
     result => {
         memory.retain.heat_manual_sp = result[0][0].heat_manual_sp;
         memory.retain.vds_manual_sp = result[0][0].vds_manual_sp;
-        memory.retain.roast_mode_auto = result[0][0].roast_mode_auto;
+        memory.retain.roast_mode = result[0][0].roast_mode;
         memory.retain.step = result[0][0].step;
         memory.retain.vds_prepare_fr = result[0][0].vds_prepare_fr;
         memory.retain.cooling_time = result[0][0].cooling_time;

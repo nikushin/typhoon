@@ -77,10 +77,10 @@ module.exports.ioConnect = async function ioConnect (socket) {
       emitter.emit('vds_new_manual_sp');
       sql.query(`UPDATE parameters SET vds_manual_sp = ${data.vds_manual_sp};`)
     }
-    if (data.roast_mode_auto !== undefined) {
-      memory.retain.roast_mode_auto = data.roast_mode_auto;
-      emitter.emit('new_roast_mode');
-      sql.query(`UPDATE parameters SET roast_mode_auto = ${data.roast_mode_auto};`)
+    if (data.roast_mode !== undefined) {
+        memory.retain.roast_mode = data.roast_mode;
+        emitter.emit('new_roast_mode');
+      sql.query(`UPDATE parameters SET roast_mode = '${data.roast_mode}';`)
     }
     if (data.step !== undefined) {
       memory.retain.step = data.step;
@@ -131,13 +131,26 @@ module.exports.ioConnect = async function ioConnect (socket) {
 
   socket.on('one_story_request', (id) => {
     (async function () {
-    const [result] = await sql.query(`SELECT beans, air, ror, arr_done, time FROM saved_graphs WHERE id = ${id};`);
+      const [result] = await sql.query(`SELECT beans, air, ror, arr_done, time FROM saved_graphs WHERE id = ${id};`);
       result[0].beans = JSON.parse(result[0].beans);
       result[0].air = JSON.parse(result[0].air);
       result[0].ror = JSON.parse(result[0].ror);
       result[0].arr_done = JSON.parse(result[0].arr_done);
-      console.log(result[0].time)
       socket.emit("one_story_answer", result[0]);
+    })()
+  });
+
+  socket.on('delete_one_story', ({id, offset}) => {
+    (async function () {
+      await sql.query(`DELETE FROM saved_graphs WHERE id = ${id};`);
+      const [result_count] = await sql.query(`SELECT COUNT(*) AS count  FROM saved_graphs;`);
+      const count = result_count[0].count;
+      if (count/10 <= offset && offset > 0) {
+        offset--
+      }
+      const [result_history] = await sql.query(`SELECT id, name, date FROM saved_graphs ORDER BY id DESC LIMIT ${offset*10}, 10;`);
+
+      socket.emit("history_answer", {history: result_history, count: result_count[0].count, offset: offset})
     })()
   });
 
@@ -145,7 +158,11 @@ module.exports.ioConnect = async function ioConnect (socket) {
     // console.log(data);
     sql.query(`INSERT saved_graphs(name, time, date, beans, air, ror, arr_done) 
     VALUES ("${data.name}","${data.time}","${data.date}","${JSON.stringify(data.beans)}",
-    "${JSON.stringify(data.air)}", "${JSON.stringify(data.ror)}","${JSON.stringify(data.heat_arr_done)}");`)
+    "${JSON.stringify(data.air)}",  "${JSON.stringify(data.ror)}","${JSON.stringify(data.heat_arr_done)}");`)
+  });
+
+  socket.on('history_set_background', (id) => {
+
   });
 
   // (async function () {

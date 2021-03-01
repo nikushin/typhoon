@@ -26,13 +26,14 @@ class step_roast {
   NewRoastMode = () => {
     const arr = global.memory.recipe.data.heat_setting_arr;
     let roast_power = 0;
-    if (global.memory.retain.roast_mode_auto) {
+    if (global.memory.retain.roast_mode === 'auto') {
       if (this.status) {
       arr.forEach( (item) => {if (item[0] <= this.roastSecond) {roast_power = item[1]}});
       } else {
         arr.forEach( (item) => {if (item[0] <= 0) {roast_power = item[1]}});
       }
-    } else {
+    }
+    if (global.memory.retain.roast_mode === 'manual') {
         if (this.status) {
         arr.forEach( (item) => {if (item[0] <= this.roastSecond) {roast_power = item[1]}});
         global.memory.retain.heat_manual_sp = roast_power;
@@ -63,7 +64,7 @@ class step_roast {
     }
 	const arr = global.memory.recipe.data.heat_setting_arr;
     let roast_power = 0;
-    if (global.memory.retain.roast_mode_auto) {
+    if (global.memory.retain.roast_mode === 'auto') {
       arr.forEach( (item) => {
         if (item[0] <= this.roastSecond) {roast_power = item[1]}
       });

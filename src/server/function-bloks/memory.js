@@ -14,7 +14,7 @@ module.exports = {
     vds_prepare_fr: 100,
     heat_manual_sp: 0,
     vds_manual_sp: 0,
-    roast_mode_auto: true,
+    roast_mode: 'manual',
     step: 60,
     temp_prepare_sp: 0,
     manual: {

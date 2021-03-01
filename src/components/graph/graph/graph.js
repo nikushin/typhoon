@@ -61,8 +61,12 @@ const Graph = ({parameters}) => {
   const graph_path_beans = useSelector(state => state.graphKeeper.path_beans);
   const graph_path_air = useSelector(state => state.graphKeeper.path_air);
   const graph_path_ror = useSelector(state => state.graphKeeper.path_ror);
+  const path_beans_bg = useSelector(state => state.graphKeeper.path_beans_bg);
+  const path_ror_bg = useSelector(state => state.graphKeeper.path_ror_bg);
+  const history_bg_show = useSelector(state => state.graphKeeper.history_bg_show);
   const graph_start_time = useSelector(state => state.graphKeeper.graph_start_time);
   const graph_save_request = useSelector(state => state.graphKeeper.graph_save_request);
+
 
   const AxesConst = <Axes Ysteps={16}
                           Yinterval={25}
@@ -305,6 +309,15 @@ const Graph = ({parameters}) => {
             <path stroke={ror_color}  fill="none"
                   d={graph_path_ror}/>
           </SVGrealTimeLineG>
+
+        <g>
+        <path stroke={bean_color} fill="none" strokeOpacity={0.4} visibility={history_bg_show?'visible ':'hidden'}
+              d={path_beans_bg}/>
+        </g>
+        <g>
+          <path stroke={ror_color} fill="none" strokeOpacity={0.4} visibility={history_bg_show?'visible ':'hidden'}
+              d={path_ror_bg}/>
+        </g>
 
         {/*</SVGrealTimeLinesContainer>*/}
         {/*<line stroke={'white'} x1={0} x2={120} y1={-50} y2={-50}/>*/}

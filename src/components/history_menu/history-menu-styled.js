@@ -2,11 +2,13 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: grid;
-  grid-template-rows: 50px 100px;
+  grid-template-rows: 50px 50px 100px;
   grid-template-areas:
   "total-count"
+  "select-menu"
   "navigate"
   "content";
+
   > div:nth-child(1) {
     grid-area: total-count;
     //background-color: #d05c60;
@@ -14,7 +16,25 @@ export const Container = styled.div`
     font-size: 25px;
     padding-right: 20px;
   }
-   > div:nth-child(2) {
+  > div:nth-child(2) {
+      grid-area: select-menu;
+      display: flex;
+      justify-content: space-around;
+    >div {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       width: 250px;
+       height: 50px;
+    }    
+    >div:nth-child(1) {
+        background-color: ${props => props.history_delete_mode ? '#d05c60' : '#5a5a5a'};
+    }
+    >div:nth-child(2) {
+        background-color: ${props => props.bg ? '#3973d0' : '#5a5a5a'};
+    } 
+  }
+   > div:nth-child(3) {
     grid-area: navigate;
     //background-color: #8cc6d0;
     display: flex;
@@ -37,7 +57,7 @@ export const Container = styled.div`
       min-width: 180px;
     } 
   }
-   > div:nth-child(3) {
+   > div:nth-child(4) {
     grid-area: content;
     //background-color: #5ed036;
     //display: flex;
@@ -54,10 +74,20 @@ export const Container = styled.div`
   }
 `;
 
+const OneStoryContainerGetBackground = ({history_delete_mode, chosen, bg}) => {
+  if (bg) {return '#3973d0'}
+  if (chosen) {return '#d0bc49'}
+  if (history_delete_mode) {return '#d05c60'}
+
+  return '#5a5a5a'
+};
+
+
 export const OneStoryContainer = styled.div`
   width: 300px;
   height: 100px;
-  background-color: #5a5a5a;
+  background-color: ${props => OneStoryContainerGetBackground(props)};
+  //background-color: ${props => props.history_delete_mode ? '#d05c60' : '#5a5a5a'};
   margin: 10px;
   display: flex;
   flex-direction: column;
@@ -71,11 +101,8 @@ export const OneStoryContainer = styled.div`
     display: flex;
    justify-content: space-between;
   }
-
- 
 `;
 
 export const StoriesContainer = styled.div`
   ${props => props.visible ? "" : "display:none"};
-  
 `;

@@ -17,7 +17,58 @@ module.exports = function emittSocket () {
   let ror = undefined;
   const tempBeansArr = [];
 
+  const levels = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  let levels2 = 0;
+  let lvl1 = 0;
+  let lvl2 = 0;
+  let lvl3 = 0;
+
   const TempSimulator = () => {
+
+    levels.unshift(global.heater.power);
+    if (levels.length > 42) { levels.pop() }
+
+    lvl1 = 0;
+
+    for (let i = levels.length-1; i > levels.length-10; i--) {
+      lvl1 += levels[i];
+    }
+
+    if (lvl1) {lvl1 = (lvl1*0.1)*1.5;}
+
+
+
+    lvl2 = 0;
+    for (let i = levels.length-1; i > levels.length-20; i--) {
+      lvl2 += levels[i];
+    }
+    lvl2 = (lvl2/20)*1.2;
+
+    lvl3 = 0;
+    for (let i = levels.length-1; i > levels.length-39; i--) {
+      lvl3 += levels[i];
+    }
+    lvl3 = (lvl3/35)*1.1;
+
+    levels2 += (lvl3);
+    levels2 = (levels2*0.997);
+    tempBeans = levels2/50;
+
+
+    tempBeansArr.push(tempBeans);
+    if (tempBeansArr.length > 10) {
+      ror = -(tempBeansArr[0] - tempBeansArr[9]).toFixed(1);
+      tempBeansArr.shift()
+    }
+
+    global.memory.operative.temp_beans = tempBeans.toFixed(1);
+    global.memory.operative.temp_air = 0.0;
+    emitter.emit('temp_beans_new_value');
+
+    return {tempBeans: tempBeans.toFixed(1), tempAir:0.0, ror: ror}
+  };
+
+  const TempRandom = () => {
     if (tempBeans > 150) {vektorBeans = 'down';}
     if (tempBeans < 20) {vektorBeans = 'up';}
     if (tempAir > 150) {vektorAir = 'down';}

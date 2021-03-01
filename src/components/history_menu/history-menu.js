@@ -1,24 +1,39 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, {Fragment, memo, useLayoutEffect, useState} from "react";
 import {HistoryRequest, OneStoryRequest, RealTimeOn,
-  DisplayLastRoast, HistoryRequestLeft, HistoryRequestRight, HistoryDisplay} from '../../actions/graph'
-import {Container, OneStoryContainer, StoriesContainer} from './history-menu-styled'
+DisplayLastRoast, HistoryRequestLeft, HistoryRequestRight, HistoryDisplay} from '../../actions/graph';
+import {Container, OneStoryContainer, StoriesContainer} from './history-menu-styled';
 import {showKeyboard, hideKeyboard} from "../../actions";
+import socketService from "../../services/socket-service";
 
 const HistoryMenu = () => {
 
   const dispatch = useDispatch();
   const history = useSelector(state => state.graphKeeper.history);
   const history_display = useSelector(state => state.graphKeeper.history_display);
+  const history_delete_mode = useSelector(state => state.graphKeeper.history_delete_mode);
+  const history_chosen_id = useSelector(state => state.graphKeeper.history_chosen_id);
+  const history_bg_id = useSelector(state => state.graphKeeper.history_bg_id);
   const history_offset = useSelector(state => state.graphKeeper.history_request_offset);
   const [DisplayHistory, setDisplayHistory] = useState(null);
-
 
   const chooseNumberOfPage = () => {
     dispatch(showKeyboard({startValue: (history_offset + 1), min: 1, max:Math.ceil(history.count/10),
       top: 300, left: 1200, func: (input) => {dispatch(HistoryRequest(input-1))}}));
   };
 
+    const OneStoryClick = (id) => {
+        console.log(history_delete_mode);
+        if (history_delete_mode) {
+            if (history_chosen_id === id) {
+                dispatch({type: 'HISTORY_CHOOSE_STORY', payload: 0});
+            }
+            socketService.SocketEmmit('delete_one_story', {id: id, offset: history_offset});
+        } else {
+            dispatch(OneStoryRequest(id));
+            dispatch({type: 'HISTORY_CHOOSE_STORY', payload: id});
+        }
+    };
 
     useLayoutEffect(() => {
         if (history.count === 0) {
@@ -27,12 +42,17 @@ const HistoryMenu = () => {
             setDisplayHistory(
                 <Fragment>
                     <div>
+                        <div onClick={() => {dispatch({type: 'HISTORY_DELETE_MODE'})}}>Delete mode</div>
+                        <div onClick={() => {dispatch({type: 'HISTORY_SET_BACKGROUND'})}}>Set Background</div>
+                    </div>
+                    <div>
                   <div onClick={() => {dispatch(HistoryRequest(history_offset-1))}}>{'<'}</div>
                   <div onClick={() => chooseNumberOfPage()}>{(history_offset+1) + " / " + Math.ceil(history.count/10)}</div>
                   <div onClick={() => {dispatch(HistoryRequest(history_offset+1))}}>{'>'}</div>
                     </div>
                 <div> {history.history.map((oneStory) =>
-                    <OneStoryContainer onClick={() => dispatch(OneStoryRequest(oneStory.id))}>
+                    <OneStoryContainer history_delete_mode={history_delete_mode} chosen={history_chosen_id===oneStory.id}
+                                       bg={history_bg_id===oneStory.id} onClick={() => OneStoryClick(oneStory.id)}>
                         <div><div>{'#' + oneStory.id}</div><div>{oneStory.name}</div></div>
                         <div><div>{oneStory.date.slice(0, 10)}</div><div>{oneStory.date.slice(11, 19)}</div></div>
                     </OneStoryContainer>
@@ -41,11 +61,11 @@ const HistoryMenu = () => {
                 </Fragment>
             )
          }
-        },[history.count]);
+        },[history, history_delete_mode, history_chosen_id, history_bg_id]);
 
   // oneStory.date.slice(0, 19).replace('T', ' ')
   return(
-    <Container>
+    <Container history_delete_mode={history_delete_mode} bg={history_bg_id !== 0}>
       <div>Обжарок: {history.count}</div>
        {DisplayHistory}
       {/*<div>*/}

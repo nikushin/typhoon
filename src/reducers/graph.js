@@ -82,6 +82,9 @@ const graphParameters = (state, action) => {
             path_arr_done: start_point,
             path_arr_heat: start_point,
 
+            path_beans_bg: start_point,
+            path_ror_bg: start_point,
+
             data_beans: [],
             data_air: [],
             data_ror: [],
@@ -104,9 +107,13 @@ const graphParameters = (state, action) => {
             history_display: true,
             history_loading_spinner: false,
             history: {history:[], count: 0},
+            history_chosen_id: 0,
+            history_bg_id: 0,
+            history_bg_show: false,
+            history_delete_mode: false,
             history_request_offset :0,
             real_time: true,
-            roast_mode_auto: true,
+            roast_mode: 'manual',
         };
     }
 
@@ -133,11 +140,11 @@ const graphParameters = (state, action) => {
 
             const tempBeans = -action.payload.tempBeans;
             const tempAir = -action.payload.tempAir;
-            const ror = -action.payload.ror;
+            //const ror = -action.payload.ror;
 
             state.graphKeeper.data_beans.push([state.graphKeeper.graph_time, tempBeans]);
             state.graphKeeper.data_air.push([state.graphKeeper.graph_time, tempAir]);
-            if (ror) {state.graphKeeper.data_ror.push([state.graphKeeper.graph_time, ror*10]);}
+            if (action.payload.ror !== undefined) {state.graphKeeper.data_ror.push([state.graphKeeper.graph_time, -action.payload.ror*10]);}
 
             if (state.graphKeeper.real_time) {
                 return {
@@ -250,6 +257,10 @@ const graphParameters = (state, action) => {
             }
 
         case 'HISTORY_ANSWER':
+            console.log(action.payload);
+            if (action.payload.offset !== undefined) {
+                state.graphKeeper.history_request_offset = action.payload.offset
+            }
             return {
                 ...state.graphKeeper,
                 history_loading_spinner: false,
@@ -311,12 +322,18 @@ const graphParameters = (state, action) => {
             }
 
         case 'CHANGE_ROAST_MODE':
-
-            const new_roast_mode_auto = !state.graphKeeper.roast_mode_auto;
-            socketService.SocketEmmit('memory_change', {roast_mode_auto: new_roast_mode_auto});
+            let new_roast_mode = undefined;
+            if (state.graphKeeper.roast_mode === 'manual') {
+                new_roast_mode = 'auto'
+            } else if (state.graphKeeper.roast_mode === 'auto') {
+                new_roast_mode = 'background'
+            } else if (state.graphKeeper.roast_mode === 'background') {
+                new_roast_mode = 'manual'
+            }
+            socketService.SocketEmmit('memory_change', {roast_mode: new_roast_mode});
             return {
                 ...state.graphKeeper,
-                roast_mode_auto: new_roast_mode_auto,
+                roast_mode: new_roast_mode,
             };
 
         case 'CLEAR_GRAPH':
@@ -327,6 +344,40 @@ const graphParameters = (state, action) => {
                 data_air: [],
                 data_ror: [],
                 graph_time: 0,
+            };
+
+        case 'HISTORY_CHOOSE_STORY':
+
+            return {
+                ...state.graphKeeper,
+                history_chosen_id: action.payload,
+                history_bg_show: false
+            };
+
+        case 'HISTORY_DELETE_MODE':
+            return {
+                ...state.graphKeeper,
+                history_delete_mode: !state.graphKeeper.history_delete_mode
+            };
+
+        case 'HISTORY_SET_BACKGROUND':
+            if ((state.graphKeeper.history_chosen_id === 0 && state.graphKeeper.history_bg_id !==0) ||
+                (state.graphKeeper.history_chosen_id === state.graphKeeper.history_bg_id)) {
+                state.graphKeeper.history_bg_id = 0
+            } else {
+                state.graphKeeper.history_bg_id = state.graphKeeper.history_chosen_id
+            }
+            socketService.SocketEmmit('history_set_background', state.graphKeeper.history_bg_id);
+            return {
+                ...state.graphKeeper,
+                path_beans_bg: state.graphKeeper.path_beans,
+                path_ror_bg: state.graphKeeper.path_ror,
+            };
+
+        case 'HISTORY_BACKGROUND_SHOW':
+            return {
+                ...state.graphKeeper,
+                history_bg_show: action.payload
             };
 
         default:

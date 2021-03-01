@@ -106,7 +106,7 @@ export const SliderHeat = memo(({src_img, min, max, top, left}) => {
     const [trackProgress, setTrackProgress] = useState(`linear-gradient(90deg, ${Color} 0% 0%, ${inactive} 0% 100%)`);
     const heat_power_indicator = useSelector(state => state.analogParametersKeeper.heat_power_indicator);
     const HeatOn = useSelector(state => state.analogParametersKeeper.heat_lamp);
-    const roast_mode_auto = useSelector(state => state.graphKeeper.roast_mode_auto);
+    const roast_mode = useSelector(state => state.graphKeeper.roast_mode);
 
     useLayoutEffect(() => {
         if (HeatOn) {
@@ -143,7 +143,7 @@ export const SliderHeat = memo(({src_img, min, max, top, left}) => {
     return (
         <Container value={VisibleValue} src_img={src_img} >
             <Track bg={trackProgress}/>
-            <input type="range" value={VisibleValue} min={min} max={max} disabled={!!roast_mode_auto}
+            <input type="range" value={VisibleValue} min={min} max={max} disabled={roast_mode !== 'manual'}
                    onChange={handleChange()}/>
             <ValueDiv value={VisibleValue} max={max}
                       onClick={() => onClick(left)}>

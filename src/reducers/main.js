@@ -6,10 +6,10 @@ const updateMain = (state, action) => {
             st: {r: 247, g: 223, b: 79, a: 1}},
             connectStatus: false,
             route: {
-                // mainMenu:'home',
-                mainMenu:'settings',
-                homePageMode: 'realtime',
-                // homePageMode: 'history'
+                mainMenu:'home',
+                // mainMenu:'settings',
+                // homePageMode: 'realtime',
+                homePageMode: 'history'
             }
         };
     }
@@ -17,7 +17,7 @@ const updateMain = (state, action) => {
 
         case 'MEMORY_INIT' :
             // console.log(action.payload);
-            state.graphKeeper.roast_mode_auto = action.payload.retain.roast_mode_auto;
+            state.graphKeeper.roast_mode = action.payload.retain.roast_mode;
             state.analogParametersKeeper.heat_manual_sp = action.payload.retain.heat_manual_sp;
             state.analogParametersKeeper.vds_manual_sp = action.payload.retain.vds_manual_sp;
             state.graphSettingsKeeper.step = action.payload.retain.step;

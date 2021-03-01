@@ -45,7 +45,7 @@ class heater {
             if (global.steps.roast.status) {
                 this.SetRoastPower(global.memory.recipe.data.heat_setting_arr[0][1])
             }
-            if (global.memory.operative.manual.on) {
+            if (global.memory.operative.manual.heat) {
                 this.SetManualPower(global.memory.operative.temp_beans)
             }
         } else {
@@ -76,7 +76,7 @@ class heater {
     };
 
     SetManualPower = () => {
-		let new_power = undefined
+		let new_power = undefined;
         if (global.memory.operative.temp_beans < global.memory.retain.manual.temp_sp) {
             new_power = 100;
         } else {
@@ -86,8 +86,8 @@ class heater {
 			this.power = new_power;
 			global.emitter.emit('heater_gpio_switch_power', this.power);
 		}
-        //console.log('temp_beans' + global.memory.operative.temp_beans);
-        //console.log('temp_sp' + global.memory.retain.manual.temp_sp);
+        // console.log('temp_beans' + global.memory.operative.temp_beans);
+        // console.log('temp_sp' + global.memory.retain.manual.temp_sp);
         //console.log('SetManualPower' + this.power)
     };
 

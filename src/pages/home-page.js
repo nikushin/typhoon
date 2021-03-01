@@ -14,12 +14,14 @@ import StepsIndicator from '../components/steps-indicator'
 const HomePage = () => {
   const dispatch = useDispatch();
   const selectedMenu = useSelector(state => state.mainKeeper.route.homePageMode);
-  const roast_mode_auto = useSelector(state => state.graphKeeper.roast_mode_auto);
+  const roast_mode = useSelector(state => state.graphKeeper.roast_mode);
 
   const changeHistoryMode = () => {
     if (selectedMenu === 'history') {
-      dispatch(changePage('homePageMode', 'realtime'))
-      dispatch(RealTimeOn())
+      dispatch(changePage('homePageMode', 'realtime'));
+      dispatch(RealTimeOn());
+      dispatch({type: 'HISTORY_CHOOSE_STORY', payload: 0});
+      dispatch({type: 'HISTORY_BACKGROUND_SHOW', payload: true});
     } else {
       dispatch(changePage('homePageMode', 'history'));
       dispatch(HistoryRequest())
@@ -49,12 +51,12 @@ const HomePage = () => {
         <div>
           <VidgetInputOutput keeper='analogParametersKeeper' parameter='tempBeans' title='Зерно'
                              test_value = {186.7}
-                             min={0} max={100} top={450} left={950} color={"rgb(17, 236, 229)"} inputMode={true}/>
+                             min={0} max={100} top={450} left={950} color={"#4bee25"} inputMode={true}/>
         </div>
           <div>
             <VidgetInputOutput keeper='analogParametersKeeper' parameter='tempAir' title='Воздух'
                                test_value = {201.4}
-                               min={0} max={100} top={450} left={950} color={"#e3e619"} inputMode={true}/>
+                               min={0} max={100} top={450} left={950} color={"#e6dc4f"} inputMode={true}/>
           </div>
           <div>
             <VidgetInputOutput keeper='analogParametersKeeper' parameter='ror' title='ROR'
@@ -79,7 +81,7 @@ const HomePage = () => {
         </div>
         <div>
           <RoastModeContainer onClick={() => dispatch(changeRoastMode())}>
-            {roast_mode_auto ? 'auto' : 'manual'}
+            {roast_mode}
           </RoastModeContainer>
 
           <HistoryIconContainer onClick={changeHistoryMode}>
