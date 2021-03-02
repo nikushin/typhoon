@@ -2,7 +2,7 @@ class step_cooling {
   constructor() {
     global.emitter.on('new_cooling_time', (value) => this.NewCoolingTime(value));
     global.emitter.on('button_cooler', () => {
-      if (this.status) {this.Finish();}
+      if (this.status) {this.Finish()}
     })
   }
   status = false;

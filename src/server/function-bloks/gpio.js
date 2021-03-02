@@ -50,7 +50,7 @@ module.exports = function gpioCreate () {
     });
 
     emitter.on('vds_gpio_power', (data) => {
-	console.log('vds_gpio_power ', data);
+	    console.log('vds_gpio_power ', data);
         vds.write(data?1:0, err => {
             if (err) {console.log('err')}
         })

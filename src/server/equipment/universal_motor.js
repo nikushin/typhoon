@@ -13,7 +13,7 @@ class universal_motor {
     };
 
     ManualSwitchPower = () => {
-        if (!global.global.steps.cooling.status && !global.memory.operative.manual.on) {
+        if (!global.steps.cooling.status && !global.memory.operative.manual.on) {
             this.power = !this.power;
             this.SwitchPower(this.power);
         }

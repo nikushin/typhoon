@@ -37,7 +37,7 @@ const readStack = [
     },
     async () => {
         Modbusclient.setID(16);
-        await Modbusclient.readHoldingRegisters(1, 6).then((data) => {
+        await Modbusclient.readHoldingRegisters(1, 7).then((data) => {
             global.memory.operative.temp_beans = data.data[0];
             global.memory.operative.temp_air = data.data[6];
             //console.log(data.data[0], data.data[6]);
@@ -54,7 +54,7 @@ let n = 0;
 const readModbus = async () => {
     if (writeStack.length !== 0) {
        await writeStack[0]();
-        writeStack.shift()
+       writeStack.shift()
     } else {
         if (++n > readStack.length-1) {n=0}
         await readStack[n]();
