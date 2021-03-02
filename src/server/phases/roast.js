@@ -2,7 +2,12 @@
 
 class step_roast {
   constructor() {
-    global.emitter.on('button_stop', () => this.toUnloadingRoaster());
+    global.emitter.on('button_stop', () => {
+      if (this.status) {
+        this.toUnloadingRoaster();
+      }
+    });
+
     global.emitter.on('new_roast_mode', () => this.NewRoastMode());
   }
   status = false;
