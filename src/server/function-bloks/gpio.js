@@ -106,6 +106,7 @@ module.exports = function gpioCreate () {
 
     const button_alarm_body = (err, value)  => {
         if (err) {console.log('button_alarm Error', err); return}
+        global.memory.operative.button_alarm = !value;
         if (value===1) {emitter.emit('button_alarm', false); console.log('button_alarm ' + false)}
         if (value===0) {emitter.emit('button_alarm', true); console.log('button_alarm ' + true)}
     };
@@ -114,6 +115,7 @@ module.exports = function gpioCreate () {
 
     const switch_prepare_body = (err, value)  => {
         if (err) {console.log('switch_prepare Error', err); return}
+        global.memory.operative.button_prepare = value;
         if (value===1) {emitter.emit('button_prepare', true); console.log('button_prepare ' + true)}
         if (value===0) {emitter.emit('button_prepare', false); console.log('button_prepare ' + false)}
     };
