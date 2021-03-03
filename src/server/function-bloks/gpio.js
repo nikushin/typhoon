@@ -118,7 +118,7 @@ module.exports = function gpioCreate () {
 
     const switch_prepare_body = (err, value)  => {
         if (err) {console.log('switch_prepare Error', err); return}
-        global.memory.operative.button_prepare = value;
+        value ? global.memory.operative.button_prepare = true : global.memory.operative.button_prepare = false;
         if (value===1) {emitter.emit('button_prepare', true); console.log('button_prepare ' + true)}
         if (value===0) {emitter.emit('button_prepare', false); console.log('button_prepare ' + false)}
     };
