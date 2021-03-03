@@ -6,10 +6,10 @@ class step_stop {
       }
     });
 
-    global.emitter.on('button_alarm',(value) => {
-      console.log('step stop button_alarm ' + value);
-      if (!value && global.memory.operative.button_prepare) {
-        this.toPrepare(value)
+    global.emitter.on('button_alarm',() => {
+      console.log('step stop button_alarm ' + global.memory.operative.button_alarm);
+      if (!global.memory.operative.button_alarm && global.memory.operative.button_prepare) {
+        this.toPrepare(true)
       }
     });
 

@@ -106,11 +106,16 @@ module.exports = function gpioCreate () {
 
     const button_alarm_body = (err, value)  => {
         if (err) {console.log('button_alarm Error', err); return}
-        (value === 1) ? global.memory.operative.button_alarm = false : global.memory.operative.button_alarm = true;
-        if (value===1) {emitter.emit('button_alarm', false); console.log('button_alarm ' + false)}
+        if (value===1) {
+            global.memory.operative.button_alarm = false;
+            emitter.emit('button_alarm', false);
+            console.log('button_alarm ' + false);
+        }
         if (value===0) {
+            global.memory.operative.button_alarm = true;
             global.steps.stop.EmergencyStop();
-            emitter.emit('button_alarm', true); console.log('button_alarm ' + true);
+            emitter.emit('button_alarm', true);
+            console.log('button_alarm ' + true);
         }
     };
     button_alarm.read((err, value) => {button_alarm_body(err, value)});
@@ -118,9 +123,16 @@ module.exports = function gpioCreate () {
 
     const switch_prepare_body = (err, value)  => {
         if (err) {console.log('switch_prepare Error', err); return}
-        (value === 1) ? global.memory.operative.button_prepare = true : global.memory.operative.button_prepare = false;
-        if (value===1) {emitter.emit('button_prepare', true); console.log('button_prepare ' + true)}
-        if (value===0) {emitter.emit('button_prepare', false); console.log('button_prepare ' + false)}
+        if (value===1) {
+            global.memory.operative.button_prepare = true;
+            emitter.emit('button_prepare', true);
+            console.log('button_prepare ' + true);
+        }
+        if (value===0) {
+            global.memory.operative.button_prepare = false;
+            emitter.emit('button_prepare', false);
+            console.log('button_prepare ' + false);
+        }
     };
     switch_prepare.read((err, value) => {switch_prepare_body(err, value)});
     switch_prepare.watch((err, value) => {switch_prepare_body(err, value)});
