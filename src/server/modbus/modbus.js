@@ -77,7 +77,8 @@ function modbusInit () {
 }
 
 global.emitter.on('vds_set_fr', (data) => {
-    while(writeStack.length > 0) {
+    console.log(data);
+    while(writeStack.length > 3) {
         writeStack.pop();
     }
     writeStack.push (
