@@ -106,8 +106,7 @@ module.exports = function gpioCreate () {
 
     const button_alarm_body = (err, value)  => {
         if (err) {console.log('button_alarm Error', err); return}
-        global.memory.operative.button_alarm = !value;
-
+        value ? global.memory.operative.button_alarm = false : global.memory.operative.button_alarm = true;
         if (value===1) {emitter.emit('button_alarm', false); console.log('button_alarm ' + false)}
         if (value===0) {
             global.steps.stop.EmergencyStop();
