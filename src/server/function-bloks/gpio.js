@@ -69,6 +69,7 @@ module.exports = function gpioCreate () {
     //inputs
 
     button_cooler.watch((err, value) => {
+
         if (err) {console.log('button_cooler Error', err); return}
         if (value===1) {emitter.emit('button_cooler'); console.log('button_cooler')}
     });
