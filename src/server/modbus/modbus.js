@@ -77,9 +77,13 @@ function modbusInit () {
 }
 
 global.emitter.on('vds_set_fr', (data) => {
-    writeStack.push(
+    while(writeStack.length > 0) {
+        writeStack.pop();
+    }
+    writeStack.push (
         async () => {
 	    console.log('vds_set_fr ', data);
             Modbusclient.setID(1);
             await Modbusclient.writeRegisters(8502, [data]).catch(function(err) {console.log(err.message)})
-})});
+    })
+});
