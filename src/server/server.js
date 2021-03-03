@@ -7,13 +7,8 @@
   global.emitter = new EventEmitter();
 
   await require('./equipment/equipment_init');
-  console.log('equipment_init');
-
   await require('./phases/steps_init');
-  console.log('steps_init');
-
   await require ('./function-bloks/emitt-socket')();
-  console.log('emitt-socket');
 
   if (process.platform === 'linux') {
     await require('./modbus/modbus')();
