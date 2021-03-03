@@ -106,7 +106,7 @@ module.exports = function gpioCreate () {
 
     const button_alarm_body = (err, value)  => {
         if (err) {console.log('button_alarm Error', err); return}
-        value ? global.memory.operative.button_alarm = false : global.memory.operative.button_alarm = true;
+        (value === 1) ? global.memory.operative.button_alarm = false : global.memory.operative.button_alarm = true;
         if (value===1) {emitter.emit('button_alarm', false); console.log('button_alarm ' + false)}
         if (value===0) {
             global.steps.stop.EmergencyStop();
@@ -118,7 +118,7 @@ module.exports = function gpioCreate () {
 
     const switch_prepare_body = (err, value)  => {
         if (err) {console.log('switch_prepare Error', err); return}
-        value ? global.memory.operative.button_prepare = true : global.memory.operative.button_prepare = false;
+        (value === 1) ? global.memory.operative.button_prepare = true : global.memory.operative.button_prepare = false;
         if (value===1) {emitter.emit('button_prepare', true); console.log('button_prepare ' + true)}
         if (value===0) {emitter.emit('button_prepare', false); console.log('button_prepare ' + false)}
     };
