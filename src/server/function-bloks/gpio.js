@@ -107,8 +107,12 @@ module.exports = function gpioCreate () {
     const button_alarm_body = (err, value)  => {
         if (err) {console.log('button_alarm Error', err); return}
         global.memory.operative.button_alarm = !value;
+
         if (value===1) {emitter.emit('button_alarm', false); console.log('button_alarm ' + false)}
-        if (value===0) {emitter.emit('button_alarm', true); console.log('button_alarm ' + true)}
+        if (value===0) {
+            global.steps.stop.EmergencyStop();
+            emitter.emit('button_alarm', true); console.log('button_alarm ' + true);
+        }
     };
     button_alarm.read((err, value) => {button_alarm_body(err, value)});
     button_alarm.watch((err, value) => {button_alarm_body(err, value)});
