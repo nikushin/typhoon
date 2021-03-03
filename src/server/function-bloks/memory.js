@@ -26,6 +26,7 @@ module.exports = {
     temp_beans: undefined,
     temp_air: undefined,
     button_prepare: undefined,
+    button_alarm: undefined,
     manual: {
       on: false,
       vds: false,

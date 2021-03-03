@@ -28,7 +28,6 @@ module.exports = function gpioCreate () {
     // });
 
     //outputs
-
     emitter.on('blades_gpio_switch_power', (data) => {
 		console.log('blades_gpio_switch_power ', data);
         blades_starter.write(data?1:0, err => {
@@ -67,16 +66,32 @@ module.exports = function gpioCreate () {
     });
 
     //inputs
-
+    let button_cooler_bounce = false;
     button_cooler.watch((err, value) => {
-
         if (err) {console.log('button_cooler Error', err); return}
-        if (value===1) {emitter.emit('button_cooler'); console.log('button_cooler')}
+        if (value===1) {
+            if (!button_cooler_bounce) {
+                setTimeout (()=>{
+                    button_cooler_bounce = false
+                }, 300);
+                button_cooler_bounce = true;
+                emitter.emit('button_cooler'); console.log('button_cooler')
+            }
+        }
     });
 
+    let button_blades_bounce = false;
     button_blades.watch((err, value) => {
         if (err) {console.log('button_blades Error', err); return}
-        if (value===1) {emitter.emit('button_blades'); console.log('button_blades')}
+        if (value===1) {
+            if (!button_blades_bounce) {
+                setTimeout (()=>{
+                    button_blades_bounce = false
+                }, 300);
+                button_blades_bounce = true;
+                emitter.emit('button_blades'); console.log('button_blades')
+            }
+        }
     });
 
     button_start.watch((err, value) => {
@@ -89,16 +104,20 @@ module.exports = function gpioCreate () {
         if (value===0) {emitter.emit('button_stop'); console.log('button_stop')}
     });
 
-    button_alarm.watch((err, value) => {
+    const button_alarm_body = (err, value)  => {
         if (err) {console.log('button_alarm Error', err); return}
-        if (value===1) {emitter.emit('button_alarm', true); console.log('button_alarm')}
-        if (value===0) {emitter.emit('button_alarm', false); console.log('button_alarm')}
-    });
+        if (value===1) {emitter.emit('button_alarm', false); console.log('button_alarm ' + false)}
+        if (value===0) {emitter.emit('button_alarm', true); console.log('button_alarm ' + true)}
+    };
+    button_alarm.read((err, value) => {button_alarm_body(err, value)});
+    button_alarm.watch((err, value) => {button_alarm_body(err, value)});
 
-    switch_prepare.watch((err, value) => {
+    const switch_prepare_body = (err, value)  => {
         if (err) {console.log('switch_prepare Error', err); return}
-        if (value===1) {emitter.emit('button_prepare', true); console.log('button_prepare')}
-        if (value===0) {emitter.emit('button_prepare', false); console.log('button_prepare')}
-    });
+        if (value===1) {emitter.emit('button_prepare', true); console.log('button_prepare ' + true)}
+        if (value===0) {emitter.emit('button_prepare', false); console.log('button_prepare ' + false)}
+    };
+    switch_prepare.read((err, value) => {switch_prepare_body(err, value)});
+    switch_prepare.watch((err, value) => {switch_prepare_body(err, value)});
 
  };

@@ -1,9 +1,21 @@
 class step_stop {
   constructor() {
-    global.emitter.on('button_prepare',(value) => this.toPrepare(value));
+    global.emitter.on('button_prepare',(value) => {
+      if (!global.memory.operative.button_alarm) {
+        this.toPrepare(value)
+      }
+    });
+
+    global.emitter.on('button_alarm',(value) => {
+      if (!value && global.memory.operative.button_prepare) {
+        this.toPrepare(value)
+      }
+    });
+
     global.emitter.on('new_manual_switch_on',() => {
       if (this.status) {this.ManualChange();}
     });
+
     global.emitter.on('new_manual_switch_vds',() => this.ManualVds());
     global.emitter.on('new_manual_switch_heat',() => this.ManualHeat());
     global.emitter.on('new_manual_switch_cooler',() => this.ManualCooler());

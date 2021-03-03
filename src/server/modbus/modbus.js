@@ -27,9 +27,9 @@ module.exports = function modbusCreate () {
 const readStack = [
     async () => {
         Modbusclient.setID(1);
-        await Modbusclient.readHoldingRegisters(0, 2).then((data) => { //3201
+        await Modbusclient.readHoldingRegisters(3201, 2).then((data) => { //3201
             //console.log(data.data[0], data.data[1]);
-            global.vds.statusFeedBack(data.data[0]);
+            global.vds.statusFeedBack(data.data[0]*5);
     })
 	.catch(err=>{}
 	//console.log(err.message)
@@ -81,5 +81,5 @@ global.emitter.on('vds_set_fr', (data) => {
         async () => {
 	    console.log('vds_set_fr ', data);
             Modbusclient.setID(1);
-            await Modbusclient.writeRegisters(2, [data]).catch(function(err) {console.log(err.message)})
+            await Modbusclient.writeRegisters(8502, [data]).catch(function(err) {console.log(err.message)})
 })});
