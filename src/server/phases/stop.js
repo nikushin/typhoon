@@ -7,6 +7,7 @@ class step_stop {
     });
 
     global.emitter.on('button_alarm',(value) => {
+      console.log('step stop button_alarm ' + value);
       if (!value && global.memory.operative.button_prepare) {
         this.toPrepare(value)
       }

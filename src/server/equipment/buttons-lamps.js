@@ -21,14 +21,14 @@ global.emitter.on('button_prepare', (value) => {
 });
 
 global.emitter.on('button_alarm', (value) => {
+  console.log('button button_alarm ' + value);
+  global.memory.operative.button_alarm = value;
   if (value === true) {
-
-    global.memory.operative.button_alarm = value;
-    global.steps.stop = true;
-    global.steps.prepare = false;
-    global.steps.loading_roaster = false;
+    global.steps.stop.status = true;
+    global.steps.prepare.status = false;
+    global.steps.loading_roaster.status = false;
     global.steps.roast.status = false;
-    global.steps.cooling = false;
+    global.steps.cooling.status = false;
     global.vds.SwitchPower(false);
     global.heater.SwitchAllow(false);
     global.cooler.SwitchPower(false);
