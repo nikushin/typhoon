@@ -24,7 +24,7 @@ export const Container = styled.div`
   background-color: rgba(35, 35, 35, 0.95);
   font-size: 30px;
   color: white;
-  //box-shadow: 4px 4px 12px 0px #141414;
+  box-shadow: 4px 4px 12px 0px #141414;
 `;
 
 export const ContainerInner = styled.div`

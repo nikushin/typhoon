@@ -10,11 +10,11 @@
   await require('./phases/steps_init');
   await require ('./function-bloks/emitt-socket')();
 
-  if (process.platform === 'linux') {
-    await require('./modbus/modbus')();
+  //if (process.platform === 'linux') {
+    //await require('./modbus/modbus')();
     require('./function-bloks/gpio')();
-    require('./function-bloks/gpio2')();
-  }
+    //require('./function-bloks/gpio2')();
+  //}
   const {ioConnect} = require ('./function-bloks/io-connect');
   global.socket.on('connect', socket => {
     ioConnect(socket);
