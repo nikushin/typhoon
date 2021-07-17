@@ -2,6 +2,7 @@
 class step_loading_roaster {
   constructor() {
     global.emitter.on('button_start', () => this.toRoast());
+    global.emitter.on('temp_beans_new_value', () => {if (this.status) this.autoStartCheck()});
   }
 
   status = false;
@@ -33,7 +34,19 @@ class step_loading_roaster {
       this.SetStatus (false);
       global.steps.roast.SetStatus(true);
     }
-  }
+  };
+
+  autoStartCheck = () => {
+    const now_history = global.memory.history.temp_beans_history;
+    const last_index = now_history.length - 1;
+    const getNowSpeed = (index) =>
+        (now_history[index][0] - now_history[index - 1][0]) /
+        (now_history[index][1] / 100);
+    const now_temp = now_history[last_index][0];
+    const now_speed = getNowSpeed(last_index);
+    if (now_temp < 150 && now_speed < 0.5)
+      this.toRoast()
+  };
 
 }
 

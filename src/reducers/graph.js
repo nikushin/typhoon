@@ -196,6 +196,7 @@ const graphParameters = (state, action) => {
 
             state.graphKeeper.graph_start_time = -state.graphKeeper.graph_time+1;
 
+            socketService.SocketEmmit('save_graph');
             return {
                 ...state.graphKeeper,
                 real_time: true,
@@ -204,6 +205,7 @@ const graphParameters = (state, action) => {
                 path_air : svgPath(state.graphKeeper.data_air),
                 path_ror : svgPath(state.graphKeeper.data_ror),
                 path_arr_done: start_point,
+                graph_save_request: false,
             };
 
         case 'GRAPH_ROAST_FINISH':
@@ -232,8 +234,10 @@ const graphParameters = (state, action) => {
                     beans: state.graphKeeper.data_beans_last_roast,
                     air: state.graphKeeper.data_air_last_roast,
                     ror: state.graphKeeper.data_ror_last_roast,
-                    heat_arr_done: state.graphKeeper.data_arr_done_last_roast
+                    heat_arr_done: state.graphKeeper.data_arr_done_last_roast,
                 })
+            } else {
+                socketService.SocketEmmit('save_graph')
             }
 
             return {
@@ -326,7 +330,8 @@ const graphParameters = (state, action) => {
             if (state.graphKeeper.roast_mode === 'manual') {
                 new_roast_mode = 'auto'
             } else if (state.graphKeeper.roast_mode === 'auto') {
-                new_roast_mode = 'background'
+                if (state.graphKeeper.history_bg_id !== 0) new_roast_mode = 'background';
+                else new_roast_mode = 'manual'
             } else if (state.graphKeeper.roast_mode === 'background') {
                 new_roast_mode = 'manual'
             }
@@ -363,15 +368,19 @@ const graphParameters = (state, action) => {
         case 'HISTORY_SET_BACKGROUND':
             if ((state.graphKeeper.history_chosen_id === 0 && state.graphKeeper.history_bg_id !==0) ||
                 (state.graphKeeper.history_chosen_id === state.graphKeeper.history_bg_id)) {
-                state.graphKeeper.history_bg_id = 0
+                state.graphKeeper.history_bg_id = 0;
+                if (state.graphKeeper.roast_mode === 'background') state.graphKeeper.roast_mode = 'manual';
+                state.graphKeeper.path_beans_bg = start_point;
+                state.graphKeeper.path_ror_bg = start_point;
+                socketService.SocketEmmit('memory_change', {roast_mode: 'manual'});
             } else {
-                state.graphKeeper.history_bg_id = state.graphKeeper.history_chosen_id
+                state.graphKeeper.history_bg_id = state.graphKeeper.history_chosen_id;
+                state.graphKeeper.path_beans_bg = state.graphKeeper.path_beans;
+                state.graphKeeper.path_ror_bg = state.graphKeeper.path_ror;
             }
             socketService.SocketEmmit('history_set_background', state.graphKeeper.history_bg_id);
             return {
                 ...state.graphKeeper,
-                path_beans_bg: state.graphKeeper.path_beans,
-                path_ror_bg: state.graphKeeper.path_ror,
             };
 
         case 'HISTORY_BACKGROUND_SHOW':

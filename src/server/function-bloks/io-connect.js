@@ -119,6 +119,20 @@ module.exports.ioConnect = async function ioConnect (socket) {
         emitter.emit('new_manual_switch_'+ data.manual.switch);
       }
     }
+    if (data.coefficients !== undefined) {
+      if (data.coefficients.kt !== undefined) {
+        memory.retain.background_coefficients.t = data.coefficients.kt;
+        sql.query(`UPDATE parameters SET koef_t = ${data.coefficients.kt};`)
+      }
+      if (data.coefficients.kv !== undefined) {
+        memory.retain.background_coefficients.v = data.coefficients.kv;
+        sql.query(`UPDATE parameters SET koef_v = ${data.coefficients.kv};`)
+      }
+      if (data.coefficients.ka !== undefined) {
+        memory.retain.background_coefficients.a = data.coefficients.ka;
+        sql.query(`UPDATE parameters SET koef_a = ${data.coefficients.ka};`)
+      }
+    }
   });
 
   socket.on('history_request', (offset) => {
@@ -155,20 +169,23 @@ module.exports.ioConnect = async function ioConnect (socket) {
   });
 
   socket.on('save_graph', (data) => {
-    // console.log(data);
-    sql.query(`INSERT saved_graphs(name, time, date, beans, air, ror, arr_done) 
-    VALUES ("${data.name}","${data.time}","${data.date}","${JSON.stringify(data.beans)}",
-    "${JSON.stringify(data.air)}",  "${JSON.stringify(data.ror)}","${JSON.stringify(data.heat_arr_done)}");`)
+    if (!data) return;
+
+    sql.query(`INSERT saved_graphs(name, time, date, beans, air, ror, arr_done, history)
+    VALUES ("${data.name}","${data.time}","${data.date}","${JSON.stringify(data.beans)}","${JSON.stringify(data.air)}",
+    "${JSON.stringify(data.ror)}","${JSON.stringify(data.heat_arr_done)}","${JSON.stringify(global.memory.history.temp_beans_history_remember)}");`)
   });
 
   socket.on('history_set_background', (id) => {
-
+    (async function () {
+      if (id === 0) {return}
+      const [result] = await sql.query(`SELECT beans, air, ror, arr_done, time, history FROM saved_graphs WHERE id = ${id};`);
+      memory.history.background.temp_beans = JSON.parse(result[0].beans);
+      memory.history.background.arr_done = JSON.parse(result[0].arr_done);
+      memory.history.background.history = JSON.parse(result[0].history);
+      sql.query(`UPDATE service SET current_background_id = ${id};`);
+    })()
   });
-
-  // (async function () {
-  // const [result] = await sql.query("SELECT value FROM parameters WHERE name = 'temp_set_point';");
-  //     socket.emit("init", ["temp_set_point", result[0]['value']]);
-  // })();
 
   // recipe init
   (async function () {

@@ -20,7 +20,12 @@ module.exports = {
     manual: {
       vds_fr: 0,
       temp_sp: 0,
-    }
+    },
+    background_coefficients: {
+      t:0,
+      v:0,
+      a:0,
+    },
   },
   operative:{
     temp_beans: undefined,
@@ -34,5 +39,17 @@ module.exports = {
       cooler: false,
       blades: false,
     }
+  },
+  history: {
+    date_start: Date.now(),
+    date_roast_start: undefined,
+    date_roast_finish: undefined,
+    temp_beans_history: [],
+    temp_beans_history_remember: [],
+    background: {
+      temp_beans: [],
+      arr_done: [],
+      history: [],
+    },
   },
 };
