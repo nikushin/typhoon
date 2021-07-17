@@ -11,12 +11,6 @@ module.exports = async function mysql_create_connect () {
     await connection.query("CREATE DATABASE IF NOT EXISTS main");
     await connection.query("USE main");
 
-    // await connection.query(`CREATE TABLE IF NOT EXISTS parameters
-    // (name CHAR(50), value TINYINT)`).then(
-    // (result) => {if (result[0].warningStatus === 0) {
-    //   connection.query("INSERT parameters(name, value) VALUES ('temp_set_point', '0')");
-    // }});
-
     await connection.query(`CREATE TABLE IF NOT EXISTS parameters 
     (heat_manual_sp TINYINT, 
     vds_manual_sp TINYINT, 
@@ -26,11 +20,14 @@ module.exports = async function mysql_create_connect () {
     cooling_time SMALLINT,
     temp_prepare_sp SMALLINT,
     manual_vds TINYINT,
-    manual_heat SMALLINT)`).then(
+    manual_heat SMALLINT,
+    koef_t SMALLINT UNSIGNED,
+    koef_v SMALLINT UNSIGNED,
+    koef_a SMALLINT UNSIGNED)`).then(
     async (result) => {if (result[0].warningStatus === 0) {
       await connection.query(`INSERT parameters(heat_manual_sp, vds_manual_sp, roast_mode, step, 
-      vds_prepare_fr, cooling_time, temp_prepare_sp, manual_vds, manual_heat) 
-      VALUES (0, 0, 'manual'  , 60, 100, 60, 180, 100, 200)`);
+      vds_prepare_fr, cooling_time, temp_prepare_sp, manual_vds, manual_heat, koef_t, koef_v, koef_a) 
+      VALUES (0, 0, 'manual'  , 60, 100, 60, 180, 100, 200, 0, 0, 0)`);
     }});
 
     await connection.query(`CREATE TABLE IF NOT EXISTS saved_graphs (
@@ -41,7 +38,8 @@ module.exports = async function mysql_create_connect () {
       beans LONGTEXT, 
       air LONGTEXT, 
       ror LONGTEXT, 
-      arr_done LONGTEXT 
+      arr_done LONGTEXT,
+      history LONGTEXT
       )`);
 
     await connection.query("CREATE TABLE IF NOT EXISTS `recipes` (" +
@@ -53,12 +51,16 @@ module.exports = async function mysql_create_connect () {
         await connection.query("INSERT recipes(name) VALUES ('first_recipe')");
       }});
 
-    await connection.query("CREATE TABLE IF NOT EXISTS `service` (current_recipe INT)").then(
+    await connection.query(`CREATE TABLE IF NOT EXISTS service (
+    current_recipe INT,
+    current_background_id INT
+    )`).then(
          async (result) => {
             if (result[0].warningStatus === 0) {
                 await connection.query("SELECT id FROM recipes LIMIT 1;").then(
                     async (result)=>{
-                await connection.query(`INSERT service(current_recipe) VALUES (${result[0][0]['id']})`)
+                await connection.query(`INSERT service(current_recipe, current_background_id) 
+                VALUES (${result[0][0]['id']}, 0)`)
                 }
             );
         }});

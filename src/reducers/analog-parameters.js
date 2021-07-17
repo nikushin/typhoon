@@ -31,6 +31,9 @@ const analogParameters = (state, action) => {
             vds_switch: false,
             vds_status_feedback: false,
             vds_fr_feedback: 0,
+            background_data: {
+                p0:0, tsp:0, t:0, kt:0, vsp:0, v:0, kv:0, asp:0, a:0, ka:0, t_summ:0, v_summ:0, a_summ:0,
+            }
         };
     }
 
@@ -75,12 +78,28 @@ const analogParameters = (state, action) => {
                     state.ManualKeeper.heat = action.payload.manual.heat;
                 }
             }
-
+            if (action.payload.background_data !== undefined) {
+                state.analogParametersKeeper.background_data.p0 =  action.payload.background_data.p0;
+                state.analogParametersKeeper.background_data.tsp =  action.payload.background_data.tsp;
+                state.analogParametersKeeper.background_data.t =  action.payload.background_data.t;
+                state.analogParametersKeeper.background_data.vsp =  action.payload.background_data.vsp;
+                state.analogParametersKeeper.background_data.v =  action.payload.background_data.v;
+                state.analogParametersKeeper.background_data.asp =  action.payload.background_data.asp;
+                state.analogParametersKeeper.background_data.a =  action.payload.background_data.a;
+                state.analogParametersKeeper.background_data.t_summ =  action.payload.background_data.t_summ;
+                state.analogParametersKeeper.background_data.v_summ =  action.payload.background_data.v_summ;
+                state.analogParametersKeeper.background_data.a_summ =  action.payload.background_data.a_summ;
+            }
 
             return {...state.analogParametersKeeper};
 
         case 'RECEIVE_VDS_STATUS_FEEDBACK' :
             return {...state.analogParametersKeeper, vds_status_feedback: action.payload};
+
+        case 'CHANGE_COEFFICIENT' :
+            state.analogParametersKeeper.background_data[action.payload.type] =  action.payload.value;
+            socketService.SocketEmmit('memory_change', {coefficients:{[action.payload.type]:action.payload.value}});
+            return {...state.analogParametersKeeper};
 
         case 'RECEIVE_VDS_FR_FEEDBACK' :
             return {...state.analogParametersKeeper, vds_fr_feedback: action.payload};

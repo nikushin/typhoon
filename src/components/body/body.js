@@ -1,119 +1,131 @@
-import React, {useContext, useEffect, useReducer, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import socketService from "../../services/socket-service";
-import styled from 'styled-components'
-
+import {Container, Button} from './body_styled'
 import {useDispatch, useSelector} from "react-redux";
-import {showKeyboard, hideKeyboard, setBoolParameter, changeGlobalColor, changePhase, testDispatch} from "../../actions";
-
-import {VdsSwitch} from '../../actions/parameters'
-import { ChromePicker } from 'react-color';
-
-import VidgetInputOutput from "../vidget-input-output";
-import Tank from "../tank";
+import {
+    showKeyboard,
+    hideKeyboard,
+    changePhase,
+} from "../../actions";
 import Lamp from "../lamp";
-import NumIndicator from "../num-indicator";
-import './body.css';
-
-const Button = styled.div`
- width: 100px;
- height: 50px;
- background-color: rgb(90,90,90);
- margin-bottom: 10px;
-`;
 
 const Body = () => {
     const [selectorPrepare, SetselectorPrepare] = useState(false);
     const dispatch = useDispatch();
-    // const {SocketEmmit} = useContext(MyContext);
-    const color = useSelector(state => state.mainKeeper.globalColor);
-    const vds_fr_feedback = useSelector(state => state.analogParametersKeeper.vds_fr_feedback);
-    const vds_status_feedback = useSelector(state => state.analogParametersKeeper.vds_status_feedback);
+    const background_data = useSelector(state => state.analogParametersKeeper.background_data);
+    const heat_power_indicator = useSelector(state => state.analogParametersKeeper.heat_power_indicator);
+
+    const ChangeK = (type) => {
+        dispatch(showKeyboard({startValue: background_data[type], min:0, max:5000, top:500, left:500,
+            func: (value) => {
+                dispatch({type: 'CHANGE_COEFFICIENT', payload: {type, value}})
+            }}));
+    };
 
     return (
-        <div className="body">
+        <Container>
             <div>
-                <NumIndicator/>
-                <VidgetInputOutput keeper='analogParametersKeeper' parameter='temp_set_point' title='Подготовка'
-                min={0} max={100} top={300} left={300}/>
-                <VidgetInputOutput parameter='increment_value' title='modbus' keeper='analogParametersKeeper'/>
-                <Button text="lamp" onClick={() => dispatch(setBoolParameter())}/>
-                <Tank parameter='temp_set_point'/>
-                <Lamp parameters={{parameter : 'lamp_test', keeper : 'analogParametersKeeper'}} />
-                <Lamp parameters={{parameter : 'lamp_test_gpio', keeper : 'analogParametersKeeper'}} />
+                <div>
+                    <div>{heat_power_indicator[0]}</div>
+                    <div>P</div>
+                    <div>{background_data.p0}</div>
+                </div>
+                <div>
+                    <div></div>
+                    <div>t sp</div>
+                    <div>{background_data.tsp.toFixed(1)}</div>
+                </div>
+                <div>
+                    <div>{background_data.t_summ.toFixed(1)}</div>
+                    <div>t</div>
+                    <div>{background_data.t.toFixed(1)}</div>
+                </div>
+                <div>
+                    <div></div>
+                    <div>kt</div>
+                    <div onClick={() => ChangeK('kt')}>{background_data.kt}</div>
+                </div>
+                <div>
+                    <div></div>
+                    <div>v sp</div>
+                    <div>{background_data.vsp.toFixed(1)}</div>
+                </div>
+                <div>
+                    <div>{background_data.v_summ.toFixed(1)}</div>
+                    <div>v</div>
+                    <div>{background_data.v.toFixed(1)}</div>
+                </div>
+                <div>
+                    <div></div>
+                    <div>kv</div>
+                    <div onClick={() => ChangeK('kv')}>{background_data.kv}</div>
+                </div>
+                <div>
+                    <div></div>
+                    <div>a sp</div>
+                    <div>{background_data.asp.toFixed(1)}</div>
+                </div>
+                <div>
+                    <div>{background_data.a_summ.toFixed(1)}</div>
+                    <div>a</div>
+                    <div>{background_data.a.toFixed(1)}</div>
+                </div>
+                <div>
+                    <div></div>
+                    <div>ka</div>
+                    <div onClick={() => ChangeK('ka')}>{background_data.ka}</div>
+                </div>
             </div>
-
             <div>
-                <Button onClick={() => dispatch(VdsSwitch())}>on/off</Button>
-
-                <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:100,
-                    top: 200, left: 500, func: (input) => {socketService.SocketEmmit('vds_set_fr', input)}}))}>fr</Button>
-
-                <Button>fr {vds_fr_feedback}</Button>
-                <Button>status {vds_status_feedback}</Button>
-
+                <div>vds<Lamp parameters={{parameter: 'vds_switch', keeper: 'analogParametersKeeper'}}/></div>
+                <div>cooler<Lamp parameters={{parameter: 'cooler_lamp', keeper: 'analogParametersKeeper'}}/></div>
+                <div>blades<Lamp parameters={{parameter: 'blades_lamp', keeper: 'analogParametersKeeper'}}/></div>
+                <div>heat<Lamp parameters={{parameter: 'heat_lamp', keeper: 'analogParametersKeeper'}}/></div>
             </div>
-            <div style = {{paddingTop: "20px"}}>
-                <ChromePicker
-                  color = {color.st}
-                  onChangeComplete = {(color) => dispatch(changeGlobalColor(color))}
-                  disableAlpha = {true}
-                />
-
-                <Button text="test"
-                        onMouseDown={() => socketService.SocketEmmit('test_gpio')}>
-                    Test
+            <div>
+                <Button text="bPrepare" style={{backgroundColor: selectorPrepare ? "green" : "rgba(90,90,90,0.57)"}}
+                        onMouseDown={() => {
+                            SetselectorPrepare((s) => {
+                                socketService.SocketEmmit('button_prepare', !s);
+                                return !s
+                            });
+                        }}>
+                    Prepare
                 </Button>
-
-                <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:9999999,
-                    top: 300, left: 1200, func: (input) => {socketService.SocketEmmit('test_range', input)}}))}>Range</Button>
-                <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:9999999,
-                    top: 300, left: 1200, func: (input) => {socketService.SocketEmmit('test_frequency', input)}}))}>Frequency</Button>
-                <Button onClick={()=>dispatch(showKeyboard({startValue: 0, min: 0, max:9999999,
-                    top: 300, left: 1200, func: (input) => {socketService.SocketEmmit('test_value', input)}}))}>Value</Button>
-
-            </div>
-            <div>
-                <div>vds<Lamp parameters={{parameter : 'vds_switch', keeper : 'analogParametersKeeper'}} /></div>
-                <div>cooler<Lamp parameters={{parameter : 'cooler_lamp', keeper : 'analogParametersKeeper'}} /></div>
-                <div>blades<Lamp parameters={{parameter : 'blades_lamp', keeper : 'analogParametersKeeper'}} /></div>
-                <div>heat<Lamp parameters={{parameter : 'heat_lamp', keeper : 'analogParametersKeeper'}} /></div>
-                <div></div>
-            </div>
-          <div className="phases-container">
-
-            <Button text="bPrepare" style={{backgroundColor: selectorPrepare ? "green" : "rgba(90,90,90,0.57)" }}
-                    onMouseDown={() => {SetselectorPrepare((s) => {socketService.SocketEmmit('button_prepare', !s); return !s});}}>
-                Prepare
-            </Button>
-
-
-            <Button text="bStart"
-                    onMouseDown={() => socketService.SocketEmmit('button_start')}>
-                Start
-            </Button>
-            <Button text="bStop"
-                    onMouseDown={() => socketService.SocketEmmit('button_stop')}>
-                Stop
-            </Button>
-            <Button text="bBlades"
-                    onMouseDown={() => socketService.SocketEmmit('button_blades')}>
-                Blades
-          </Button>
+                <Button text="bStart"
+                        onMouseDown={() => socketService.SocketEmmit('button_start')}>
+                    Start
+                </Button>
+                <Button text="bStop"
+                        onMouseDown={() => socketService.SocketEmmit('button_stop')}>
+                    Stop
+                </Button>
+                <Button text="bBlades"
+                        onMouseDown={() => socketService.SocketEmmit('button_blades')}>
+                    Blades
+                </Button>
                 <Button text="bCooler"
                         onMouseDown={() => socketService.SocketEmmit('button_cooler')}>
                     Cooler
                 </Button>
+            </div>
 
-            <div>stop<Lamp parameters={{parameter : 'stop', keeper : 'PhasesKeeper'}} /></div>
-            <div>prepare<Lamp parameters={{parameter : 'prepare', keeper : 'PhasesKeeper', blink : 'prepare_done'}}/></div>
+            <div>
+                <div>stop<Lamp parameters={{parameter: 'stop', keeper: 'PhasesKeeper'}}/></div>
+                <div>prepare<Lamp parameters={{parameter: 'prepare', keeper: 'PhasesKeeper', blink: 'prepare_done'}}/>
+                </div>
 
-            <div>loading_roaster<Lamp parameters={{parameter : 'loading_roaster', keeper : 'PhasesKeeper', blink : 'loading_roaster_done'}}/></div>
-            <div>roast<Lamp parameters={{parameter : 'roast', keeper : 'PhasesKeeper'}}/></div>
-            <div>unloading_roaster<Lamp parameters={{parameter : 'unloading_roaster', keeper : 'PhasesKeeper'}}/></div>
-            <div>cooling<Lamp parameters={{parameter : 'cooling', keeper : 'PhasesKeeper'}}/></div>
-            <div>unload_cooler<Lamp parameters={{parameter : 'unloading_cooler', keeper : 'PhasesKeeper'}}/></div>
-          </div>
-        </div>
+                <div>loading_roaster<Lamp
+                    parameters={{parameter: 'loading_roaster', keeper: 'PhasesKeeper', blink: 'loading_roaster_done'}}/>
+                </div>
+                <div>roast<Lamp parameters={{parameter: 'roast', keeper: 'PhasesKeeper'}}/></div>
+                <div>unloading_roaster<Lamp parameters={{parameter: 'unloading_roaster', keeper: 'PhasesKeeper'}}/>
+                </div>
+                <div>cooling<Lamp parameters={{parameter: 'cooling', keeper: 'PhasesKeeper'}}/></div>
+                <div>unload_cooler<Lamp parameters={{parameter: 'unloading_cooler', keeper: 'PhasesKeeper'}}/></div>
+
+            </div>
+        </Container>
     );
 };
 

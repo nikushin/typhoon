@@ -23,7 +23,6 @@ const HistoryMenu = () => {
   };
 
     const OneStoryClick = (id) => {
-        console.log(history_delete_mode);
         if (history_delete_mode) {
             if (history_chosen_id === id) {
                 dispatch({type: 'HISTORY_CHOOSE_STORY', payload: 0});

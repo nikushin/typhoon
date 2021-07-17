@@ -138,8 +138,8 @@ export const SliderHeat = memo(({src_img, min, max, top, left}) => {
             func: (value) => {
                 socketService.SocketEmmit('memory_change', {'heat_manual_sp': value});
                 setVisibleValue(value);
-        }}));};
-
+        }}));
+    };
     return (
         <Container value={VisibleValue} src_img={src_img} >
             <Track bg={trackProgress}/>
