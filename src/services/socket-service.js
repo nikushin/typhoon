@@ -39,7 +39,7 @@ class SocketService {
 
         socket.on('recipe_init', (data) => {
             RecipeInit(data);
-            //console.log('init ' + data.amount)
+            // console.log('init ' + {data})
         });
 
         socket.on('every_second_data', (data) => {

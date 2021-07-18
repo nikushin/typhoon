@@ -19,7 +19,9 @@ const intTobit = (int) => {
 };
 
 const connectTcp = async () => {
-    await client.close(() => {console.log('close')});
+    await client.close(() => {
+        // console.log('close')
+    });
     // await client.connectTCP("127.0.0.1", { port: 502 }).then(
     await client.connectTCP("192.168.1.99", { port: 502 }).then(
         () => {
@@ -28,8 +30,8 @@ const connectTcp = async () => {
         }
     ).catch(
         (e) => {
-            console.log('connection fail ' + e);
-            setTimeout(connectTcp, 2000);
+            // console.log('connection fail ' + e);
+            setTimeout(connectTcp, 5000);
         }
     );
 };

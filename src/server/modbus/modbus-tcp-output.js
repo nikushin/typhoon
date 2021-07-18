@@ -6,11 +6,15 @@ const emitter = global.emitter;
 let flagReady = false;
 let cycleOn = false;
 
+const stack = [];
 const conform = {ssr: 340, lamp_start: 341, vds: 342, heat_starter: 343, cooler: 344, blades: 345};
 
 const connectTcp = async () => {
+    stack.length = 0;
     flagReady = false;
-    await client.close(() => {console.log('close')});
+    await client.close(() => {
+        // console.log('close')
+    });
     // await client.connectTCP("127.0.0.2", { port: 502 }).then(
     await client.connectTCP("192.168.1.98", { port: 502 }).then(
         () => {
@@ -21,8 +25,8 @@ const connectTcp = async () => {
         }
     ).catch(
         (e) => {
-            console.log('connection fail ' + e);
-            setTimeout(connectTcp, 2000);
+            // console.log('connection fail output ' + e);
+            setTimeout(connectTcp, 5000);
         }
     );
 };
@@ -33,8 +37,6 @@ connectTcp();
 //     console.log('heater_gpio_switch_power ' + value);
 //     await writeTemplate(340, [value*10]);
 // });
-
-const stack = [];
 
 const writeTemplate = async (name, value) => {
     await client.writeRegisters (conform[name], [value*10]).then(
@@ -80,6 +82,7 @@ const init = () => {
 };
 
 let timeOut = undefined;
+
 const cycle = () => {
     clearTimeout(timeOut);
     console.log('cycle ', stack);
