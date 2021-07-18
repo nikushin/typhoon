@@ -10,7 +10,9 @@ const conform = {ssr: 340, lamp_start: 341, vds: 342, heat_starter: 343, cooler:
 
 const connectTcp = async () => {
     flagReady = false;
-    await client.close(() => {console.log('close')});
+    await client.close(() => {
+		//console.log('close')
+		});
     // await client.connectTCP("127.0.0.2", { port: 502 }).then(
     await client.connectTCP("192.168.1.98", { port: 502 }).then(
         () => {
@@ -21,7 +23,7 @@ const connectTcp = async () => {
         }
     ).catch(
         (e) => {
-            console.log('connection fail ' + e);
+            //console.log('connection fail ' + e);
             setTimeout(connectTcp, 2000);
         }
     );

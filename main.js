@@ -11,8 +11,8 @@ function createWindow () {
     });
 
     // и загрузить index.html приложения.
-    win.loadURL('http://localhost:3000');
-    // win.loadFile('/build/index.html');
+    win.loadURL('http://localhost:3000/');
+    //win.loadFile('/build/index.html');
     win.setMenu(null);
     win.setFullScreen(true);
 }

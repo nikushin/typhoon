@@ -1,5 +1,4 @@
 // const {emitter} = require('../server');
-
 module.exports.recipeInit = function recipeInit (sql, socket, recipe_id) {
   sql.query(`SELECT * FROM recipes WHERE id = ${recipe_id};`,
     function(err, results) {
