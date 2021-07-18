@@ -31,8 +31,8 @@ const connectTcp = async () => {
         }
     ).catch(
         (e) => {
-            //console.log('connection fail ' + e);
-            setTimeout(connectTcp, 2000);
+            // console.log('connection fail ' + e);
+            setTimeout(connectTcp, 5000);
         }
     );
 };
