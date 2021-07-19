@@ -12,7 +12,8 @@
 
   await require('./modbus/modbus-tcp-input');
   await require('./modbus/modbus-tcp-output');
-
+  await require('./modbus/modbus')()
+  
   // if (process.platform === 'linux') {
   //   await require('./modbus/modbus')();
   //   require('./function-bloks/gpio')();

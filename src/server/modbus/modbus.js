@@ -28,7 +28,7 @@ let old_temp_beans = undefined;
 let old_temp_beans_time = undefined;
 
 const readStack = [
-    async () => {
+/*     async () => {
         Modbusclient.setID(1);
         await Modbusclient.readHoldingRegisters(3201, 2).then((data) => { //3201
             //console.log(data.data[0], data.data[1]);
@@ -38,21 +38,22 @@ const readStack = [
             .catch(err => {
                 console.log('1 ' + err.message)
             });
-    },
+    }, */
     async () => {
         Modbusclient.setID(16);
         await Modbusclient.readHoldingRegisters(1, 7).then((data) => {
-            const temp_beans_time = data.data[3];
+            const temp_beans_time = data.data[2];
             if (old_temp_beans_time !== temp_beans_time) {
                 const temp_beans = data.data[0];
-                const time = Date.now() - global.memory.operative.history.date_start;
-                const temp_beans_history = global.memory.operative.history.temp_beans_history;
-
+                const time = Date.now() - global.memory.history.date_start;
+                const temp_beans_history = global.memory.history.temp_beans_history;
                 global.memory.operative.temp_beans = temp_beans;
                 temp_beans_history.push([temp_beans, temp_beans_time, time]);
-                if (time > 60 * 1000 && !global.steps.roast.status)
+                if (time > 60 * 1000 && !global.steps.roast.status) {
                     while (temp_beans_history[0][1] > 30 * 1000)
                         temp_beans_history.shift();
+				}
+				console.log(temp_beans)
                 old_temp_beans_time = temp_beans_time;
                 global.emitter.emit('temp_beans_new_value');
             }
@@ -77,7 +78,7 @@ const readModbus = async () => {
         }
         await readStack[n]();
     }
-    setTimeout(() => readModbus(), 20);
+    setTimeout(() => readModbus(), 20); //20
     //await readModbus()
 };
 
@@ -86,8 +87,9 @@ function modbusInit() {
     //Modbusclient.connectRTUBuffered('/dev/serial0', {baudRate: 9600, parity: "even", dataBits: 8, stopBits: 1 }, (err) => {
     // Modbusclient.connectRTUBuffered('COM30', {baudRate: 19200, parity: "even", dataBits: 8, stopBits: 1 }, (err) => {
     //Modbusclient.connectRTUBuffered('COM31', {baudRate: 9600, parity: "even", dataBits: 8, stopBits: 1 }, (err) => {
-    Modbusclient.connectRTUBuffered('/dev/ttyAMA1', {
-        baudRate: 9600,
+    //Modbusclient.connectRTUBuffered('/dev/ttyAMA1', {
+	Modbusclient.connectRTUBuffered('/dev/ttyS0', {
+        baudRate: 19200,
         parity: "even",
         dataBits: 8,
         stopBits: 1

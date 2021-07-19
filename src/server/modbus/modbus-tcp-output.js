@@ -7,7 +7,7 @@ let flagReady = false;
 let cycleOn = false;
 
 const stack = [];
-const conform = {ssr: 340, lamp_start: 341, vds: 342, heat_starter: 343, cooler: 344, blades: 345};
+const conform = {ssr: 341, lamp_start: 340, vds: 342, heat_starter: 343, cooler: 344, blades: 345};
 
 const connectTcp = async () => {
     stack.length = 0;
@@ -16,7 +16,7 @@ const connectTcp = async () => {
         // console.log('close')
     });
     // await client.connectTCP("127.0.0.2", { port: 502 }).then(
-    await client.connectTCP("192.168.1.98", { port: 502 }).then(
+    await client.connectTCP("192.168.10.98", { port: 502 }).then(
         () => {
             console.log('connection successful');
             flagReady = true;
@@ -25,7 +25,7 @@ const connectTcp = async () => {
         }
     ).catch(
         (e) => {
-            // console.log('connection fail output ' + e);
+            console.log('connection fail output ' + e);
             setTimeout(connectTcp, 5000);
         }
     );
@@ -85,7 +85,7 @@ let timeOut = undefined;
 
 const cycle = () => {
     clearTimeout(timeOut);
-    console.log('cycle ', stack);
+    //console.log('cycle ', stack);
     if (!flagReady) {return}
     cycleOn = true;
     if (stack.length > 0) {
@@ -100,12 +100,12 @@ const cycle = () => {
 const checkConnection = async () => {
     await client.readHoldingRegisters(340, 1).then(
         (data) =>  {
-            console.log(data.data);
+            //console.log(data.data);
             if (!cycleOn) {cycle()}
         }
     ).catch(
         (err) => {
-            setTimeout(connectTcp, 1000);
+            setTimeout(connectTcp, 5000);
         }
     )
 };

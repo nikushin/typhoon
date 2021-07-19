@@ -5,8 +5,8 @@ const emitter = global.emitter;
 client.setTimeout(100);
 clientOutput.setTimeout(100);
 
-const conform = [['button_start', 0, 'rising'],['button_stop', 1, 'falling'],['button_alarm', 2, 'both'],
-    ['button_cooler', 3, 'rising'],['button_blades', 4, 'rising'],['switch_prepare', 5, 'both'],];
+const conform = [['button_alarm', 0, 'both'],['switch_prepare', 1, 'both'],['button_start', 2, 'both'],
+    ['button_stop', 3, 'falling'],['button_blades', 4, 'rising'],['button_cooler', 5, 'rising'],];
 
 const intTobit = (int) => {
     const innerInt = int.toString(2).split('').reverse();
@@ -24,14 +24,14 @@ const connectTcp = async () => {
 		//console.log('close')
 	});
     // await client.connectTCP("127.0.0.1", { port: 502 }).then(
-    await client.connectTCP("192.168.1.99", { port: 502 }).then(
+    await client.connectTCP("192.168.10.99", { port: 502 }).then(
         () => {
             console.log('connection successful');
             readTcp1();
         }
     ).catch(
         (e) => {
-            // console.log('connection fail ' + e);
+            console.log('connection fail ' + e);
             setTimeout(connectTcp, 5000);
         }
     );
@@ -41,7 +41,7 @@ connectTcp();
 const readTcp1 =  () => {
     client.readHoldingRegisters(51, 2).then(
         (data) =>  {
-            const d = intTobit(data.data[1]);
+            const d = intTobit(data.data[0]);
 
             for (let i = 0; i <= conform.length-1; i++) {
                 const new_value = d[conform[i][1]];
@@ -67,14 +67,14 @@ const readTcp1 =  () => {
                 }
             }
 
-            setTimeout(readTcp1, 2000);
-            // readTcp1();
+            //setTimeout(readTcp1, 500);
+            readTcp1();
         }
     ).catch(
         (err) => {
             if (client.isOpen) {
                 console.log('какая-то ошибка входа' + err.err);
-                setTimeout(readTcp1, 1000);
+                setTimeout(connectTcp, 1000);
             }
             else {
                 console.log('соединение не установленно, пробуем подключиться');
