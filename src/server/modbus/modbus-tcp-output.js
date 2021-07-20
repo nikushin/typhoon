@@ -15,8 +15,8 @@ const connectTcp = async () => {
     await client.close(() => {
         // console.log('close')
     });
-    // await client.connectTCP("127.0.0.2", { port: 502 }).then(
-    await client.connectTCP("192.168.10.98", { port: 502 }).then(
+    await client.connectTCP("127.0.0.2", { port: 502 }).then(
+    // await client.connectTCP("192.168.10.98", { port: 502 }).then(
         () => {
             console.log('connection successful');
             flagReady = true;

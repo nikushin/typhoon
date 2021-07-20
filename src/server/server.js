@@ -10,15 +10,15 @@
   await require('./phases/steps_init');
   await require('./function-bloks/emitt-socket')();
 
-  await require('./modbus/modbus-tcp-input');
-  await require('./modbus/modbus-tcp-output');
-  await require('./modbus/modbus')()
+  // await require('./modbus/modbus-tcp-input');
+  // await require('./modbus/modbus-tcp-output');
+  await require('./modbus/modbus-tcp');
   
-  // if (process.platform === 'linux') {
-  //   await require('./modbus/modbus')();
+  if (process.platform === 'linux') {
+    await require('./modbus/modbus')();
   //   require('./function-bloks/gpio')();
   //   require('./function-bloks/gpio2')();
-  // }
+  }
   
   const {ioConnect} = require ('./function-bloks/io-connect');
   global.socket.on('connect', socket => {

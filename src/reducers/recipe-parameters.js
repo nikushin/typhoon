@@ -29,6 +29,7 @@ const RecipeParameters = (state, action) => {
             return {...state.recipeKeeper};
 
         case 'RECIPE_INIT' :
+            console.log(action.payload);
             if (action.payload.recipe_data && action.payload.recipe_data.heat_setting_arr) {
                 state.graphSettingsKeeper.arr_heat = action.payload.recipe_data.heat_setting_arr;
             } else {
