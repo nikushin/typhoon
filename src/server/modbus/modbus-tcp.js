@@ -51,7 +51,7 @@ const intTobit = (int) => {
 const readTCPinput =  async () => {
     await clientInput.readHoldingRegisters(51, 2).then(
         (data) =>  {
-            const d = intTobit(data.data[1]);
+            const d = intTobit(data.data[0]);
             for (let i = 0; i <= inputConform.length-1; i++) {
                 const new_value = d[inputConform[i][1]];
                 const old_value = inputConform[i][3];

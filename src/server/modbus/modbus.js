@@ -53,7 +53,7 @@ const readStack = [
                     while (temp_beans_history[0][1] > 30 * 1000)
                         temp_beans_history.shift();
 				}
-				console.log(temp_beans)
+				console.log(data.data[0])
                 old_temp_beans_time = temp_beans_time;
                 global.emitter.emit('temp_beans_new_value');
             }
