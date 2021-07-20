@@ -135,8 +135,8 @@ let timeOut = undefined;
 const checkConnection = async () => {
     await clientOutput.readHoldingRegisters(340, 1).then(
         (data) =>  {
-            console.log('Проверка модуля вывода прошла успешно');
-            setTimeout(timeOut = checkConnection,5000)
+            //console.log('Проверка модуля вывода прошла успешно');
+            timeOut = setTimeout(checkConnection,5000)
         }
     ).catch(
         (err) => {
