@@ -44,7 +44,7 @@ const readStack = [
         await Modbusclient.readHoldingRegisters(1, 7).then((data) => {
             const temp_beans_time = data.data[2];
             if (old_temp_beans_time !== temp_beans_time) {
-                const temp_beans = data.data[0];
+                const temp_beans = data.data[0]/100;
                 const time = Date.now() - global.memory.history.date_start;
                 const temp_beans_history = global.memory.history.temp_beans_history;
                 global.memory.operative.temp_beans = temp_beans;
@@ -53,7 +53,7 @@ const readStack = [
                     while (temp_beans_history[0][1] > 30 * 1000)
                         temp_beans_history.shift();
 				}
-				console.log(data.data[0])
+				console.log(data.data[0]);
                 old_temp_beans_time = temp_beans_time;
                 global.emitter.emit('temp_beans_new_value');
             }
