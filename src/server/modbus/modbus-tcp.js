@@ -10,9 +10,8 @@ const inputModuleAddress = '192.168.10.99'; //127.0.0.1
 
 const stack = [];
 const outputConform = {ssr: 341, lamp_start: 340, vds: 342, heat_starter: 343, cooler: 344, blades: 345};
-const inputConform = [['button_alarm', 0, 'both'],['switch_prepare', 1, 'both'],['button_start', 2, 'both'],
+const inputConform = [['button_alarm', 0, 'both'],['button_prepare', 1, 'both'],['button_start', 2, 'rising'],
     ['button_stop', 3, 'falling'],['button_blades', 4, 'rising'],['button_cooler', 5, 'rising'],];
-
 
 let flagReadyTCPinput = false;
 let tryConnectTCPinput = false;
@@ -59,12 +58,12 @@ const readTCPinput =  async () => {
                 const message = inputConform[i][0];
                 if (new_value !== old_value) {
                     if (func === 'rising') {
-                        if (new_value === true) {
+                        if (new_value === true && old_value !== undefined) {
                             emitter.emit(message);
                             console.log(message, new_value)
                         }
                     } else if (func === 'falling') {
-                        if (new_value === false) {
+                        if (new_value === false &&old_value !== undefined) {
                             emitter.emit(message);
                             console.log(message, new_value)
                         }
@@ -150,7 +149,7 @@ const checkConnection = async () => {
 const writeTemplate = async (name, value) => {
     await clientOutput.writeRegisters (outputConform[name], [value*10]).then(
         () => {
-            console.log('успешно');
+            console.log(name, value*10);
         }
     )
         .catch(
