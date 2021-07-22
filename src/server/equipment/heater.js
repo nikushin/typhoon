@@ -82,6 +82,7 @@ class heater {
         } else {
             new_power = 0;
         }
+		console.log(global.memory.operative.temp_beans, global.memory.retain.manual.temp_sp);
         if (this.on && this.power!== new_power) {
 			this.power = new_power;
 			global.emitter.emit('heater_gpio_switch_power', this.power);

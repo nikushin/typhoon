@@ -135,14 +135,13 @@ module.exports = function emittSocket() {
     const TempCalc = () => {
 
         if (global.memory.operative.temp_beans !== undefined) {
-            tempBeansArr.push(tempBeans);
+            tempBeansArr.push(memory.operative.temp_beans);
         }
 
         if (tempBeansArr.length > 10) {
-            ror = -(tempBeansArr[0] - tempBeansArr[9]).toFixed(1);
+            ror = -(tempBeansArr[0] - tempBeansArr[9]).toFixed(2);
             tempBeansArr.shift()
         }
-		//console.log('ror ', ror);
         return {tempBeans: global.memory.operative.temp_beans, tempAir: global.memory.operative.temp_air, ror: ror}
     };
 
