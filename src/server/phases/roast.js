@@ -156,7 +156,7 @@ class step_roast {
 
             if (roast_power > 100) roast_power = 100;
             if (roast_power < 0) roast_power = 100;
-            console.log(bg_roast_power);
+            //console.log(bg_roast_power);
             global.socket.emit('memory_change', {background_data: {p0: bg_roast_power, tsp: bg_temp, t: now_temp,
                     vsp: bg_speed, v: now_speed, asp: bg_acceleration, a: now_acceleration,
                     t_summ: t_summ, v_summ: v_summ, a_summ: a_summ}});

@@ -1,10 +1,7 @@
 class step_prepare {
   constructor() {
     global.emitter.on('button_prepare',(value) => this.ButtonPrepare(value));
-    global.emitter.on('button_start',() => {
-      console.log('button_start q');
-      this.toLoadingRoaster()
-    });
+    global.emitter.on('button_start',() => this.toLoadingRoaster());
   }
   status = false;
   SetStatus = (value) => {

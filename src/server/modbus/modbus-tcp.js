@@ -149,7 +149,7 @@ const checkConnection = async () => {
 const writeTemplate = async (name, value) => {
     await clientOutput.writeRegisters (outputConform[name], [value*10]).then(
         () => {
-            console.log(name, value*10);
+            console.log(name, value);
         }
     )
         .catch(

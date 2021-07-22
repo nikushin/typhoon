@@ -38,9 +38,7 @@ const connectTcp = async () => {
 };
 connectTcp();
 
-let n = 0;
 const readTcp1 =  () => {
-    console.log(n++);
     client.readHoldingRegisters(51, 2).then(
         (data) =>  {
             const d = intTobit(data.data[0]);

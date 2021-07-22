@@ -109,7 +109,7 @@ module.exports.ioConnect = async function ioConnect (socket) {
         sql.query(`UPDATE parameters SET manual_vds = ${data.manual.vds_fr};`)
       }
       if (data.manual.temp_sp !== undefined) {
-        console.log(data.manual.temp_sp);
+        //console.log(data.manual.temp_sp);
         memory.retain.manual.temp_sp = data.manual.temp_sp;
         emitter.emit('new_manual_temp_sp');
         sql.query(`UPDATE parameters SET manual_heat = ${data.manual.temp_sp};`)
