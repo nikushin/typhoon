@@ -142,14 +142,14 @@ module.exports = function emittSocket() {
             ror = -(tempBeansArr[0] - tempBeansArr[9]).toFixed(1);
             tempBeansArr.shift()
         }
-
+    console.log('ror ', ror);
         return {tempBeans: global.memory.operative.temp_beans, tempAir: global.memory.operative.temp_air, ror: ror}
     };
 
     const EverySecondSendData = () => {
 
-        const tempSimulatorValues = TempSimulator();
-        //const temp = TempCalc();
+        //const temp = TempSimulator();
+        const temp = TempCalc();
         const roastData = global.steps.roast.RoastTick();
         const coolingData = global.steps.cooling.CoolingTick();
 
