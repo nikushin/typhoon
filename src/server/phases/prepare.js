@@ -5,6 +5,7 @@ class step_prepare {
   }
   status = false;
   SetStatus = (value) => {
+	  console.log('Подготовка ', value);
     this.status = value;
     if (value) {
       global.vds.SwitchPower(true);
