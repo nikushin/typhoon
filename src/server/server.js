@@ -1,17 +1,17 @@
 (async function () {
-  global.memory = require('./function-bloks/memory');
-  global.sql = await require('./mysql.js')();
-  await require('./function-bloks/memory_init')();
-  global.socket = require('socket.io')(8080, {transports: ['polling', 'websocket']} ).sockets;
   const EventEmitter = new require('events').EventEmitter;
   global.emitter = new EventEmitter();
+  global.socket = require('socket.io')(8080, {transports: ['polling', 'websocket']} ).sockets;
+  global.memory = require('./function-bloks/memory');
 
   await require('./equipment/equipment_init');
   await require('./phases/steps_init');
+
+  global.sql = await require('./mysql.js')();
+  await require('./function-bloks/memory_init')();
+
   await require('./function-bloks/emitt-socket')();
 
-  // await require('./modbus/modbus-tcp-input');
-  // await require('./modbus/modbus-tcp-output');
   await require('./modbus/modbus-tcp');
   
   if (process.platform === 'linux') {

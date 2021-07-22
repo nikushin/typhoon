@@ -231,4 +231,6 @@ module.exports.ioConnect = async function ioConnect (socket) {
     cooling: global.steps.cooling.status,
   });
 
+  socket.emit("alarms", global.memory.operative.alarms);
+
 };

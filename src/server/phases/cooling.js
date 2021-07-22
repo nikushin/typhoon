@@ -40,8 +40,8 @@ class step_cooling {
   };
 
   toUnloadingCooler = () => {
-      this.SetStatus (false);
-      global.steps.unloading_cooler.SetStatus(true);
+    this.SetStatus (false);
+    global.steps.unloading_cooler.SetStatus(true);
   };
 
   Finish = () => {

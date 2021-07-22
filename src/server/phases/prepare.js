@@ -4,23 +4,11 @@ class step_prepare {
     global.emitter.on('button_start',() => this.toLoadingRoaster());
   }
   status = false;
-  start_delay = false;
-  start_delay_timeout = undefined;
   SetStatus = (value) => {
     this.status = value;
     if (value) {
-      this.start_delay_timeout = setTimeout (()=> {
-        this.start_delay = true;
-        global.socket.emit("phases_status", {prepare_done : this.start_delay});
-      }, 3000);
-
       global.vds.SwitchPower(true);
       global.heater.SwitchAllow(true);
-
-    } else {
-      clearTimeout(this.start_delay_timeout);
-      this.start_delay = false;
-      global.socket.emit("phases_status", {prepare_done : this.start_delay});
     }
     global.socket.emit("phases_status", {prepare : this.status});
   };
@@ -41,10 +29,8 @@ class step_prepare {
   };
 
   toLoadingRoaster = () => {
-    if (this.start_delay === true) {
       this.SetStatus (false);
       global.steps.loading_roaster.SetStatus(true);
-    }
   }
 
 }
