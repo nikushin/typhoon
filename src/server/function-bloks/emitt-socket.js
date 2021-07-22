@@ -148,13 +148,13 @@ module.exports = function emittSocket() {
 
     const EverySecondSendData = () => {
 
-        const tempSimulatorValues = TempSimulator();
-        //const temp = TempCalc();
+        //const tempSimulatorValues = TempSimulator();
+        const temp = TempCalc();
         const roastData = global.steps.roast.RoastTick();
         const coolingData = global.steps.cooling.CoolingTick();
 
         socket.emit("every_second_data", {
-            temp: tempSimulatorValues,
+            temp: temp,
             roastData: roastData,
             coolingData: coolingData,
         });
