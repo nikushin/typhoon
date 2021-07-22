@@ -11,6 +11,9 @@ function discret_input_create (socket, emitter) {
   for (let button in buttons_list) {
     socket.on(button, (data) => {
       if (data !== null) {buttons_list[button] = data}
+	  if (button === 'button_prepare') {
+        global.memory.operative[button] = data;
+      }
       emitter.emit(button, data);
     });
   }

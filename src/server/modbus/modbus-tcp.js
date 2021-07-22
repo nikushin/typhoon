@@ -31,7 +31,7 @@ const connectTCPinput = async () => {
         }
     ).catch(
         (e) => {
-            console.log('connection fail module input ' + e);
+            //console.log('connection fail module input ' + e);
             setTimeout(connectTCPinput, 5000);
         }
     );
@@ -69,7 +69,7 @@ const readTCPinput =  async () => {
                             console.log(message, new_value)
                         }
                     } else if (func === 'both') {
-						global.memory.operative[message] = new_value;
+                        global.memory.operative[message] = new_value;
                         emitter.emit(message, new_value);
                         console.log(message, new_value)
                     }
@@ -109,7 +109,7 @@ const connectTCPoutput = async () => {
         }
     ).catch(
         (e) => {
-            console.log('connection fail module output ' + e);
+            //console.log('connection fail module output ' + e);
             setTimeout(connectTCPoutput, 5000);
         }
     );

@@ -62,7 +62,7 @@ class heater {
 
     SetPreparePower = () => {
 		
-		let new_power = undefined
+		let new_power = undefined;
         if (global.memory.operative.temp_beans < global.memory.retain.temp_prepare_sp) {
             new_power = 100;
         } else {

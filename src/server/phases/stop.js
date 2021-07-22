@@ -112,24 +112,22 @@ class step_stop {
 
       global.socket.emit("phases_status", {stop : global.steps.stop.status,
       prepare: global.steps.prepare.status,
-      prepare_done: global.steps.prepare.start_delay,
       loading_roaster: global.steps.loading_roaster.status,
       roast: global.steps.roast.status,
       cooling: global.steps.cooling.status,
       });
 
-    global.memory.operative.manual.on = false;
-    global.memory.operative.manual.heat = false;
-    global.memory.operative.manual.vds = false;
-    global.memory.operative.manual.blades = false;
-    global.memory.operative.manual.cooler = false;
-    global.socket.emit("memory_change", {manual:global.memory.operative.manual});
+      global.memory.operative.manual.on = false;
+      global.memory.operative.manual.heat = false;
+      global.memory.operative.manual.vds = false;
+      global.memory.operative.manual.blades = false;
+      global.memory.operative.manual.cooler = false;
+      global.socket.emit("memory_change", {manual:global.memory.operative.manual});
 
-    clearTimeout(global.steps.prepare.start_delay_timeout);
-    clearTimeout(global.steps.loading_roaster.start_delay_timeout);
-    global.steps.loading_roaster.start_delay = false;
-    clearTimeout(global.steps.roast.roast_finish_delay_timeout);
-    global.steps.roast.roast_finish_delay = false;
+      clearTimeout(global.steps.loading_roaster.start_delay_timeout);
+      global.steps.loading_roaster.start_delay = false;
+      clearTimeout(global.steps.roast.roast_finish_delay_timeout);
+      global.steps.roast.roast_finish_delay = false;
   };
 
 }

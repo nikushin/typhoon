@@ -32,6 +32,13 @@ module.exports = {
     temp_air: undefined,
     button_prepare: undefined,
     button_alarm: undefined,
+    alarms: {
+      analog_input_module : false,
+      discrete_input_module : false,
+      discrete_output_module : false,
+      vds_invertor : false,
+      rs485 : false,
+    },
     manual: {
       on: false,
       vds: false,

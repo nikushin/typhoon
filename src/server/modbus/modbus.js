@@ -53,7 +53,7 @@ const readStack = [
                     while (temp_beans_history[0][1] > 30 * 1000)
                         temp_beans_history.shift();
 				}
-				console.log(data.data[0])
+				console.log(data.data[0]);
                 old_temp_beans_time = temp_beans_time;
                 global.emitter.emit('temp_beans_new_value');
             }
@@ -78,7 +78,7 @@ const readModbus = async () => {
         }
         await readStack[n]();
     }
-    setTimeout(() => readModbus(), 20); //20
+    setTimeout(readModbus, 20); //20
     //await readModbus()
 };
 
@@ -95,6 +95,7 @@ function modbusInit() {
         stopBits: 1
     }, (err) => {
         if (err) {
+
             console.log(err);
             setTimeout(modbusInit, 4000);
             return
@@ -112,7 +113,7 @@ global.emitter.on('vds_set_fr', (data) => {
         async () => {
             console.log('vds_set_fr ', data);
             Modbusclient.setID(1);
-            await Modbusclient.writeRegisters(8502, [data]).catch(function (err) {
+            await Modbusclient.writeRegisters(8502, [data]).catch((err) => {
                 console.log(err.message)
             })
         })
